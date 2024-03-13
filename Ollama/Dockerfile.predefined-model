@@ -1,0 +1,9 @@
+FROM ollama/ollama:0.1.27
+
+ARG MODEL_NAME
+
+COPY ollama_setup.sh /ollama_setup.sh
+
+RUN chmod +x /ollama_setup.sh
+
+RUN /ollama_setup.sh ${MODEL_NAME}

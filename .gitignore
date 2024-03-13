@@ -11,3 +11,16 @@
 # Environment configuration
 
 **/.env
+
+# Node.js
+
+**/node_modules/
+**/dist/
+
+# Test files generated
+
+**/output/
+
+# Models used for testing
+
+/Ollama/models/

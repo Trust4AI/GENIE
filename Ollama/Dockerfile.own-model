@@ -1,0 +1,13 @@
+FROM ollama/ollama:0.1.27
+
+ARG MODEL_NAME
+ARG MODELFILE_PATH
+ARG MODEL_PATH
+
+COPY ${MODELFILE_PATH} /${MODELFILE_PATH}
+COPY ${MODEL_PATH} /${MODEL_PATH}
+COPY ollama_setup.sh /ollama_setup.sh
+
+RUN chmod +x /ollama_setup.sh
+
+RUN /ollama_setup.sh ${MODEL_NAME} ${MODELFILE_PATH}
