@@ -18,9 +18,10 @@ services:
     image: gemma:latest
     build: 
       context: ./Ollama
-      dockerfile: Dockerfile.predefined-model
+      dockerfile: Dockerfile.predefined-model-modelfile
       args:
-        MODEL_NAME: "gemma:2b"
+        MODEL_NAME: "gemma"
+        MODELFILE_PATH: "modelfiles/Modelfile-gemma"
     ports:
       - "11434:11434"
     volumes:
