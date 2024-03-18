@@ -25,7 +25,7 @@
     "dotenv": "16.4.4",
     "express": "4.18.2",
     "express-validator": "7.0.1",
-    "ollama": "./dependencies/ollama-0.0.0.tgz"
+    "ollama": "0.5.0"
   },
   "devDependencies": {
     "@types/cors": "2.8.17",
