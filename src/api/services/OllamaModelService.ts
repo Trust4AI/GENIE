@@ -17,18 +17,23 @@ class OllamaModelService extends AbstractOllamaModelService {
 
         const limitMessage = `Answer the question using less than ${max_length} words.`
 
+        const messages = [
+            {
+                role: 'user',
+                content: prompt + '\n' + limitMessage,
+            },
+        ]
+
+        if (role) {
+            messages.unshift({
+                role: 'system',
+                content: generateRoleBasedPrompt({ role }),
+            })
+        }
+
         const response = await ollama.chat({
             model: model,
-            messages: [
-                {
-                    role: 'system',
-                    content: generateRoleBasedPrompt({ role }),
-                },
-                {
-                    role: 'user',
-                    content: prompt + '\n' + limitMessage,
-                },
-            ],
+            messages: messages,
         })
         return response.message.content
     }
