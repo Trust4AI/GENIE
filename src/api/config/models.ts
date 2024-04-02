@@ -1,19 +1,19 @@
 import { OllamaModel } from '../interfaces/OllamaModel'
 
 const models: { [name: string]: OllamaModel } = {
-    gemma: {
+    'gemma-2b': {
         name: 'gemma:2b',
         host:
             process.env.GEMMA_HOST || process.env.NODE_ENV === 'docker'
                 ? 'http://gemma:11434'
                 : 'http://localhost:11434',
     },
-    'dolphin-phi': {
-        name: 'dolphin-phi',
+    gemma: {
+        name: 'gemma:latest',
         host:
-            process.env.DOLPHIN_HOST || process.env.NODE_ENV === 'docker'
-                ? 'http://dolphin-phi:11434'
-                : 'http://localhost:11435',
+            process.env.GEMMA_HOST || process.env.NODE_ENV === 'docker'
+                ? 'http://gemma:11434'
+                : 'http://localhost:11434',
     },
 }
 

@@ -2,7 +2,7 @@ import fs from 'fs'
 
 const writeResponseToFile = (
     role: string,
-    model_name: string,
+    modelName: string,
     prompt: string,
     response: string
 ) => {
@@ -10,7 +10,7 @@ const writeResponseToFile = (
 
     const data = {
         role,
-        model_name,
+        modelName,
         prompt,
         response,
     }

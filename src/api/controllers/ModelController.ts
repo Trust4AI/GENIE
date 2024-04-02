@@ -21,17 +21,11 @@ class ModelController {
 
     async request(req: Request, res: Response) {
         try {
-            const {
-                role,
-                prompt,
-                model_name = 'gemma',
-                max_length = 150,
-            } = req.body
+            const { role, prompt, modelName = 'gemma' } = req.body
             const evaluationData = await this.modelService.request(
                 role,
                 prompt,
-                model_name,
-                max_length
+                modelName
             )
             res.send(evaluationData)
         } catch (err: any) {
