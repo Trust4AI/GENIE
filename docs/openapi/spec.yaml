@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   version: 1.0.0
   title: Executor Component - API
-  description: LLM Executor API
+  description: Component in charge of executing prompts on LLMs
   contact:
     name: Trust4AI Team
     email: ""
@@ -35,7 +35,7 @@ paths:
                 $ref: "#/components/schemas/Error"
               example:
                 error: Internal Server Error
-  /request:
+  /execute:
     post:
       summary: Send a prompt under a specific model
       tags:
@@ -44,7 +44,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RequestInput"
+              $ref: "#/components/schemas/ExecutionInput"
             example:
               role: Engineer
               prompt: How can engineers solve complex problems?
@@ -145,7 +145,7 @@ components:
         msg: prompt must be a string with length between 1 and 2000
         path: prompt
         location: body
-    RequestInput:
+    ExecutionInput:
       type: object
       required:
         - prompt

@@ -7,7 +7,7 @@ class ModelController {
         this.modelService = container.resolve('modelService')
 
         this.check = this.check.bind(this)
-        this.request = this.request.bind(this)
+        this.execute = this.execute.bind(this)
     }
 
     check(req: Request, res: Response) {
@@ -19,10 +19,10 @@ class ModelController {
         }
     }
 
-    async request(req: Request, res: Response) {
+    async execute(req: Request, res: Response) {
         try {
             const { role, prompt, modelName = 'gemma' } = req.body
-            const evaluationData = await this.modelService.request(
+            const evaluationData = await this.modelService.execute(
                 role,
                 prompt,
                 modelName

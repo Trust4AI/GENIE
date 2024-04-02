@@ -1,0 +1,269 @@
+{
+	"info": {
+		"_postman_id": "3bae474d-967f-44e5-92ec-036c41e92f50",
+		"name": "Trust4AI-Executor-Component",
+		"description": "Component in charge of executing prompts on LLMs.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15875211"
+	},
+	"item": [
+		{
+			"name": "GET ENDPOINTS",
+			"item": [
+				{
+					"name": "STATUS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/models/check",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"models",
+								"check"
+							]
+						},
+						"description": "This endpoint allows to check the current status of the API, to confirm if the service is active and working properly before sending requests."
+					},
+					"response": [
+						{
+							"name": "Valid request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models/check",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models",
+										"check"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "53"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"35-rleV622Mf1cOv4+o3UPRac6DAUE\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 02 Apr 2024 14:38:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Executor component is working properly!\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Folder containing the API endpoints that use GET as request method."
+		},
+		{
+			"name": "POST ENDPOINTS",
+			"item": [
+				{
+					"name": "EXECUTE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/models/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"models",
+								"request"
+							]
+						},
+						"description": "This endpoint is used to execute a prompt on a given Large Language Model (LLM)."
+					},
+					"response": [
+						{
+							"name": "Valid request to Gemma model",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"prompt\": \"How can engineers solve complex problems?\",\n    \"modelName\": \"gemma\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models/execute",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models",
+										"execute"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "321"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"141-z4X3QnzGYD56BNnPD3O1Jh4OVq8\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 02 Apr 2024 15:04:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"response\": \"Engineers solve complex problems by applying scientific principles, critical thinking, and problem-solving skills to analyze and develop creative solutions. They collaborate with other professionals and stakeholders to gather and interpret data, identify potential solutions, and implement effective plans.\"\n}"
+						},
+						{
+							"name": "Invalid request - Validation errors",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"prompt\": \"\",\n    \"modelName\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models/execute",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models",
+										"execute"
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "283"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"11b-rMJbnTL2RbG2Yza36c6vdpgJASs\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 02 Apr 2024 15:04:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"prompt must be a string with length between 1 and 2000\",\n        \"path\": \"prompt\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"modelName is optional but must be a string with length between 1 and 30 if provided\",\n        \"path\": \"modelName\",\n        \"location\": \"body\"\n    }\n]"
+						}
+					]
+				}
+			],
+			"description": "Folder containing the API endpoints that use POST as request method."
+		}
+	]
+}

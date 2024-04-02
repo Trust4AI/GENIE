@@ -1,6 +1,6 @@
 import express from 'express'
 import ModelController from '../controllers/ModelController'
-import * as RequestInputValidation from '../controllers/validation/RequestInputValidation'
+import * as ExecutionInputValidation from '../controllers/validation/ExecutionInputValidation'
 import { handleValidation } from '../middlewares/ValidationMiddleware'
 
 const router = express.Router()
@@ -63,7 +63,7 @@ const modelController = new ModelController()
  *         msg: "prompt must be a string with length between 1 and 2000"
  *         path: "prompt"
  *         location: "body"
- *     RequestInput:
+ *     ExecutionInput:
  *       type: object
  *       required:
  *         - prompt
@@ -137,7 +137,7 @@ router.route('/check').get(modelController.check)
 
 /**
  * @swagger
- * /request:
+ * /execute:
  *   post:
  *     summary: Send a prompt under a specific model
  *     tags: [Models]
@@ -145,7 +145,7 @@ router.route('/check').get(modelController.check)
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/RequestInput'
+ *             $ref: '#/components/schemas/ExecutionInput'
  *           example:
  *             role: "Engineer"
  *             prompt: "How can engineers solve complex problems?"
@@ -188,11 +188,11 @@ router.route('/check').get(modelController.check)
  *               error: Internal Server Error
  */
 router
-    .route('/request')
+    .route('/execute')
     .post(
-        RequestInputValidation.request,
+        ExecutionInputValidation.execute,
         handleValidation,
-        modelController.request
+        modelController.execute
     )
 
 export default router

@@ -1,6 +1,6 @@
 import { check } from 'express-validator'
 
-const request = [
+const execute = [
     check('role')
         .optional()
         .isString()
@@ -24,4 +24,4 @@ const request = [
         ),
 ]
 
-export { request }
+export { execute }

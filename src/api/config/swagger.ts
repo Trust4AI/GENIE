@@ -11,7 +11,7 @@ const swaggerOptions = {
         info: {
             version: '1.0.0',
             title: 'Executor Component - API',
-            description: 'LLM Executor API',
+            description: 'Component in charge of executing prompts on LLMs',
             contact: {
                 name: 'Trust4AI Team',
                 email: '',
