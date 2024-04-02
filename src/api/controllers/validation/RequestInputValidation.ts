@@ -20,7 +20,7 @@ const request = [
         .isLength({ min: 1, max: 30 })
         .trim()
         .withMessage(
-            'model is optional but must be a string with length between 1 and 30 if provided'
+            'modelName is optional but must be a string with length between 1 and 30 if provided'
         ),
 ]
 

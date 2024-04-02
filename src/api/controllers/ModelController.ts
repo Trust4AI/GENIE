@@ -27,7 +27,7 @@ class ModelController {
                 prompt,
                 modelName
             )
-            res.send(evaluationData)
+            res.send({ response: evaluationData })
         } catch (err: any) {
             res.status(500).send({ error: err.message })
         }
