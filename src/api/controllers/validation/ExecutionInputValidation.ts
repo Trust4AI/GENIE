@@ -14,7 +14,7 @@ const execute = [
         .isLength({ min: 1, max: 2000 })
         .trim()
         .withMessage('prompt must be a string with length between 1 and 2000'),
-    check('modelName')
+    check('model_name')
         .optional()
         .isString()
         .isLength({ min: 1, max: 30 })

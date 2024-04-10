@@ -21,7 +21,8 @@ class ModelController {
 
     async execute(req: Request, res: Response) {
         try {
-            const { role, prompt, modelName = 'gemma' } = req.body
+            const { role, prompt, model_name = 'gemma' } = req.body
+            const modelName = model_name
             const evaluationData = await this.modelService.execute(
                 role,
                 prompt,
