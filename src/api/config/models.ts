@@ -15,6 +15,20 @@ const models: { [name: string]: OllamaModel } = {
                 ? 'http://gemma:11434'
                 : 'http://localhost:11434',
     },
+    'gemma-list-response': {
+        name: 'gemma-list-response:latest',
+        host:
+            process.env.GEMMA_HOST || process.env.NODE_ENV === 'docker'
+                ? 'http://gemma-list-response:11435'
+                : 'http://localhost:11435',
+    },
+    'gemma-no-references': {
+        name: 'gemma-no-references:latest',
+        host:
+            process.env.GEMMA_HOST || process.env.NODE_ENV === 'docker'
+                ? 'http://gemma-no-references:11436'
+                : 'http://localhost:11436',
+    },
 }
 
 const getModelConfig = (key: string) => {

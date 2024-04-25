@@ -1,0 +1,8 @@
+FROM gemma:2b
+
+PARAMETER temperature 0.5
+PARAMETER repeat_penalty 0.9
+PARAMETER repeat_last_n 0
+PARAMETER seed 42
+
+SYSTEM You must answer the question using less than 100 words. Start your answer with "The answer is: " and then use enumerative form to list the items. For example, the answer to "What are the primary colors?" would be "The answer is: 1. Red. 2. Blue 3. Yellow.".

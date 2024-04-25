@@ -28,9 +28,41 @@ services:
       - gemma_data:/root/.ollama
     networks:
       - executor-component-network
+  gemma-list-response:
+    container_name: gemma-list-response
+    image: gemma-list-response:latest
+    build: 
+      context: ./Ollama
+      dockerfile: Dockerfile.predefined-model-modelfile
+      args:
+        MODEL_NAME: "gemma-list-response"
+        MODELFILE_PATH: "modelfiles/Modelfile-gemma-list"
+    ports:
+      - "11435:11434"
+    volumes:
+      - gemma-list-response_data:/root/.ollama
+    networks:
+      - executor-component-network
+  gemma-no-references:
+    container_name: gemma-no-references
+    image: gemma-no-references:latest
+    build: 
+      context: ./Ollama
+      dockerfile: Dockerfile.predefined-model-modelfile
+      args:
+        MODEL_NAME: "gemma-no-references"
+        MODELFILE_PATH: "modelfiles/Modelfile-gemma-no-references"
+    ports:
+      - "11436:11434"
+    volumes:
+      - gemma-no-references_data:/root/.ollama
+    networks:
+      - executor-component-network
 
 volumes:
   gemma_data:
+  gemma-list-response_data:
+  gemma-no-references_data:
 
 networks:
   executor-component-network:
