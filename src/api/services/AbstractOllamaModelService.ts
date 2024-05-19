@@ -1,7 +1,8 @@
 abstract class AbstractCandidateService {
     abstract sendPromptToModel(
         prompt: string,
-        modelName: string
+        modelName: string,
+        excludedText: string
     ): Promise<string>
 }
 

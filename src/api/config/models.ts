@@ -2,32 +2,18 @@ import { OllamaModel } from '../interfaces/OllamaModel'
 
 const models: { [name: string]: OllamaModel } = {
     'gemma-2b': {
-        name: 'gemma:2b',
+        name: 'gemma-2b:latest',
         host:
             process.env.GEMMA_HOST || process.env.NODE_ENV === 'docker'
-                ? 'http://gemma:11434'
+                ? 'http://gemma-2b:11434'
                 : 'http://localhost:11434',
     },
-    gemma: {
-        name: 'gemma:latest',
+    'llama3-8b': {
+        name: 'llama3-8b:latest',
         host:
             process.env.GEMMA_HOST || process.env.NODE_ENV === 'docker'
-                ? 'http://gemma:11434'
-                : 'http://localhost:11434',
-    },
-    'gemma-list-response': {
-        name: 'gemma-list-response:latest',
-        host:
-            process.env.GEMMA_HOST || process.env.NODE_ENV === 'docker'
-                ? 'http://gemma-list-response:11435'
+                ? 'http://llama3-8b:11435'
                 : 'http://localhost:11435',
-    },
-    'gemma-no-references': {
-        name: 'gemma-no-references:latest',
-        host:
-            process.env.GEMMA_HOST || process.env.NODE_ENV === 'docker'
-                ? 'http://gemma-no-references:11436'
-                : 'http://localhost:11436',
     },
 }
 

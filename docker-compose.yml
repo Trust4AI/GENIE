@@ -13,56 +13,40 @@ services:
       - .env
     networks:
       - executor-component-network
-  gemma:
-    container_name: gemma
-    image: gemma:latest
+  gemma-2b:
+    container_name: gemma-2b
+    image: gemma-2b:latest
     build: 
       context: ./Ollama
       dockerfile: Dockerfile.predefined-model-modelfile
       args:
-        MODEL_NAME: "gemma"
-        MODELFILE_PATH: "modelfiles/Modelfile-gemma"
+        MODEL_NAME: "gemma-2b"
+        MODELFILE_PATH: "modelfiles/Modelfile-gemma-2b"
     ports:
       - "11434:11434"
     volumes:
-      - gemma_data:/root/.ollama
+      - gemma-2b_data:/root/.ollama
     networks:
       - executor-component-network
-  gemma-list-response:
-    container_name: gemma-list-response
-    image: gemma-list-response:latest
+  llama3-8b:
+    container_name: llama3-8b
+    image: llama3-8b:latest
     build: 
       context: ./Ollama
       dockerfile: Dockerfile.predefined-model-modelfile
       args:
-        MODEL_NAME: "gemma-list-response"
-        MODELFILE_PATH: "modelfiles/Modelfile-gemma-list"
+        MODEL_NAME: "llama3-8b"
+        MODELFILE_PATH: "modelfiles/Modelfile-llama3-8b"
     ports:
       - "11435:11434"
     volumes:
-      - gemma-list-response_data:/root/.ollama
-    networks:
-      - executor-component-network
-  gemma-no-references:
-    container_name: gemma-no-references
-    image: gemma-no-references:latest
-    build: 
-      context: ./Ollama
-      dockerfile: Dockerfile.predefined-model-modelfile
-      args:
-        MODEL_NAME: "gemma-no-references"
-        MODELFILE_PATH: "modelfiles/Modelfile-gemma-no-references"
-    ports:
-      - "11436:11434"
-    volumes:
-      - gemma-no-references_data:/root/.ollama
+      - llama3-8b_data:/root/.ollama
     networks:
       - executor-component-network
 
 volumes:
-  gemma_data:
-  gemma-list-response_data:
-  gemma-no-references_data:
+  gemma-2b_data:
+  llama3-8b_data:
 
 networks:
   executor-component-network:

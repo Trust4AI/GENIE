@@ -11,9 +11,18 @@ class ModelService {
         return { message: 'Executor component is working properly!' }
     }
 
-    async execute(role: string, prompt: string, modelName: string) {
+    async execute(
+        role: string,
+        prompt: string,
+        modelName: string,
+        excludedText: string
+    ) {
         const response: string =
-            await this.ollamaModelService.sendPromptToModel(prompt, modelName)
+            await this.ollamaModelService.sendPromptToModel(
+                prompt,
+                modelName,
+                excludedText
+            )
 
         writeResponseToFile(role, modelName, prompt, response)
         return response

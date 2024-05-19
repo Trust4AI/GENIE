@@ -21,12 +21,19 @@ class ModelController {
 
     async execute(req: Request, res: Response) {
         try {
-            const { role, prompt, model_name = 'gemma' } = req.body
+            const {
+                role,
+                prompt,
+                model_name = 'gemma',
+                excluded_text,
+            } = req.body
             const modelName = model_name
+            const excludedText = excluded_text || ''
             const evaluationData = await this.modelService.execute(
                 role,
                 prompt,
-                modelName
+                modelName,
+                excludedText
             )
             res.send({ response: evaluationData })
         } catch (err: any) {
