@@ -13,39 +13,29 @@ services:
       - .env
     networks:
       - executor-component-network
-  gemma-2b:
-    container_name: gemma-2b
-    image: gemma-2b:latest
-    build: 
-      context: ./Ollama
-      dockerfile: Dockerfile.predefined-model-modelfile
-      args:
-        MODEL_NAME: "gemma-2b"
-        MODELFILE_PATH: "modelfiles/Modelfile-gemma-2b"
-    ports:
-      - "11434:11434"
-    volumes:
-      - gemma-2b_data:/root/.ollama
-    networks:
-      - executor-component-network
   llama3-8b:
     container_name: llama3-8b
     image: llama3-8b:latest
     build: 
       context: ./Ollama
-      dockerfile: Dockerfile.predefined-model-modelfile
+      dockerfile: Dockerfile.predefined-model
       args:
-        MODEL_NAME: "llama3-8b"
-        MODELFILE_PATH: "modelfiles/Modelfile-llama3-8b"
+        MODEL_NAME: "llama3"
     ports:
       - "11435:11434"
     volumes:
       - llama3-8b_data:/root/.ollama
     networks:
       - executor-component-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
 volumes:
-  gemma-2b_data:
   llama3-8b_data:
 
 networks:

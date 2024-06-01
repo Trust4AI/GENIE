@@ -15,13 +15,19 @@ class ModelService {
         role: string,
         prompt: string,
         modelName: string,
-        excludedText: string
+        excludedText: string,
+        responseMaxLength: number,
+        listFormatResponse: boolean,
+        excludeBiasReferences: boolean
     ) {
         const response: string =
             await this.ollamaModelService.sendPromptToModel(
                 prompt,
                 modelName,
-                excludedText
+                excludedText,
+                responseMaxLength,
+                listFormatResponse,
+                excludeBiasReferences
             )
 
         writeResponseToFile(role, modelName, prompt, response)

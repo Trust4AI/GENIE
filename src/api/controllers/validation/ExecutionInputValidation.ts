@@ -25,10 +25,28 @@ const execute = [
     check('excluded_text')
         .optional()
         .isString()
-        .isLength({ min: 1, max: 30 })
+        .isLength({ min: 0, max: 30 })
         .trim()
         .withMessage(
-            'excludedText is optional but must be a string with length between 1 and 30 if provided'
+            'excludedText is optional but must be a string with length between 0 and 30 if provided'
+        ),
+    check('response_max_length')
+        .optional()
+        .isInt({ min: 1, max: 2000 })
+        .withMessage(
+            'responseMaxLength is optional but must be an integer between 1 and 2000 if provided'
+        ),
+    check('list_format_response')
+        .optional()
+        .isBoolean()
+        .withMessage(
+            'listFormatResponse is optional but must be a boolean if provided'
+        ),
+    check('exclude_bias_references')
+        .optional()
+        .isBoolean()
+        .withMessage(
+            'excludeBiasReferences is optional but must be a boolean if provided'
         ),
 ]
 

@@ -25,15 +25,24 @@ class ModelController {
                 role,
                 prompt,
                 model_name = 'gemma',
-                excluded_text,
+                excluded_text = '',
+                response_max_length = 100,
+                list_format_response = false,
+                exclude_bias_references = true,
             } = req.body
             const modelName = model_name
-            const excludedText = excluded_text || ''
+            const excludedText = excluded_text
+            const responseMaxLength = response_max_length
+            const listFormatResponse = list_format_response
+            const excludeBiasReferences = exclude_bias_references
             const evaluationData = await this.modelService.execute(
                 role,
                 prompt,
                 modelName,
-                excludedText
+                excludedText,
+                responseMaxLength,
+                listFormatResponse,
+                excludeBiasReferences
             )
             res.send({ response: evaluationData })
         } catch (err: any) {
