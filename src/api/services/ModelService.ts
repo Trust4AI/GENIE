@@ -30,7 +30,8 @@ class ModelService {
                 excludeBiasReferences
             )
 
-        writeResponseToFile(role, modelName, prompt, response)
+        //TODO: Review if it is necessary to write the response to a file
+        // writeResponseToFile(role, modelName, prompt, response)
         return response
     }
 }
