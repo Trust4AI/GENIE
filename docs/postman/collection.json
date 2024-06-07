@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3bae474d-967f-44e5-92ec-036c41e92f50",
+		"_postman_id": "80a0395f-fb67-4878-8177-f1bbbda17ec4",
 		"name": "Trust4AI-Executor-Component",
 		"description": "Component in charge of executing prompts on LLMs.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -123,13 +123,13 @@
 					},
 					"response": [
 						{
-							"name": "Valid request to Gemma model",
+							"name": "Valid request to Llama3-8b",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"prompt\": \"How can engineers solve complex problems?\",\n    \"modelName\": \"gemma\"\n}",
+									"raw": "{\n    \"prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"model_name\": \"llama3-8b\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"exclude_bias_references\": true,\n    \"excluded_text\": \"non-binary\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -169,15 +169,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "321"
+									"value": "801"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"141-z4X3QnzGYD56BNnPD3O1Jh4OVq8\""
+									"value": "W/\"321-P3G8vjrwf6ykvmN2KcEfZP4CnQo\""
 								},
 								{
 									"key": "Date",
-									"value": "Tue, 02 Apr 2024 15:04:29 GMT"
+									"value": "Fri, 07 Jun 2024 10:20:11 GMT"
 								},
 								{
 									"key": "Connection",
@@ -189,7 +189,76 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"response\": \"Engineers solve complex problems by applying scientific principles, critical thinking, and problem-solving skills to analyze and develop creative solutions. They collaborate with other professionals and stakeholders to gather and interpret data, identify potential solutions, and implement effective plans.\"\n}"
+							"body": "{\n    \"response\": \"1. Strong communication and interpersonal skills to effectively collaborate with clients, colleagues, and contractors.\\n2. Creativity and imagination to design innovative and functional spaces that meet client needs.\\n3. Technical skills in CAD software, building information modeling (BIM), and other architectural technologies.\\n4. Attention to detail and ability to manage multiple projects simultaneously.\\n5. Strong analytical and problem-solving skills to navigate complex building codes and regulations.\\n6. Ability to work independently and as part of a team to achieve project goals.\\n7. Excellent time management and organizational skills to meet deadlines and budgets.\\n8. Knowledge of sustainable design principles and materials to create environmentally friendly buildings.\"\n}"
+						},
+						{
+							"name": "Valid request to Gemma-7B",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"model_name\": \"gemma-7b\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"exclude_bias_references\": true,\n    \"excluded_text\": \"non-binary\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models/execute",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models",
+										"execute"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "298"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"12a-a4dVkf2WMd9zGJNafTlXMQ5BglU\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 07 Jun 2024 10:27:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"response\": \"1. Creativity and imagination in spatial design.\\n2. Understanding of diverse perspectives and inclusivity.\\n3. Technical proficiency in design software and tools.\\n4. Excellent communication and teamwork skills.\\n5. Knowledge of sustainable and eco-friendly materials and practices.\"\n}"
 						},
 						{
 							"name": "Invalid request - Validation errors",
@@ -198,7 +267,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"prompt\": \"\",\n    \"modelName\": \"\"\n}",
+									"raw": "{\n    \"prompt\": \"\",\n    \"model_name\": \"\",\n    \"response_max_length\": 2001,\n    \"list_format_response\": \"yes\",\n    \"exclude_bias_references\":\"yes\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -238,15 +307,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "283"
+									"value": "770"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"11b-rMJbnTL2RbG2Yza36c6vdpgJASs\""
+									"value": "W/\"302-y0xDfBU2UstA8gvwQkZA8JMxkhM\""
 								},
 								{
 									"key": "Date",
-									"value": "Tue, 02 Apr 2024 15:04:52 GMT"
+									"value": "Fri, 07 Jun 2024 10:17:38 GMT"
 								},
 								{
 									"key": "Connection",
@@ -258,7 +327,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"prompt must be a string with length between 1 and 2000\",\n        \"path\": \"prompt\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"modelName is optional but must be a string with length between 1 and 30 if provided\",\n        \"path\": \"modelName\",\n        \"location\": \"body\"\n    }\n]"
+							"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"prompt must be a string with length between 1 and 2000\",\n        \"path\": \"prompt\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"model_name is optional but must be a string with length between 1 and 30 if provided\",\n        \"path\": \"model_name\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": 2001,\n        \"msg\": \"response_max_length is optional but must be an integer between 1 and 2000 if provided\",\n        \"path\": \"response_max_length\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"yes\",\n        \"msg\": \"list_format_response is optional but must be a boolean if provided\",\n        \"path\": \"list_format_response\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"yes\",\n        \"msg\": \"exclude_bias_references is optional but must be a boolean if provided\",\n        \"path\": \"exclude_bias_references\",\n        \"location\": \"body\"\n    }\n]"
 						}
 					]
 				}
