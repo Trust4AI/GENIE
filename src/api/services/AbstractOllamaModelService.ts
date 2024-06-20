@@ -1,11 +1,12 @@
 abstract class AbstractCandidateService {
     abstract sendPromptToModel(
-        prompt: string,
+        userPrompt: string,
         modelName: string,
         excludedText: string,
         responseMaxLength: number,
         listFormatResponse: boolean,
-        excludeBiasReferences: boolean
+        excludeBiasReferences: boolean,
+        systemPrompt: string
     ): Promise<string>
 }
 

@@ -1,5 +1,4 @@
 import container from '../containers/container'
-import { writeResponseToFile } from '../utils/files'
 
 class ModelService {
     ollamaModelService: any
@@ -13,25 +12,27 @@ class ModelService {
 
     async execute(
         role: string,
-        prompt: string,
+        userPrompt: string,
         modelName: string,
         excludedText: string,
         responseMaxLength: number,
         listFormatResponse: boolean,
-        excludeBiasReferences: boolean
+        excludeBiasReferences: boolean,
+        systemPrompt: string
     ) {
         const response: string =
             await this.ollamaModelService.sendPromptToModel(
-                prompt,
+                userPrompt,
                 modelName,
                 excludedText,
                 responseMaxLength,
                 listFormatResponse,
-                excludeBiasReferences
+                excludeBiasReferences,
+                systemPrompt
             )
 
         //TODO: Review if it is necessary to write the response to a file
-        // writeResponseToFile(role, modelName, prompt, response)
+        // writeResponseToFile(role, modelName, userPrompt, response)
         return response
     }
 }

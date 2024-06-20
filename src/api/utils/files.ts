@@ -3,7 +3,7 @@ import fs from 'fs'
 const writeResponseToFile = (
     role: string,
     modelName: string,
-    prompt: string,
+    userPrompt: string,
     response: string
 ) => {
     const date = new Date().toISOString().replace(/:/g, '-')
@@ -11,7 +11,7 @@ const writeResponseToFile = (
     const data = {
         role,
         modelName,
-        prompt,
+        userPrompt,
         response,
     }
 

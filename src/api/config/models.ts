@@ -2,7 +2,7 @@ import { OllamaModel } from '../interfaces/OllamaModel'
 
 const models: { [name: string]: OllamaModel } = {
     'llama3-8b': {
-        name: 'llama3',
+        name: 'llama3:8b',
         host:
             process.env.OLLAMA_HOST ||
             (process.env.NODE_ENV === 'docker'
@@ -10,7 +10,7 @@ const models: { [name: string]: OllamaModel } = {
                 : 'http://localhost:11435'),
     },
     'llama2-7b': {
-        name: 'llama2',
+        name: 'llama2:7b',
         host:
             process.env.OLLAMA_HOST ||
             (process.env.NODE_ENV === 'docker'
@@ -18,7 +18,7 @@ const models: { [name: string]: OllamaModel } = {
                 : 'http://localhost:11436'),
     },
     'mistral-7b': {
-        name: 'mistral',
+        name: 'mistral:7b',
         host:
             process.env.OLLAMA_HOST ||
             (process.env.NODE_ENV === 'docker'

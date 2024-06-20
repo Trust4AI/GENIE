@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "80a0395f-fb67-4878-8177-f1bbbda17ec4",
+		"_postman_id": "0858827e-6e82-40b8-84fb-a31c076005ff",
 		"name": "Trust4AI-Executor-Component",
 		"description": "Component in charge of executing prompts on LLMs.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -129,7 +129,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"model_name\": \"llama3-8b\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"exclude_bias_references\": true,\n    \"excluded_text\": \"non-binary\"\n}",
+									"raw": "{\n    \"user_prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"model_name\": \"llama3-8b\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"exclude_bias_references\": true,\n    \"excluded_text\": \"non-binary\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -198,7 +198,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"model_name\": \"gemma-7b\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"exclude_bias_references\": true,\n    \"excluded_text\": \"non-binary\"\n}",
+									"raw": "{\n    \"user_prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"model_name\": \"gemma-7b\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"exclude_bias_references\": true,\n    \"excluded_text\": \"non-binary\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -267,7 +267,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"prompt\": \"\",\n    \"model_name\": \"\",\n    \"response_max_length\": 2001,\n    \"list_format_response\": \"yes\",\n    \"exclude_bias_references\":\"yes\"\n}",
+									"raw": "{\n    \"user_prompt\": \"\",\n    \"model_name\": \"\",\n    \"response_max_length\": 2001,\n    \"list_format_response\": \"yes\",\n    \"exclude_bias_references\":\"yes\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -307,15 +307,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "770"
+									"value": "780"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"302-y0xDfBU2UstA8gvwQkZA8JMxkhM\""
+									"value": "W/\"30c-CM2PwrppXBCaHD2SDe0r3u3pjTU\""
 								},
 								{
 									"key": "Date",
-									"value": "Fri, 07 Jun 2024 10:17:38 GMT"
+									"value": "Thu, 20 Jun 2024 18:18:55 GMT"
 								},
 								{
 									"key": "Connection",
@@ -327,7 +327,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"prompt must be a string with length between 1 and 2000\",\n        \"path\": \"prompt\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"model_name is optional but must be a string with length between 1 and 30 if provided\",\n        \"path\": \"model_name\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": 2001,\n        \"msg\": \"response_max_length is optional but must be an integer between 1 and 2000 if provided\",\n        \"path\": \"response_max_length\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"yes\",\n        \"msg\": \"list_format_response is optional but must be a boolean if provided\",\n        \"path\": \"list_format_response\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"yes\",\n        \"msg\": \"exclude_bias_references is optional but must be a boolean if provided\",\n        \"path\": \"exclude_bias_references\",\n        \"location\": \"body\"\n    }\n]"
+							"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"user_prompt must be a string with length between 1 and 2000\",\n        \"path\": \"user_prompt\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"model_name is optional but must be a string with length between 1 and 30 if provided\",\n        \"path\": \"model_name\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": 2001,\n        \"msg\": \"response_max_length is optional but must be an integer between 1 and 2000 if provided\",\n        \"path\": \"response_max_length\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"yes\",\n        \"msg\": \"list_format_response is optional but must be a boolean if provided\",\n        \"path\": \"list_format_response\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"yes\",\n        \"msg\": \"exclude_bias_references is optional but must be a boolean if provided\",\n        \"path\": \"exclude_bias_references\",\n        \"location\": \"body\"\n    }\n]"
 						}
 					]
 				}
