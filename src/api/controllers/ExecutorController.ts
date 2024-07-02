@@ -1,4 +1,4 @@
-import container from '../containers/container'
+import container from '../config/container'
 import { Request, Response } from 'express'
 
 class ExecutorController {

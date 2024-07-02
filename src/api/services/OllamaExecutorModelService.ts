@@ -61,10 +61,10 @@ class OllamaExecutorModelService {
                 model,
                 stream: false,
                 messages,
-            })
+            }).then((res) => res.message.content)
             debugLog('Chat posted successfully!', 'info')
             debugLog('Response from Ollama: ' + response, 'info')
-            return response.message.content
+            return response
         } catch (error: any) {
             debugLog('Error posting chat!', 'error')
             debugLog(error, 'error')

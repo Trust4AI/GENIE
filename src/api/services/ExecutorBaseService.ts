@@ -1,4 +1,4 @@
-import container from '../containers/container'
+import container from '../config/container'
 //import { writeResponseToFile } from '../utils/fileUtils'
 
 class ExecutorBaseService {

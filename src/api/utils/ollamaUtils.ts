@@ -13,7 +13,7 @@ const sendChatRequest = async (
             body: JSON.stringify(requestBody),
         })
     } catch (error: any) {
-        throw new Error(`[EXECUTOR] Ollama fetch failed: ${error.message}`)
+        throw new Error(`[EXECUTOR] Ollama fetch error: ${error.message}`)
     }
 
     if (!response.ok) {
