@@ -1,6 +1,6 @@
 import express, { Express } from 'express'
 import cors from 'cors'
-import modelRoutes from './routes/ModelRoutes'
+import executorRoutes from './routes/ExecutorRoutes'
 import swaggerui from 'swagger-ui-express'
 import { swaggerDocs } from './config/swagger'
 import './config/loadEnv'
@@ -17,6 +17,6 @@ app.use(
     swaggerUI.serve,
     swaggerUI.setup(swaggerDocs, { explorer: true })
 )
-app.use(API_VERSION + '/models', modelRoutes)
+app.use(API_VERSION + '/models', executorRoutes)
 
 module.exports = app

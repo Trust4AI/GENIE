@@ -1,10 +1,10 @@
 import express from 'express'
-import ModelController from '../controllers/ModelController'
+import ExecutorController from '../controllers/ExecutorController'
 import * as ExecutionInputValidation from '../controllers/validation/ExecutionInputValidation'
 import { handleValidation } from '../middlewares/ValidationMiddleware'
 
 const router = express.Router()
-const modelController = new ModelController()
+const executorController = new ExecutorController()
 
 /**
  * @swagger
@@ -133,7 +133,7 @@ const modelController = new ModelController()
  *             example:
  *               error: Internal Server Error
  */
-router.route('/check').get(modelController.check)
+router.route('/check').get(executorController.check)
 
 /**
  * @swagger
@@ -192,7 +192,7 @@ router
     .post(
         ExecutionInputValidation.execute,
         handleValidation,
-        modelController.execute
+        executorController.execute
     )
 
 export default router

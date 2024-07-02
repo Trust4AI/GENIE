@@ -1,10 +1,10 @@
 import container from '../containers/container'
 import { Request, Response } from 'express'
 
-class ModelController {
-    baseService: any
+class ExecutorController {
+    executorBaseService: any
     constructor() {
-        this.baseService = container.resolve('baseService')
+        this.executorBaseService = container.resolve('executorBaseService')
 
         this.check = this.check.bind(this)
         this.execute = this.execute.bind(this)
@@ -12,7 +12,7 @@ class ModelController {
 
     check(req: Request, res: Response) {
         try {
-            const message = this.baseService.check()
+            const message = this.executorBaseService.check()
             res.json(message)
         } catch (error: any) {
             res.status(500).send({ error: error.message })
@@ -30,7 +30,7 @@ class ModelController {
                 exclude_bias_references = true,
                 excluded_text = '',
             } = req.body
-            const modelResponse = await this.baseService.execute(
+            const modelResponse = await this.executorBaseService.execute(
                 model_name,
                 system_prompt,
                 user_prompt,
@@ -46,4 +46,4 @@ class ModelController {
     }
 }
 
-export default ModelController
+export default ExecutorController

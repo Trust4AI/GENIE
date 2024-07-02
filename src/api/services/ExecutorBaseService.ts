@@ -1,7 +1,7 @@
 import container from '../containers/container'
 //import { writeResponseToFile } from '../utils/fileUtils'
 
-class BaseService {
+class ExecutorBaseService {
     ollamaExecutorModelService: any
     constructor() {
         this.ollamaExecutorModelService = container.resolve(
@@ -38,4 +38,4 @@ class BaseService {
     }
 }
 
-export default BaseService
+export default ExecutorBaseService

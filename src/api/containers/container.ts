@@ -1,13 +1,13 @@
 import { createContainer, asClass } from 'awilix'
 
-import BaseService from '../services/BaseService'
+import ExecutorBaseService from '../services/ExecutorBaseService'
 import OllamaExecutorModelService from '../services/OllamaExecutorModelService'
 
 function initContainer() {
     const container = createContainer()
 
     container.register({
-        baseService: asClass(BaseService).singleton(),
+        executorBaseService: asClass(ExecutorBaseService).singleton(),
         ollamaExecutorModelService: asClass(
             OllamaExecutorModelService
         ).singleton(),
