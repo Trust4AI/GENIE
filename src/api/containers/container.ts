@@ -1,14 +1,16 @@
 import { createContainer, asClass } from 'awilix'
 
-import ModelService from '../services/ModelService'
-import OllamaModelService from '../services/OllamaModelService'
+import BaseService from '../services/BaseService'
+import OllamaExecutorModelService from '../services/OllamaExecutorModelService'
 
 function initContainer() {
     const container = createContainer()
 
     container.register({
-        modelService: asClass(ModelService).singleton(),
-        ollamaModelService: asClass(OllamaModelService).singleton(),
+        baseService: asClass(BaseService).singleton(),
+        ollamaExecutorModelService: asClass(
+            OllamaExecutorModelService
+        ).singleton(),
     })
     return container
 }

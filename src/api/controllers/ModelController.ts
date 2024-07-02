@@ -2,9 +2,9 @@ import container from '../containers/container'
 import { Request, Response } from 'express'
 
 class ModelController {
-    modelService: any
+    baseService: any
     constructor() {
-        this.modelService = container.resolve('modelService')
+        this.baseService = container.resolve('baseService')
 
         this.check = this.check.bind(this)
         this.execute = this.execute.bind(this)
@@ -12,43 +12,36 @@ class ModelController {
 
     check(req: Request, res: Response) {
         try {
-            const message = this.modelService.check()
+            const message = this.baseService.check()
             res.json(message)
-        } catch (err: any) {
-            res.status(500).send({ error: err.message })
+        } catch (error: any) {
+            res.status(500).send({ error: error.message })
         }
     }
 
     async execute(req: Request, res: Response) {
         try {
             const {
-                role,
+                model_name,
+                system_prompt = '',
                 user_prompt,
-                model_name = 'gemma',
-                excluded_text = '',
-                response_max_length = 100,
+                response_max_length = -1,
                 list_format_response = false,
                 exclude_bias_references = true,
-                system_prompt = '',
+                excluded_text = '',
             } = req.body
-            const modelName = model_name
-            const excludedText = excluded_text
-            const responseMaxLength = response_max_length
-            const listFormatResponse = list_format_response
-            const excludeBiasReferences = exclude_bias_references
-            const modelResponse = await this.modelService.execute(
-                role,
+            const modelResponse = await this.baseService.execute(
+                model_name,
+                system_prompt,
                 user_prompt,
-                modelName,
-                excludedText,
-                responseMaxLength,
-                listFormatResponse,
-                excludeBiasReferences,
-                system_prompt
+                response_max_length,
+                list_format_response,
+                exclude_bias_references,
+                excluded_text
             )
             res.send({ response: modelResponse })
-        } catch (err: any) {
-            res.status(500).send({ error: err.message })
+        } catch (error: any) {
+            res.status(500).send({ error: error.message })
         }
     }
 }
