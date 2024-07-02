@@ -1,6 +1,6 @@
 import express from 'express'
 import ExecutorController from '../controllers/ExecutorController'
-import * as ExecutionInputValidation from '../controllers/validation/ExecutionInputValidation'
+import * as ExecutorInputValidation from '../controllers/validation/ExecutorInputValidation'
 import { handleValidation } from '../middlewares/ValidationMiddleware'
 
 const router = express.Router()
@@ -190,7 +190,7 @@ router.route('/check').get(executorController.check)
 router
     .route('/execute')
     .post(
-        ExecutionInputValidation.execute,
+        ExecutorInputValidation.execute,
         handleValidation,
         executorController.execute
     )
