@@ -14,4 +14,6 @@ const getModelConfig = (key: string) => {
         : null
 }
 
-export { getModelConfig }
+const getModelNames = () => Object.keys(models)
+
+export { getModelConfig, getModelNames }

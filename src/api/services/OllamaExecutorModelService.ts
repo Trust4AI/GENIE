@@ -38,9 +38,9 @@ class OllamaExecutorModelService {
         ]
         const fullUserPrompt = promptComponents.filter(Boolean).join(' ')
 
-        debugLog('Host: ' + host, 'info')
-        debugLog('Model: ' + model, 'info')
-        debugLog('User prompt: ' + fullUserPrompt, 'info')
+        debugLog(`Host: ${host}`, 'info')
+        debugLog(`Model: ${model}`, 'info')
+        debugLog(`User prompt: ${fullUserPrompt}`, 'info')
 
         const messages = [
             {
@@ -63,7 +63,7 @@ class OllamaExecutorModelService {
                 messages,
             }).then((res) => res.message.content)
             debugLog('Chat posted successfully!', 'info')
-            debugLog('Response from Ollama: ' + response, 'info')
+            debugLog(`Response from Ollama: ${response}`, 'info')
             return response
         } catch (error: any) {
             debugLog('Error posting chat!', 'error')

@@ -13,10 +13,7 @@ const writeResponseToFile = (
         response,
     }
 
-    fs.writeFileSync(
-        './output/' + date + '.json',
-        JSON.stringify(data, null, 4)
-    )
+    fs.writeFileSync(`./output/${date}.json`, JSON.stringify(data, null, 4))
 }
 
 export { writeResponseToFile }

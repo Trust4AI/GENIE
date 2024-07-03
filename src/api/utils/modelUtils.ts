@@ -8,7 +8,7 @@ const createModel = (name: string, port: number) => {
 const getHostUrl = (modelName: string, port: number): string => {
     return process.env.NODE_ENV === 'docker'
         ? `http://${modelName.replace(':', '-')}:${port}`
-        : 'http://localhost:' + port
+        : `http://localhost:${port}`
 }
 
 export { createModel, getHostUrl }

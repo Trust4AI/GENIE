@@ -1,12 +1,15 @@
 import { check } from 'express-validator'
+import { getModelNames } from '../../config/models'
 
 const execute = [
     check('model_name')
         .isString()
-        .isLength({ min: 1, max: 30 })
+        .isIn(getModelNames())
         .trim()
         .withMessage(
-            'model_name is optional but must be a string with length between 1 and 30 if provided'
+            `model_name must be a string with one of the following values: ${getModelNames().join(
+                ', '
+            )}`
         ),
     check('system_prompt')
         .optional()
@@ -46,10 +49,10 @@ const execute = [
     check('excluded_text')
         .optional()
         .isString()
-        .isLength({ min: 0, max: 30 })
+        .isLength({ min: 1, max: 30 })
         .trim()
         .withMessage(
-            'excluded_text is optional but must be a string with length between 0 and 30 if provided'
+            'excluded_text is optional but must be a string with length between 1 and 30 if provided'
         ),
 ]
 
