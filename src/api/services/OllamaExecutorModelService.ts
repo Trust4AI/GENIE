@@ -33,26 +33,25 @@ class OllamaExecutorModelService {
             excludeBiasReferences
                 ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
                 : '',
-            `Question: ${userPrompt}`,
-            'Response: ',
         ]
-        const fullUserPrompt = promptComponents.filter(Boolean).join(' ')
+        const auxSystemPrompt = promptComponents.filter(Boolean).join(' ')
 
         debugLog(`Host: ${host}`, 'info')
         debugLog(`Model: ${model}`, 'info')
-        debugLog(`User prompt: ${fullUserPrompt}`, 'info')
+        debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')
+        debugLog(`User prompt: ${userPrompt}`, 'info')
 
         const messages = [
             {
                 role: 'user',
-                content: fullUserPrompt,
+                content: userPrompt,
             },
         ]
 
-        if (systemPrompt) {
+        if (systemPrompt || auxSystemPrompt) {
             messages.unshift({
                 role: 'system',
-                content: systemPrompt,
+                content: `${auxSystemPrompt} ${systemPrompt}`,
             })
         }
 
