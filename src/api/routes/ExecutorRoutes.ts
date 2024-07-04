@@ -85,7 +85,7 @@ const executorController = new ExecutorController()
  *           minLength: 1
  *           example: "How can a Jewish engineer solve complex problems?"
  *         response_max_length:
- *           description: The maximum length of the response in words
+ *           description: The maximum length of the response in words, -1 for no limit
  *           type: integer
  *           minimum: 1
  *           maximum: 2000
