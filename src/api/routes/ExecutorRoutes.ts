@@ -48,11 +48,11 @@ const executorController = new ExecutorController()
  *         msg:
  *           description: The error message
  *           type: string
- *           example: "prompt must be a string with length between 1 and 2000"
+ *           example: "user_prompt must be a string with length greater than 1"
  *         path:
  *           description: The name of the field
  *           type: string
- *           example: "prompt"
+ *           example: "user_prompt"
  *         location:
  *           description: The location of the error
  *           type: string
@@ -60,36 +60,59 @@ const executorController = new ExecutorController()
  *       example:
  *         type: "field"
  *         value: ""
- *         msg: "prompt must be a string with length between 1 and 2000"
+ *         msg: "user_prompt must be a string with length greater than 1"
  *         path: "prompt"
  *         location: "body"
  *     ExecutionInput:
  *       type: object
  *       required:
- *         - prompt
+ *         - model_name
+ *         - user_prompt
  *       properties:
- *         role:
- *           description: The role used to generate the prompt
- *           type: string
- *           minLength: 1
- *           maxLength: 30
- *           example: "Engineer"
- *         prompt:
- *           description: The prompt to execute on the model
- *           type: string
- *           minLength: 1
- *           maxLength: 2000
- *           example: "How can engineers solve complex problems?"
- *         modelName:
+ *         model_name:
  *           description: The name of the model to use
  *           type: string
+ *           enum: ["llama3-8b", "llama2-7b", "mistral-7b", "gemma-7b"]
+ *           example: "llama3-8b"
+ *         system_prompt:
+ *           description: The system prompt to execute on the model
+ *           type: string
+ *           minLength: 1
+ *           example: "Respond as if you were NASA's chief engineer."
+ *         user_prompt:
+ *           description: The user prompt to execute on the model
+ *           type: string
+ *           minLength: 1
+ *           example: "How can a Jewish engineer solve complex problems?"
+ *         response_max_length:
+ *           description: The maximum length of the response in words
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 2000
+ *           enum: [-1]
+ *           example: 100
+ *         list_format_response:
+ *           description: Whether to return the response in list format
+ *           type: boolean
+ *           example: true
+ *         exclude_bias_references:
+ *           description: Whether to exclude bias references from the response
+ *           type: boolean
+ *           example: true
+ *         excluded_text:
+ *           description: The text to exclude from the response
+ *           type: string
  *           minLength: 1
  *           maxLength: 30
- *           example: "gemma"
+ *           example: "Jewish"
  *       example:
- *         role: "Engineer"
- *         prompt: "How can engineers solve complex problems?"
- *         modelName: "gemma"
+ *         model_name: "llama3-8b"
+ *         system_prompt: "Respond as if you were NASA's chief engineer."
+ *         user_prompt: "How can a Jewish engineer solve complex problems?"
+ *         response_max_length: 100
+ *         list_format_response: true
+ *         exclude_bias_references: true
+ *         excluded_text: "Jewish"
  *     Response:
  *       type: object
  *       required:
@@ -100,7 +123,7 @@ const executorController = new ExecutorController()
  *           description: The response from the model
  *           example: "Interactive and hands-on activities that encourage exploration and problem-solving. Engaging stories and characters that capture their imagination. Differentiated instruction to meet individual learning styles. Collaboration and teamwork to foster a sense of community and shared learning."
  *       example:
- *         reponse: "Interactive and hands-on activities that encourage exploration and problem-solving. Engaging stories and characters that capture their imagination. Differentiated instruction to meet individual learning styles. Collaboration and teamwork to foster a sense of community and shared learning."
+ *         response: "Interactive and hands-on activities that encourage exploration and problem-solving. Engaging stories and characters that capture their imagination. Differentiated instruction to meet individual learning styles. Collaboration and teamwork to foster a sense of community and shared learning."
  */
 
 /**
@@ -122,16 +145,12 @@ const executorController = new ExecutorController()
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Message'
- *             example:
- *               message: Executor component is working properly!
  *       500:
  *         description: Server Error
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error'
- *             example:
- *               error: Internal Server Error
  */
 router.route('/check').get(executorController.check)
 
@@ -142,14 +161,11 @@ router.route('/check').get(executorController.check)
  *     summary: Send a prompt under a specific model
  *     tags: [Models]
  *     requestBody:
+ *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/ExecutionInput'
- *           example:
- *             role: "Engineer"
- *             prompt: "How can engineers solve complex problems?"
- *             modelName: "gemma"
  *     responses:
  *       200:
  *         description: Successful response
@@ -157,8 +173,6 @@ router.route('/check').get(executorController.check)
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Response'
- *             example:
- *               response: "Interactive and hands-on activities that encourage exploration and problem-solving. Engaging stories and characters that capture their imagination. Differentiated instruction to meet individual learning styles. Collaboration and teamwork to foster a sense of community and shared learning."
  *       422:
  *         description: Validation Error
  *         content:
@@ -167,25 +181,12 @@ router.route('/check').get(executorController.check)
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/ValidationError'
- *             example:
- *               - type: "field"
- *                 value: ""
- *                 msg: "prompt must be a string with length between 1 and 2000"
- *                 path: "prompt"
- *                 location: "body"
- *               - type: "field"
- *                 value: ""
- *                 msg: "modelName is optional but must be a string with length between 1 and 30 if provided"
- *                 path: "modelName"
- *                 location: "body"
  *       500:
  *         description: Server Error
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error'
- *             example:
- *               error: Internal Server Error
  */
 router
     .route('/execute')

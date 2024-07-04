@@ -6,7 +6,7 @@ import { swaggerDocs } from './config/swagger'
 import './config/loadEnv'
 
 const app: Express = express()
-const API_VERSION = '/api/v1'
+const API_VERSION: string = '/api/v1'
 const swaggerUI = swaggerui
 
 app.use(express.json())
