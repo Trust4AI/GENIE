@@ -1,16 +1,17 @@
-## Trust4AI Component Template
+## Trust4AI Executor Component
 
-This project serves as a template for the creation of components for testing LLMs in the context of the Trust4AI project. Each component will provide a REST API, a Postman collection, and the docker files required for deployment. 
 
-### Usage
 
-Provide a description of the component, including several use examples and, if possible, a video demo.
+## Index
 
-### Deployment
+1. [Repository structure](#1-repository-structure)
+2. [Deployment](#2-deployment)
+   1. [Local deployment](#i-local-deployment)
+   2. [Docker deployment](#ii-docker-deployment)
+3. [Usage](#3-usage)
+4. [License and funding](#4-license-and-funding)
 
-Provide a description of the required steps for deploying the component.
-
-### Repository structure
+## 2. Repository structure
 
 This repository is structured as follows:
 
@@ -22,7 +23,86 @@ This repository is structured as follows:
 -  `Dockerfile`: This file is a script containing a series of instructions and commands used to build a Docker image.
 -  `docker-compose.yml`: This YAML file allows you to configure application services, networks, and volumes in a single file, facilitating the orchestration of containers.
 
-## License and funding
+<p align="right">[⬆️<a href="#trust4ai-executor-component">Back to top</a>]</p>
+
+## 2. Deployment
+
+### i. Local deployment
+
+#### Pre-requirements
+
+- [Node.js](https://nodejs.org/en/download/package-manager/current) (version 16.x or newer is recommended)
+- [Ollama](https://ollama.com/download)
+
+#### Steps
+
+To deploy the component using Docker, please follow these steps carefully:
+
+1. Rename the `.env.local` file to `.env`.
+2. Navigate to the `src` directory and install the required dependencies:
+
+        ```bash
+        cd src
+        npm install
+        ```
+
+3. Compile the source code and start the server:
+
+    ```bash
+    npm run build
+    npm start
+    ```
+
+4. To verify that the component is running, you can check the status of the server by running the following command:
+
+    ```bash
+    curl -X GET "http://localhost:8081/api/v1/models/check" -H  "accept: application/json"
+    ```
+
+5. Finally, you can access the API documentation by visiting the following URL in your web browser:
+
+    ```
+    http://localhost:8081/api/v1/models/docs
+    ```
+
+### ii. Docker deployment
+
+#### Pre-requirements
+
+- [Docker engine](https://docs.docker.com/engine/install/)
+
+#### Steps
+
+To deploy the component using Docker, please follow these steps carefully:
+
+1. Rename the `.env.docker` file to `.env`.
+2. Execute the following Docker Compose instruction:
+
+    ```bash
+    docker-compose up -d
+    ```
+
+3. To verify that the component is running, you can check the status of the server by running the following command:
+
+    ```bash
+    curl -X GET "http://localhost:8081/api/v1/models/check" -H  "accept: application/json"
+    ```
+
+4. Finally, you can access the API documentation by visiting the following URL in your web browser:
+
+    ```
+    http://localhost:8081/api/v1/models/docs
+    ```
+
+<p align="right">[⬆️<a href="#trust4ai-executor-component">Back to top</a>]</p>
+
+## 3. Usage
+
+Provide a description of the component, including several use examples and, if possible, a video demo.
+
+<p align="right">[⬆️<a href="#trust4ai-executor-component">Back to top</a>]</p>
+
+## 4. License and funding
 
 [Trust4AI](https://trust4ai.github.io/trust4ai/) is licensed under the terms of the GPL-3.0 license.
 
