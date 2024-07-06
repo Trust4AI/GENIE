@@ -15,7 +15,7 @@
 
 This repository is structured as follows:
 
-- `docs/openapi/spec.yaml`: This file is used to describe the entire API, including available endpoints, operations on each endpoint, operation parameters, and the structure of the response objects. It's written in YAML format following the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html) (OAS).
+- `docs/openapi/spec.yaml`: This file describes the entire API, including available endpoints, operations on each endpoint, operation parameters, and the structure of the response objects. It's written in YAML format following the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html) (OAS).
 - `docs/postman/collection.json`: This file is a collection of API requests saved in JSON format for use with Postman.
 -  `src/`: This directory contains the source code for the project.
 -  `.dockerignore`: This file tells Docker which files and directories to ignore when building an image.
@@ -98,7 +98,26 @@ To deploy the component using Docker, please follow these steps carefully:
 
 ## 3. Usage
 
-Provide a description of the component, including several use examples and, if possible, a video demo.
+Once the component is deployed, requests can be sent to it via the `POST /models/execute` operation. This operation requires a request body, which may contain the following properties:
+
+- `model_name`. Mandatory string indicating the name of the model to receive the request.
+- `system_prompt`. Optional string indicating the system prompt to send to the model.
+- `user_prompt`. Mandatory string indicating the user prompt to send to the model.
+- `response_max_length`. Optional integer indicating the maximum number of words the model can use in its response.
+- `list_format_response`. Optional boolean indicating whether the model should return the response in list format.
+- `exclude_bias_references`. Optional boolean indicating whether the model should exclude any terms in the response provided.
+- `excluded_text`. Optional string indicating the terms that the model should exclude in the provided response.
+
+It is important that the given `model_name` is defined in the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), and that the model is correctly deployed, as explained above.
+
+In case everything works fine, a JSON object with a `response` property will be returned.
+
+#### i.
+
+
+
+
+To send requests about the component, more intuitively, a [POSTMAN collection](https://github.com/Trust4AI/executor-component/blob/main/docs/postman/collection.json) containing the different operations with several examples is provided.
 
 <p align="right">[⬆️<a href="#trust4ai-executor-component">Back to top</a>]</p>
 
