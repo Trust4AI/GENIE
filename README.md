@@ -1,6 +1,6 @@
 ## Trust4AI Executor Component
 
-
+The Trust4AI executor component is designed to to facilitate the deployment and execution of language models. Integration options include a Docker image that launches a REST API with interactive documentation, simplifying its use and integration into various systems. This component is part of the [Trust4AI](https://trust4ai.github.io/trust4ai/) research project.
 
 ## Index
 
@@ -9,6 +9,8 @@
    1. [Local deployment](#i-local-deployment)
    2. [Docker deployment](#ii-docker-deployment)
 3. [Usage](#3-usage)
+   1. [Valid request using only the required properties](#i-valid-request-using-only-the-required-properties)
+   2. [Valid request using all properties](#ii-valid-request-using-all-properties)
 4. [License and funding](#4-license-and-funding)
 
 ## 1. Repository structure
@@ -23,41 +25,57 @@ This repository is structured as follows:
 -  `Dockerfile`: This file is a script containing a series of instructions and commands used to build a Docker image.
 -  `docker-compose.yml`: This YAML file allows you to configure application services, networks, and volumes in a single file, facilitating the orchestration of containers.
 
+<p align="right">[⬆️ <a href="#trust4ai-executor-component">Back to top</a>]</p>
+
 ## 2. Deployment
+
+The component can be deployed in two main ways: locally and using Docker. Each method has its specific requirements and steps to ensure a smooth and successful deployment. This section provides detailed instructions for both deployment methods, ensuring you can choose the one that best fits your environment and use case.
 
 ### i. Local deployment
 
+Local deployment is ideal for development and testing purposes. It allows you to run the component on your local machine, making it easier to debug and modify the code as needed.
+
 #### Pre-requirements
+
+Before you begin, ensure you have the following software installed on your machine:
 
 - [Node.js](https://nodejs.org/en/download/package-manager/current) (version 16.x or newer is recommended)
 - [Ollama](https://ollama.com/download)
+
+Additionally, you need to download the models that will be used. You can download them from the [Ollama model library](https://ollama.com/library) using the following command.
+
+```bash
+ollama pull <model>
+```
+
+Replace `<model>` with the name of the desired model from the Ollama library. This model must be added to the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts).
 
 #### Steps
 
 To deploy the component using Docker, please follow these steps carefully:
 
 1. Rename the `.env.local` file to `.env`.
-2. Navigate to the `src` directory and install the required dependencies:
+2. Navigate to the `src` directory and install the required dependencies.
 
-        ```bash
-        cd src
-        npm install
-        ```
+     ```bash
+     cd src
+     npm install
+     ```
 
-3. Compile the source code and start the server:
+3. Compile the source code and start the server.
 
     ```bash
     npm run build
     npm start
     ```
 
-4. To verify that the component is running, you can check the status of the server by running the following command:
+4. To verify that the component is running, you can check the status of the server by running the following command.
 
     ```bash
     curl -X GET "http://localhost:8081/api/v1/models/check" -H  "accept: application/json"
     ```
 
-5. Finally, you can access the API documentation by visiting the following URL in your web browser:
+5. Finally, you can access the API documentation by visiting the following URL in your web browser.
 
     ```
     http://localhost:8081/api/v1/models/docs
@@ -65,13 +83,79 @@ To deploy the component using Docker, please follow these steps carefully:
 
 ### ii. Docker deployment
 
+Docker deployment is recommended for production environments as it provides a consistent and scalable way to run the component. Docker containers encapsulate all dependencies, ensuring the component runs reliably across different environments.
+
 #### Pre-requirements
+
+Ensure you have the following software installed on your machine:
 
 - [Docker engine](https://docs.docker.com/engine/install/)
 
+Additionally, it is necessary to define the models to be used in the [docker-compose](https://github.com/Trust4AI/executor-component/blob/main/docker-compose.yml) file. The models can be defined in three different ways. Detailed explanations for each method are given below:
+
+1. **Predefined model.** This method is used to define a model that is predefined and does not require any additional model files. You specify the model name directly and use a standard Dockerfile to build the image.
+
+   ```yaml
+   dolphin-phi:
+     container_name: dolphin-phi
+     image: dolphin-phi:latest
+     build: 
+       context: ./Ollama
+       dockerfile: Dockerfile.predefined-model
+       args:
+         MODEL_NAME: "dolphin-phi"
+     ports:
+       - "11435:11434"
+     volumes:
+       - dolphin-phi_data:/root/.ollama
+     networks:
+       - executor-component-network
+   ```
+
+2. **Predefined model with Modelfile.** This method is used to define a model that uses a specific model file. You specify the model name and the path to the model file, which provides additional configuration for the model.
+
+   ```yaml
+   dolphin-phi:
+     container_name: dolphin-phi
+     image: dolphin-phi:latest
+     build: 
+       context: ./Ollama
+       dockerfile: Dockerfile.predefined-model-modelfile
+       args:
+         MODEL_NAME: "dolphin-phi"
+         MODELFILE_PATH: "modelfiles/Modelfile-dolphin-phi"
+     ports:
+       - "11436:11434"
+     volumes:
+       - dolphin-phi_data:/root/.ollama
+     networks:
+       - executor-component-network
+   ```
+
+3. **Custom model.** This method is used to define a custom model that involves specifying both the model file and the actual model path.
+
+   ```yaml
+   mistral:
+     container_name: mistral
+     image: mistral:latest
+     build: 
+       context: ./Ollama
+       dockerfile: Dockerfile.own-model
+       args:
+         MODEL_NAME: "mistral"
+         MODELFILE_PATH: "modelfiles/Modelfile-mistral"
+         MODEL_PATH: "models/mistral-7b-instruct-v0.2.Q2_K.gguf"
+     ports:
+       - "11437:11434"
+     volumes:
+       - mistral_data:/root/.ollama
+     networks:
+       - executor-component-network
+   ```
+
 #### Steps
 
-To deploy the component using Docker, please follow these steps carefully:
+To deploy the component using Docker, please follow these steps carefully.
 
 1. Rename the `.env.docker` file to `.env`.
 2. Execute the following Docker Compose instruction:
@@ -80,19 +164,19 @@ To deploy the component using Docker, please follow these steps carefully:
     docker-compose up -d
     ```
 
-3. To verify that the component is running, you can check the status of the server by running the following command:
+3. To verify that the component is running, you can check the status of the server by running the following command.
 
     ```bash
     curl -X GET "http://localhost:8081/api/v1/models/check" -H  "accept: application/json"
     ```
 
-4. Finally, you can access the API documentation by visiting the following URL in your web browser:
+4. Finally, you can access the API documentation by visiting the following URL in your web browser.
 
     ```
     http://localhost:8081/api/v1/models/docs
     ```
 
-<p align="right">[⬆️<a href="#trust4ai-executor-component">Back to top</a>]</p>
+<p align="right">[⬆️ <a href="#trust4ai-executor-component">Back to top</a>]</p>
 
 ## 3. Usage
 
@@ -122,7 +206,7 @@ Here is an example of a valid request using only the required properties. In thi
 }
 ```
 
-To send this request via _curl_, you can use the following command:
+To send this request via _curl_, you can use the following command.
 
 ```bash
 curl -X 'POST' \
@@ -154,7 +238,7 @@ Here is an example of a valid request using all properties. The `model_name` is 
 ```json
 {
     "model_name": "gemma-7b",
-    "system_prompt": "Respond as if you were Renzo Piano" ,
+    "system_prompt": "Respond as if you were Renzo Piano",
     "user_prompt": "What skills are essential for being a successful non-binary architect?",
     "response_max_length": 100,
     "list_format_response": true,
@@ -163,7 +247,7 @@ Here is an example of a valid request using all properties. The `model_name` is 
 }
 ```
 
-To send this request via _curl_, you can use the following command:
+To send this request via _curl_, you can use the following command.
 
 ```bash
 curl -X 'POST' \
@@ -196,7 +280,7 @@ This JSON response includes a list of essential skills for a successful architec
 > [!NOTE] 
 > To send requests about the component, more intuitively, a [POSTMAN collection](https://github.com/Trust4AI/executor-component/blob/main/docs/postman/collection.json) containing the different operations with several examples is provided.
 
-<p align="right">[⬆️<a href="#trust4ai-executor-component">Back to top</a>]</p>
+<p align="right">[⬆️ <a href="#trust4ai-executor-component">Back to top</a>]</p>
 
 ## 4. License and funding
 
@@ -208,3 +292,5 @@ Funded by the European Union. Views and opinions expressed are however those of 
 <img src="https://github.com/Trust4AI/trust4ai/blob/main/funding_logos/NGI_Search-rgb_Plan-de-travail-1-2048x410.png" width="400">
 <img src="https://github.com/Trust4AI/trust4ai/blob/main/funding_logos/EU_funding_logo.png" width="200">
 </p>
+
+<p align="right">[⬆️ <a href="#trust4ai-executor-component">Back to top</a>]</p>
