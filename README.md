@@ -48,7 +48,7 @@ Additionally, you need to download the models that will be used. You can downloa
 ollama pull <model>
 ```
 
-Replace `<model>` with the name of the desired model from the Ollama library. This model must be added to the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts).
+Replace `<model>` with the name of the desired model from the Ollama library. This model must be added to the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), with the format `<model_id>: createModel(<model>, 11434)`.
 
 #### Steps
 
@@ -96,62 +96,68 @@ Additionally, it is necessary to define the models to be used in the [docker-com
 1. **Predefined model.** This method is used to define a model that is predefined and does not require any additional model files. You specify the model name directly and use a standard Dockerfile to build the image.
 
    ```yaml
-   dolphin-phi:
+   gemma-2b:
      container_name: dolphin-phi
-     image: dolphin-phi:latest
+     image: gemma-2b:latest
      build: 
        context: ./Ollama
        dockerfile: Dockerfile.predefined-model
        args:
-         MODEL_NAME: "dolphin-phi"
+         MODEL_NAME: "gemma:2b"
      ports:
        - "11435:11434"
      volumes:
-       - dolphin-phi_data:/root/.ollama
+       - gemma-2b_data:/root/.ollama
      networks:
        - executor-component-network
    ```
+
+   This model must be added to the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"gemma-2b": createModel("gemma:2b", 11435)`.
 
 2. **Predefined model with Modelfile.** This method is used to define a model that uses a specific model file. You specify the model name and the path to the model file, which provides additional configuration for the model.
 
    ```yaml
-   dolphin-phi:
-     container_name: dolphin-phi
-     image: dolphin-phi:latest
+   gemma-2b:
+     container_name: gemma-2b
+     image: gemma-2b:latest
      build: 
        context: ./Ollama
        dockerfile: Dockerfile.predefined-model-modelfile
        args:
-         MODEL_NAME: "dolphin-phi"
-         MODELFILE_PATH: "modelfiles/Modelfile-dolphin-phi"
+         MODEL_NAME: "gemma:2b"
+         MODELFILE_PATH: "modelfiles/Modelfile-gemma-2b"
      ports:
        - "11436:11434"
      volumes:
-       - dolphin-phi_data:/root/.ollama
+       - dolphin-2b_data:/root/.ollama
      networks:
        - executor-component-network
    ```
 
+   This model must be added to the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"gemma-2b": createModel("gemma:2b", 11436)`.
+
 3. **Custom model.** This method is used to define a custom model that involves specifying both the model file and the actual model path.
 
    ```yaml
-   mistral:
-     container_name: mistral
-     image: mistral:latest
+   mistral-7b:
+     container_name: mistral-7b
+     image: mistral-7b:latest
      build: 
        context: ./Ollama
        dockerfile: Dockerfile.own-model
        args:
-         MODEL_NAME: "mistral"
+         MODEL_NAME: "mistral:7b"
          MODELFILE_PATH: "modelfiles/Modelfile-mistral"
          MODEL_PATH: "models/mistral-7b-instruct-v0.2.Q2_K.gguf"
      ports:
        - "11437:11434"
      volumes:
-       - mistral_data:/root/.ollama
+       - mistral-7b_data:/root/.ollama
      networks:
        - executor-component-network
    ```
+
+   This model must be added to the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"mistral-7b": createModel("mistral:7b", 11437)`.
 
 #### Steps
 
