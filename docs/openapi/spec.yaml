@@ -2,7 +2,9 @@ openapi: 3.1.0
 info:
   version: 1.0.0
   title: Executor Component - API
-  description: Component in charge of executing prompts on LLMs
+  description: The Trust4AI executor component is designed to facilitate the
+    deployment and execution of Large Language Models (LLMs). This component is
+    part of the Trust4AI research project.
   contact:
     name: Trust4AI Team
     email: ""
@@ -15,7 +17,7 @@ servers:
 paths:
   /check:
     get:
-      summary: Check if the Executor component API is working
+      summary: Check if the executor component API is working properly
       tags:
         - Models
       responses:
@@ -33,7 +35,7 @@ paths:
                 $ref: "#/components/schemas/Error"
   /execute:
     post:
-      summary: Send a prompt under a specific model
+      summary: Send a prompt under a specific model to generate a response
       tags:
         - Models
       requestBody:
@@ -144,7 +146,7 @@ components:
           minLength: 1
           example: How can a Jewish engineer solve complex problems?
         response_max_length:
-          description: The maximum length of the response in words
+          description: The maximum length of the response in words, -1 for no limit
           type: integer
           minimum: 1
           maximum: 2000

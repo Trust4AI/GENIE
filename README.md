@@ -1,6 +1,6 @@
 ## Trust4AI Executor Component
 
-The Trust4AI executor component is designed to facilitate the deployment and execution of language models. Integration options include a Docker image that launches a REST API with interactive documentation, simplifying its use and integration into various systems. This component is part of the [Trust4AI](https://trust4ai.github.io/trust4ai/) research project.
+The Trust4AI executor component is designed to facilitate the deployment and execution of Large Language Models (LLMs). Integration options include a Docker image that launches a REST API with interactive documentation, simplifying its use and integration into various systems. This component is part of the [Trust4AI](https://trust4ai.github.io/trust4ai/) research project.
 
 ## Index
 

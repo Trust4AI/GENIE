@@ -11,7 +11,8 @@ const swaggerOptions = {
         info: {
             version: '1.0.0',
             title: 'Executor Component - API',
-            description: 'Component in charge of executing prompts on LLMs',
+            description:
+                'The Trust4AI executor component is designed to facilitate the deployment and execution of Large Language Models (LLMs). This component is part of the Trust4AI research project.',
             contact: {
                 name: 'Trust4AI Team',
                 email: '',

@@ -136,7 +136,7 @@ const executorController = new ExecutorController()
  * @swagger
  * /check:
  *   get:
- *     summary: Check if the Executor component API is working
+ *     summary: Check if the executor component API is working properly
  *     tags: [Models]
  *     responses:
  *       200:
@@ -158,7 +158,7 @@ router.route('/check').get(executorController.check)
  * @swagger
  * /execute:
  *   post:
- *     summary: Send a prompt under a specific model
+ *     summary: Send a prompt under a specific model to generate a response
  *     tags: [Models]
  *     requestBody:
  *       required: true
