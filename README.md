@@ -1,6 +1,6 @@
 ## Trust4AI Executor Component
 
-The Trust4AI executor component is designed to to facilitate the deployment and execution of language models. Integration options include a Docker image that launches a REST API with interactive documentation, simplifying its use and integration into various systems. This component is part of the [Trust4AI](https://trust4ai.github.io/trust4ai/) research project.
+The Trust4AI executor component is designed to facilitate the deployment and execution of language models. Integration options include a Docker image that launches a REST API with interactive documentation, simplifying its use and integration into various systems. This component is part of the [Trust4AI](https://trust4ai.github.io/trust4ai/) research project.
 
 ## Index
 
@@ -29,11 +29,11 @@ This repository is structured as follows:
 
 ## 2. Deployment
 
-The component can be deployed in two main ways: locally and using Docker. Each method has its specific requirements and steps to ensure a smooth and successful deployment. This section provides detailed instructions for both deployment methods, ensuring you can choose the one that best fits your environment and use case.
+The component can be deployed in two main ways: locally and using Docker. Each method has specific requirements and steps to ensure a smooth and successful deployment. This section provides detailed instructions for both deployment methods, ensuring you can choose the one that best fits your environment and use case.
 
 ### i. Local deployment
 
-Local deployment is ideal for development and testing purposes. It allows you to run the component on your local machine, making it easier to debug and modify the code as needed.
+Local deployment is ideal for development and testing purposes. It allows you to run the component on your local machine, making debugging and modifying the code easier.
 
 #### Pre-requirements
 
@@ -197,9 +197,9 @@ Once the component is deployed, requests can be sent to it via the `POST /models
 - `excluded_text`. Optional string indicating the terms that the model should exclude in the provided response.
 
 > [!IMPORTANT]
-> It is important that the given `model_name` is defined in the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), and that the model is correctly deployed, as explained above.
+> It is important that the given `model_name` is defined in the [models' configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), and that the model is correctly deployed, as explained above.
 
-In case everything works fine, a JSON object with a `response` property will be returned.
+In case everything works correctly, a JSON object with a `response` property will be returned.
 
 ### i. Valid request using only the required properties
 
@@ -235,7 +235,7 @@ The expected response could be:
 }
 ```
 
-This JSON response includes a detailed description of the essential characteristics for a Sikh community leader, emphasizing spiritual foundations, role modeling, communication, willingness to learn, and prioritizing community well-being.
+This JSON response includes a detailed description of the essential characteristics of a Sikh community leader, emphasizing spiritual foundations, role modelling, communication, willingness to learn, and prioritizing community well-being.
 
 ### ii. Valid request using all properties
 
