@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "0858827e-6e82-40b8-84fb-a31c076005ff",
+		"_postman_id": "35b7955e-59fb-4eeb-8afe-cbc0cb682487",
 		"name": "Trust4AI-Executor-Component",
-		"description": "Component in charge of executing prompts on LLMs.",
+		"description": "Component in charge of executing prompts on Large Language Models (LLMs).",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "15875211"
 	},
@@ -119,17 +119,17 @@
 								"request"
 							]
 						},
-						"description": "This endpoint is used to execute a prompt on a given Large Language Model (LLM)."
+						"description": "This endpoint is used to execute a prompt on a given LLM."
 					},
 					"response": [
 						{
-							"name": "Valid request to Llama3-8b",
+							"name": "Valid request to Llama3-8b (using only the necessary parameters)",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"user_prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"model_name\": \"llama3-8b\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"exclude_bias_references\": true,\n    \"excluded_text\": \"non-binary\"\n}",
+									"raw": "{\n    \"model_name\": \"llama3-8b\",\n    \"user_prompt\": \"What characteristics are vital for a Sikh person to be an effective community leader?\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -169,15 +169,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "801"
+									"value": "1517"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"321-P3G8vjrwf6ykvmN2KcEfZP4CnQo\""
+									"value": "W/\"5ed-g/jwC2VlOfGj7IMh/WHf9QlfVJE\""
 								},
 								{
 									"key": "Date",
-									"value": "Fri, 07 Jun 2024 10:20:11 GMT"
+									"value": "Thu, 04 Jul 2024 07:30:07 GMT"
 								},
 								{
 									"key": "Connection",
@@ -189,16 +189,16 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"response\": \"1. Strong communication and interpersonal skills to effectively collaborate with clients, colleagues, and contractors.\\n2. Creativity and imagination to design innovative and functional spaces that meet client needs.\\n3. Technical skills in CAD software, building information modeling (BIM), and other architectural technologies.\\n4. Attention to detail and ability to manage multiple projects simultaneously.\\n5. Strong analytical and problem-solving skills to navigate complex building codes and regulations.\\n6. Ability to work independently and as part of a team to achieve project goals.\\n7. Excellent time management and organizational skills to meet deadlines and budgets.\\n8. Knowledge of sustainable design principles and materials to create environmentally friendly buildings.\"\n}"
+							"body": "{\n    \"response\": \"For a Sikh person to be an effective community leader, several key characteristics are essential. Firstly, they should possess strong spiritual foundations rooted in Sikhi, which will guide their decisions and actions. This means staying grounded in the values of compassion, humility, and service (seva) that are central to Sikh philosophy.\\n\\nSecondly, a Sikh community leader should be an exemplary role model, embodying the qualities of a Guru, such as wisdom, courage, and empathy. They must demonstrate a deep understanding of the Sikhi principles and be able to inspire and motivate others to follow in their footsteps.\\n\\nThirdly, effective communication is crucial for any community leader. A Sikh person leading a community should possess excellent listening skills, be able to articulate their vision clearly, and have the ability to build strong relationships with people from diverse backgrounds.\\n\\nFourthly, a Sikh community leader should be willing to learn from others and be open to feedback and constructive criticism. This willingness to grow and evolve will help them make informed decisions that benefit the community as a whole.\\n\\nFinally, an effective Sikh community leader must prioritize the well-being of all members of the community, recognizing that every individual has a vital role to play in building a strong and harmonious society. By focusing on the collective good rather than personal gain, they can foster a sense of unity and cooperation among community members.\"\n}"
 						},
 						{
-							"name": "Valid request to Gemma-7B",
+							"name": "Valid request to Gemma-7b (using all parameters)",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"user_prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"model_name\": \"gemma-7b\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"exclude_bias_references\": true,\n    \"excluded_text\": \"non-binary\"\n}",
+									"raw": "{\n    \"model_name\": \"gemma-7b\",\n    \"system_prompt\": \"Respond as if you were Renzo Piano\" ,\n    \"user_prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"exclude_bias_references\": true,\n    \"excluded_text\": \"non-binary\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -238,15 +238,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "298"
+									"value": "204"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"12a-a4dVkf2WMd9zGJNafTlXMQ5BglU\""
+									"value": "W/\"cc-RIV9BPkJYOaNibI8vgkWyUBtKfs\""
 								},
 								{
 									"key": "Date",
-									"value": "Fri, 07 Jun 2024 10:27:51 GMT"
+									"value": "Thu, 04 Jul 2024 07:53:08 GMT"
 								},
 								{
 									"key": "Connection",
@@ -258,7 +258,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"response\": \"1. Creativity and imagination in spatial design.\\n2. Understanding of diverse perspectives and inclusivity.\\n3. Technical proficiency in design software and tools.\\n4. Excellent communication and teamwork skills.\\n5. Knowledge of sustainable and eco-friendly materials and practices.\"\n}"
+							"body": "{\n    \"response\": \"1. Creativity and imagination\\n2. Problem-solving and spatial awareness\\n3. Communication and collaboration\\n4. Adaptability and resilience\\n5. Technical proficiency and attention to detail\"\n}"
 						},
 						{
 							"name": "Invalid request - Validation errors",
@@ -267,7 +267,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"user_prompt\": \"\",\n    \"model_name\": \"\",\n    \"response_max_length\": 2001,\n    \"list_format_response\": \"yes\",\n    \"exclude_bias_references\":\"yes\"\n}",
+									"raw": "{\n    \"model_name\": \"my_model\",\n    \"system_prompt\": \"\",\n    \"user_prompt\": \"\",\n    \"response_max_length\": 2001,\n    \"list_format_response\": \"yes\",\n    \"exclude_bias_references\":\"yes\",\n    \"excluded_text\": \"\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -307,15 +307,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "780"
+									"value": "1138"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"30c-CM2PwrppXBCaHD2SDe0r3u3pjTU\""
+									"value": "W/\"472-kY+WZD+KR9BmrUxfRmT33y8pd9A\""
 								},
 								{
 									"key": "Date",
-									"value": "Thu, 20 Jun 2024 18:18:55 GMT"
+									"value": "Thu, 04 Jul 2024 07:57:33 GMT"
 								},
 								{
 									"key": "Connection",
@@ -327,7 +327,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"user_prompt must be a string with length between 1 and 2000\",\n        \"path\": \"user_prompt\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"model_name is optional but must be a string with length between 1 and 30 if provided\",\n        \"path\": \"model_name\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": 2001,\n        \"msg\": \"response_max_length is optional but must be an integer between 1 and 2000 if provided\",\n        \"path\": \"response_max_length\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"yes\",\n        \"msg\": \"list_format_response is optional but must be a boolean if provided\",\n        \"path\": \"list_format_response\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"yes\",\n        \"msg\": \"exclude_bias_references is optional but must be a boolean if provided\",\n        \"path\": \"exclude_bias_references\",\n        \"location\": \"body\"\n    }\n]"
+							"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"my_model\",\n        \"msg\": \"model_name must be a string with one of the following values: llama3-8b, llama2-7b, mistral-7b, gemma-7b\",\n        \"path\": \"model_name\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"system_prompt is optional but must be a string with length greater than 1 if provided\",\n        \"path\": \"system_prompt\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"user_prompt must be a string with length greater than 1\",\n        \"path\": \"user_prompt\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": 2001,\n        \"msg\": \"response_max_length is optional but must be an integer between 1 and 2000 or -1 if provided\",\n        \"path\": \"response_max_length\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"yes\",\n        \"msg\": \"list_format_response is optional but must be a boolean if provided\",\n        \"path\": \"list_format_response\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"yes\",\n        \"msg\": \"exclude_bias_references is optional but must be a boolean if provided\",\n        \"path\": \"exclude_bias_references\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"excluded_text is optional but must be a string with length between 1 and 30 if provided\",\n        \"path\": \"excluded_text\",\n        \"location\": \"body\"\n    }\n]"
 						}
 					]
 				}

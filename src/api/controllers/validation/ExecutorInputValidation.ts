@@ -1,35 +1,29 @@
 import { check } from 'express-validator'
+import { getModelNames } from '../../config/models'
 
 const execute = [
-    check('role')
-        .optional()
+    check('model_name')
         .isString()
-        .isLength({ min: 1, max: 30 })
+        .isIn(getModelNames())
         .trim()
         .withMessage(
-            'role is optional but must be a string with length between 1 and 30 if provided'
+            `model_name must be a string with one of the following values: ${getModelNames().join(
+                ', '
+            )}`
+        ),
+    check('system_prompt')
+        .optional()
+        .isString()
+        .isLength({ min: 1 })
+        .trim()
+        .withMessage(
+            'system_prompt is optional but must be a string with length greater than 1 if provided'
         ),
     check('user_prompt')
         .isString()
         .isLength({ min: 1 })
         .trim()
         .withMessage('user_prompt must be a string with length greater than 1'),
-    check('model_name')
-        .optional()
-        .isString()
-        .isLength({ min: 1, max: 30 })
-        .trim()
-        .withMessage(
-            'model_name is optional but must be a string with length between 1 and 30 if provided'
-        ),
-    check('excluded_text')
-        .optional()
-        .isString()
-        .isLength({ min: 0, max: 30 })
-        .trim()
-        .withMessage(
-            'excluded_text is optional but must be a string with length between 0 and 30 if provided'
-        ),
     check('response_max_length')
         .optional()
         .custom(
@@ -52,13 +46,13 @@ const execute = [
         .withMessage(
             'exclude_bias_references is optional but must be a boolean if provided'
         ),
-    check('system_prompt')
+    check('excluded_text')
         .optional()
         .isString()
-        .isLength({ min: 1 })
+        .isLength({ min: 1, max: 30 })
         .trim()
         .withMessage(
-            'system_prompt is optional but must be a string with length greater than 1 if provided'
+            'excluded_text is optional but must be a string with length between 1 and 30 if provided'
         ),
 ]
 

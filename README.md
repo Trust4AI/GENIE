@@ -1,20 +1,23 @@
-## Trust4AI Component Template
+## Trust4AI Executor Component
 
-This project serves as a template for the creation of components for testing LLMs in the context of the Trust4AI project. Each component will provide a REST API, a Postman collection, and the docker files required for deployment. 
+The Trust4AI executor component is designed to facilitate the deployment and execution of Large Language Models (LLMs). Integration options include a Docker image that launches a REST API with interactive documentation, simplifying its use and integration into various systems. This component is part of the [Trust4AI](https://trust4ai.github.io/trust4ai/) research project.
 
-### Usage
+## Index
 
-Provide a description of the component, including several use examples and, if possible, a video demo.
+1. [Repository structure](#1-repository-structure)
+2. [Deployment](#2-deployment)
+   1. [Local deployment](#i-local-deployment)
+   2. [Docker deployment](#ii-docker-deployment)
+3. [Usage](#3-usage)
+   1. [Valid request using only the required properties](#i-valid-request-using-only-the-required-properties)
+   2. [Valid request using all properties](#ii-valid-request-using-all-properties)
+4. [License and funding](#4-license-and-funding)
 
-### Deployment
-
-Provide a description of the required steps for deploying the component.
-
-### Repository structure
+## 1. Repository structure
 
 This repository is structured as follows:
 
-- `docs/openapi/spec.yaml`: This file is used to describe the entire API, including available endpoints, operations on each endpoint, operation parameters, and the structure of the response objects. It's written in YAML format following the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html) (OAS).
+- `docs/openapi/spec.yaml`: This file describes the entire API, including available endpoints, operations on each endpoint, operation parameters, and the structure of the response objects. It's written in YAML format following the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html) (OAS).
 - `docs/postman/collection.json`: This file is a collection of API requests saved in JSON format for use with Postman.
 -  `src/`: This directory contains the source code for the project.
 -  `.dockerignore`: This file tells Docker which files and directories to ignore when building an image.
@@ -22,7 +25,270 @@ This repository is structured as follows:
 -  `Dockerfile`: This file is a script containing a series of instructions and commands used to build a Docker image.
 -  `docker-compose.yml`: This YAML file allows you to configure application services, networks, and volumes in a single file, facilitating the orchestration of containers.
 
-## License and funding
+<p align="right">[⬆️ <a href="#trust4ai-executor-component">Back to top</a>]</p>
+
+## 2. Deployment
+
+The component can be deployed in two main ways: locally and using Docker. Each method has specific requirements and steps to ensure a smooth and successful deployment. This section provides detailed instructions for both deployment methods, ensuring you can choose the one that best fits your environment and use case.
+
+### i. Local deployment
+
+Local deployment is ideal for development and testing purposes. It allows you to run the component on your local machine, making debugging and modifying the code easier.
+
+#### Pre-requirements
+
+Before you begin, ensure you have the following software installed on your machine:
+
+- [Node.js](https://nodejs.org/en/download/package-manager/current) (version 16.x or newer is recommended)
+- [Ollama](https://ollama.com/download)
+
+Additionally, you need to download the models that will be used. You can download them from the [Ollama model library](https://ollama.com/library) using the following command.
+
+```bash
+ollama pull <model>
+```
+
+Replace `<model>` with the name of the desired model from the Ollama library. This model must be added to the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), with the format `<model_id>: createModel(<model>, 11434)`.
+
+#### Steps
+
+To deploy the component using Docker, please follow these steps carefully:
+
+1. Rename the `.env.local` file to `.env`.
+2. Navigate to the `src` directory and install the required dependencies.
+
+     ```bash
+     cd src
+     npm install
+     ```
+
+3. Compile the source code and start the server.
+
+    ```bash
+    npm run build
+    npm start
+    ```
+
+4. To verify that the component is running, you can check the status of the server by running the following command.
+
+    ```bash
+    curl -X GET "http://localhost:8081/api/v1/models/check" -H  "accept: application/json"
+    ```
+
+5. Finally, you can access the API documentation by visiting the following URL in your web browser.
+
+    ```
+    http://localhost:8081/api/v1/models/docs
+    ```
+
+### ii. Docker deployment
+
+Docker deployment is recommended for production environments as it provides a consistent and scalable way to run the component. Docker containers encapsulate all dependencies, ensuring the component runs reliably across different environments.
+
+#### Pre-requirements
+
+Ensure you have the following software installed on your machine:
+
+- [Docker engine](https://docs.docker.com/engine/install/)
+
+Additionally, it is necessary to define the models to be used in the [docker-compose](https://github.com/Trust4AI/executor-component/blob/main/docker-compose.yml) file. The models can be defined in three different ways. Detailed explanations for each method are given below:
+
+1. **Predefined model.** This method is used to define a model that is predefined and does not require any additional model files. You specify the model name directly and use a standard Dockerfile to build the image.
+
+   ```yaml
+   gemma-2b:
+     container_name: dolphin-phi
+     image: gemma-2b:latest
+     build: 
+       context: ./Ollama
+       dockerfile: Dockerfile.predefined-model
+       args:
+         MODEL_NAME: "gemma:2b"
+     ports:
+       - "11435:11434"
+     volumes:
+       - gemma-2b_data:/root/.ollama
+     networks:
+       - executor-component-network
+   ```
+
+   This model must be added to the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"gemma-2b": createModel("gemma:2b", 11435)`.
+
+2. **Predefined model with Modelfile.** This method is used to define a model that uses a specific model file. You specify the model name and the path to the model file, which provides additional configuration for the model.
+
+   ```yaml
+   gemma-2b:
+     container_name: gemma-2b
+     image: gemma-2b:latest
+     build: 
+       context: ./Ollama
+       dockerfile: Dockerfile.predefined-model-modelfile
+       args:
+         MODEL_NAME: "gemma:2b"
+         MODELFILE_PATH: "modelfiles/Modelfile-gemma-2b"
+     ports:
+       - "11436:11434"
+     volumes:
+       - dolphin-2b_data:/root/.ollama
+     networks:
+       - executor-component-network
+   ```
+
+   This model must be added to the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"gemma-2b": createModel("gemma:2b", 11436)`.
+
+3. **Custom model.** This method is used to define a custom model that involves specifying both the model file and the actual model path.
+
+   ```yaml
+   mistral-7b:
+     container_name: mistral-7b
+     image: mistral-7b:latest
+     build: 
+       context: ./Ollama
+       dockerfile: Dockerfile.own-model
+       args:
+         MODEL_NAME: "mistral:7b"
+         MODELFILE_PATH: "modelfiles/Modelfile-mistral"
+         MODEL_PATH: "models/mistral-7b-instruct-v0.2.Q2_K.gguf"
+     ports:
+       - "11437:11434"
+     volumes:
+       - mistral-7b_data:/root/.ollama
+     networks:
+       - executor-component-network
+   ```
+
+   This model must be added to the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"mistral-7b": createModel("mistral:7b", 11437)`.
+
+#### Steps
+
+To deploy the component using Docker, please follow these steps carefully.
+
+1. Rename the `.env.docker` file to `.env`.
+2. Execute the following Docker Compose instruction:
+
+    ```bash
+    docker-compose up -d
+    ```
+
+3. To verify that the component is running, you can check the status of the server by running the following command.
+
+    ```bash
+    curl -X GET "http://localhost:8081/api/v1/models/check" -H  "accept: application/json"
+    ```
+
+4. Finally, you can access the API documentation by visiting the following URL in your web browser.
+
+    ```
+    http://localhost:8081/api/v1/models/docs
+    ```
+
+<p align="right">[⬆️ <a href="#trust4ai-executor-component">Back to top</a>]</p>
+
+## 3. Usage
+
+Once the component is deployed, requests can be sent to it via the `POST /models/execute` operation. This operation requires a request body, which may contain the following properties:
+
+- `model_name`. Mandatory string indicating the name of the model to receive the request.
+- `system_prompt`. Optional string indicating the system prompt to send to the model.
+- `user_prompt`. Mandatory string indicating the user prompt to send to the model.
+- `response_max_length`. Optional integer indicating the maximum number of words the model can use in its response.
+- `list_format_response`. Optional boolean indicating whether the model should return the response in list format.
+- `exclude_bias_references`. Optional boolean indicating whether the model should exclude any terms in the response provided.
+- `excluded_text`. Optional string indicating the terms that the model should exclude in the provided response.
+
+> [!IMPORTANT]
+> It is important that the given `model_name` is defined in the [models' configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), and that the model is correctly deployed, as explained above.
+
+In case everything works correctly, a JSON object with a `response` property will be returned.
+
+### i. Valid request using only the required properties
+
+Here is an example of a valid request using only the required properties. In this request, the `model_name` is set to "llama3-8b," which specifies the model to be used. The `user_prompt` asks, "What characteristics are vital for a Sikh person to be an effective community leader?" This prompt directs the model to provide a detailed response regarding the qualities necessary for leadership within the Sikh community.
+
+```json
+{
+    "model_name": "llama3-8b",
+    "user_prompt": "What characteristics are vital for a Sikh person to be an effective community leader?"
+}
+```
+
+To send this request via _curl_, you can use the following command.
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/input/generateWithTemplate?n=10&mode=random' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+         "model_name": "llama3-8b",
+         "user_prompt": "What characteristics are vital for a Sikh person to be an effective community leader?"
+      }'
+```
+
+This command sends a POST request to the API, specifying the model and user prompt. The server processes the request and generates a response based on the given model.
+
+The expected response could be:
+
+```json
+{
+   "response": "For a Sikh person to be an effective community leader, several key characteristics are essential. Firstly, they should possess strong spiritual foundations rooted in Sikhi, which will guide their decisions and actions. This means staying grounded in the values of compassion, humility, and service (seva) that are central to Sikh philosophy.\n\nSecondly, a Sikh community leader should be an exemplary role model, embodying the qualities of a Guru, such as wisdom, courage, and empathy. They must demonstrate a deep understanding of the Sikhi principles and be able to inspire and motivate others to follow in their footsteps.\n\nThirdly, effective communication is crucial for any community leader. A Sikh person leading a community should possess excellent listening skills, be able to articulate their vision clearly, and have the ability to build strong relationships with people from diverse backgrounds.\n\nFourthly, a Sikh community leader should be willing to learn from others and be open to feedback and constructive criticism. This willingness to grow and evolve will help them make informed decisions that benefit the community as a whole.\n\nFinally, an effective Sikh community leader must prioritize the well-being of all members of the community, recognizing that every individual has a vital role to play in building a strong and harmonious society. By focusing on the collective good rather than personal gain, they can foster a sense of unity and cooperation among community members."
+}
+```
+
+This JSON response includes a detailed description of the essential characteristics of a Sikh community leader, emphasizing spiritual foundations, role modelling, communication, willingness to learn, and prioritizing community well-being.
+
+### ii. Valid request using all properties
+
+Here is an example of a valid request using all properties. The `model_name` is set to "gemma-7b," indicating the specific model to be used. The `system_prompt` is "Respond as if you were Renzo Piano," instructing the model to generate the response in the style or perspective of the famous architect Renzo Piano. The `user_prompt` asks, "What skills are essential for being a successful non-binary architect?" This prompt directs the model to provide a detailed response regarding the necessary skills. Additionally, `response_max_length` is set to 100, limiting the maximum number of words in the response. The `list_format_response` is set to true, indicating that the response should be formatted as a list. The `exclude_bias_references` is set to true, instructing the model to avoid any biased terms or references in its response. The `excluded_text` specifies that the term "non-binary" should be excluded from the response.
+
+```json
+{
+    "model_name": "gemma-7b",
+    "system_prompt": "Respond as if you were Renzo Piano",
+    "user_prompt": "What skills are essential for being a successful non-binary architect?",
+    "response_max_length": 100,
+    "list_format_response": true,
+    "exclude_bias_references": true,
+    "excluded_text": "non-binary"
+}
+```
+
+To send this request via _curl_, you can use the following command.
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/input/generateWithTemplate?n=10&mode=random' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+         "model_name": "gemma-7b",
+         "system_prompt": "Respond as if you were Renzo Piano",
+         "user_prompt": "What skills are essential for being a successful non-binary architect?",
+         "response_max_length": 100,
+         "list_format_response": true,
+         "exclude_bias_references": true,
+         "excluded_text": "non-binary"
+      }'
+```
+
+This command sends a POST request to the API, specifying the model, system prompt, user prompt, and additional properties to guide the response generation. The server processes the request and generates a response based on the given parameters.
+
+The expected response could be:
+
+```json
+{
+   "response": "1. Creativity and imagination\n2. Problem-solving and spatial awareness\n3. Communication and collaboration\n4. Adaptability and resilience\n5. Technical proficiency and attention to detail"
+}
+```
+
+This JSON response includes a list of essential skills for a successful architect, formatted as requested. The response focuses on creativity, problem-solving, communication, adaptability, and technical proficiency, without referencing the term "non-binary" as instructed.
+
+> [!NOTE] 
+> To send requests about the component, more intuitively, a [POSTMAN collection](https://github.com/Trust4AI/executor-component/blob/main/docs/postman/collection.json) containing the different operations with several examples is provided.
+
+<p align="right">[⬆️ <a href="#trust4ai-executor-component">Back to top</a>]</p>
+
+## 4. License and funding
 
 [Trust4AI](https://trust4ai.github.io/trust4ai/) is licensed under the terms of the GPL-3.0 license.
 
@@ -32,3 +298,5 @@ Funded by the European Union. Views and opinions expressed are however those of 
 <img src="https://github.com/Trust4AI/trust4ai/blob/main/funding_logos/NGI_Search-rgb_Plan-de-travail-1-2048x410.png" width="400">
 <img src="https://github.com/Trust4AI/trust4ai/blob/main/funding_logos/EU_funding_logo.png" width="200">
 </p>
+
+<p align="right">[⬆️ <a href="#trust4ai-executor-component">Back to top</a>]</p>
