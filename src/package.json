@@ -1,5 +1,5 @@
 {
-  "name": "executor-component",
+  "name": "genie",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Trust4AI/executor-component.git"
+    "url": "git+https://github.com/Trust4AI/GENIE.git"
   },
   "author": "Trust4AI",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/Trust4AI/executor-component/issues"
+    "url": "https://github.com/Trust4AI/GENIE/issues"
   },
-  "homepage": "https://github.com/Trust4AI/executor-component#readme",
+  "homepage": "https://github.com/Trust4AI/GENIE#readme",
   "dependencies": {
     "awilix": "10.0.1",
     "cors": "2.8.5",

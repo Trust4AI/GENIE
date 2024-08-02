@@ -1,17 +1,16 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: Executor Component - API
-  description: The Trust4AI executor component is designed to facilitate the
-    deployment and execution of Large Language Models (LLMs). This component is
-    part of the Trust4AI research project.
+  title: "GENIE: Natural Language Enquiry Executor"
+  description: GENIE facilitates the deployment and execution of Large Language
+    Models (LLMs).
   contact:
     name: Trust4AI Team
     email: ""
     url: https://trust4ai.github.io/trust4ai/
   license:
     name: GNU General Public License v3.0
-    url: https://github.com/Trust4AI/executor-component/blob/main/LICENSE
+    url: https://github.com/Trust4AI/GENIE/blob/main/LICENSE
 servers:
   - url: http://localhost:8081/api/v1/models/
 paths:

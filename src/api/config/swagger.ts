@@ -10,9 +10,9 @@ const swaggerOptions = {
         openapi: '3.1.0',
         info: {
             version: '1.0.0',
-            title: 'Executor Component - API',
+            title: 'GENIE: Natural Language Enquiry Executor',
             description:
-                'The Trust4AI executor component is designed to facilitate the deployment and execution of Large Language Models (LLMs). This component is part of the Trust4AI research project.',
+                'GENIE facilitates the deployment and execution of Large Language Models (LLMs).',
             contact: {
                 name: 'Trust4AI Team',
                 email: '',
@@ -20,7 +20,7 @@ const swaggerOptions = {
             },
             license: {
                 name: 'GNU General Public License v3.0',
-                url: 'https://github.com/Trust4AI/executor-component/blob/main/LICENSE',
+                url: 'https://github.com/Trust4AI/GENIE/blob/main/LICENSE',
             },
         },
         servers: [

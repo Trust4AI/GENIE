@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "35b7955e-59fb-4eeb-8afe-cbc0cb682487",
-		"name": "Trust4AI-Executor-Component",
+		"name": "GENIE: Natural Language Enquiry Executor",
 		"description": "Component in charge of executing prompts on Large Language Models (LLMs).",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "15875211"

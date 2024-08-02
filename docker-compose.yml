@@ -2,8 +2,8 @@ version: '3'
 
 services:
   server:
-    container_name: executor-component
-    image: executor-component:latest
+    container_name: genie
+    image: genie:latest
     build: 
       context: .
       dockerfile: Dockerfile
@@ -12,7 +12,7 @@ services:
     env_file:
       - .env
     networks:
-      - executor-component-network
+      - genie-network
   llama3-8b:
     container_name: llama3-8b
     image: llama3-8b:latest
@@ -26,7 +26,7 @@ services:
     volumes:
       - llama3-8b_data:/root/.ollama
     networks:
-      - executor-component-network
+      - genie-network
     deploy:
       resources:
         reservations:
@@ -39,5 +39,5 @@ volumes:
   llama3-8b_data:
 
 networks:
-  executor-component-network:
+  genie-network:
     driver: bridge
