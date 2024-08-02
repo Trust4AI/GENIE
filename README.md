@@ -1,6 +1,8 @@
-## Trust4AI Executor Component
+## GENIE: Natural Language Enquiry Executor
 
-The Trust4AI executor component is designed to facilitate the deployment and execution of Large Language Models (LLMs). Integration options include a Docker image that launches a REST API with interactive documentation, simplifying its use and integration into various systems. This component is part of the [Trust4AI](https://trust4ai.github.io/trust4ai/) research project.
+GENIE facilitates the deployment and execution of Large Language Models (LLMs). This tool is specifically designed to integrate with [MUSE](https://github.com/Trust4AI/MUSE), which generates test cases following a Metamorphic Testing approach, and [GUARD-ME](https://github.com/Trust4AI/GUARD-ME), which analyzes LLM responses to such test cases for the detection of possible biases.
+
+Integration options include a Docker image that launches a REST API with interactive documentation, simplifying its use and integration into various systems. GENIE is part of the [Trust4AI](https://trust4ai.github.io/trust4ai/) research project.
 
 ## Index
 
@@ -9,8 +11,8 @@ The Trust4AI executor component is designed to facilitate the deployment and exe
    1. [Local deployment](#i-local-deployment)
    2. [Docker deployment](#ii-docker-deployment)
 3. [Usage](#3-usage)
-   1. [Valid request using only the required properties](#i-valid-request-using-only-the-required-properties)
-   2. [Valid request using all properties](#ii-valid-request-using-all-properties)
+   1. [Request using only the required properties](#i-request-using-only-the-required-properties)
+   2. [Request using all properties](#ii-request-using-all-properties)
 4. [License and funding](#4-license-and-funding)
 
 ## 1. Repository structure
@@ -25,15 +27,15 @@ This repository is structured as follows:
 -  `Dockerfile`: This file is a script containing a series of instructions and commands used to build a Docker image.
 -  `docker-compose.yml`: This YAML file allows you to configure application services, networks, and volumes in a single file, facilitating the orchestration of containers.
 
-<p align="right">[⬆️ <a href="#trust4ai-executor-component">Back to top</a>]</p>
+<p align="right">[⬆️ <a href="#genie-natural-language-enquiry-executor">Back to top</a>]</p>
 
 ## 2. Deployment
 
-The component can be deployed in two main ways: locally and using Docker. Each method has specific requirements and steps to ensure a smooth and successful deployment. This section provides detailed instructions for both deployment methods, ensuring you can choose the one that best fits your environment and use case.
+GENIE can be deployed in two main ways: locally and using Docker. Each method has specific requirements and steps to ensure a smooth and successful deployment. This section provides detailed instructions for both deployment methods, ensuring you can choose the one that best fits your environment and use case.
 
 ### i. Local deployment
 
-Local deployment is ideal for development and testing purposes. It allows you to run the component on your local machine, making debugging and modifying the code easier.
+Local deployment is ideal for development and testing purposes. It allows you to run the tool on your local machine, making debugging and modifying the code easier.
 
 #### Pre-requirements
 
@@ -48,11 +50,11 @@ Additionally, you need to download the models that will be used. You can downloa
 ollama pull <model>
 ```
 
-Replace `<model>` with the name of the desired model from the Ollama library. This model must be added to the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), with the format `<model_id>: createModel(<model>, 11434)`.
+Replace `<model>` with the name of the desired model from the Ollama library. This model must be added to the [model configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.ts), with the format `<model_id>: createModel(<model>, 11434)`.
 
 #### Steps
 
-To deploy the component using Docker, please follow these steps carefully:
+To deploy GENIE locally, please follow these steps carefully:
 
 1. Rename the `.env.local` file to `.env`.
 2. Navigate to the `src` directory and install the required dependencies.
@@ -69,7 +71,7 @@ To deploy the component using Docker, please follow these steps carefully:
     npm start
     ```
 
-4. To verify that the component is running, you can check the status of the server by running the following command.
+4. To verify that the tool is running, you can check the status of the server by running the following command.
 
     ```bash
     curl -X GET "http://localhost:8081/api/v1/models/check" -H  "accept: application/json"
@@ -83,7 +85,7 @@ To deploy the component using Docker, please follow these steps carefully:
 
 ### ii. Docker deployment
 
-Docker deployment is recommended for production environments as it provides a consistent and scalable way to run the component. Docker containers encapsulate all dependencies, ensuring the component runs reliably across different environments.
+Docker deployment is recommended for production environments as it provides a consistent and scalable way of running applications. Docker containers encapsulate all dependencies, ensuring the tool runs reliably across different environments.
 
 #### Pre-requirements
 
@@ -91,7 +93,7 @@ Ensure you have the following software installed on your machine:
 
 - [Docker engine](https://docs.docker.com/engine/install/)
 
-Additionally, it is necessary to define the models to be used in the [docker-compose](https://github.com/Trust4AI/executor-component/blob/main/docker-compose.yml) file. The models can be defined in three different ways. Detailed explanations for each method are given below:
+Additionally, it is necessary to define the models to be used in the [docker-compose](https://github.com/Trust4AI/GENIE/blob/main/docker-compose.yml) file. The models can be defined in three different ways. Detailed explanations for each method are given below:
 
 1. **Predefined model.** This method is used to define a model that is predefined and does not require any additional model files. You specify the model name directly and use a standard Dockerfile to build the image.
 
@@ -109,10 +111,10 @@ Additionally, it is necessary to define the models to be used in the [docker-com
      volumes:
        - gemma-2b_data:/root/.ollama
      networks:
-       - executor-component-network
+       - genie-network
    ```
 
-   This model must be added to the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"gemma-2b": createModel("gemma:2b", 11435)`.
+   This model must be added to the [model configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"gemma-2b": createModel("gemma:2b", 11435)`.
 
 2. **Predefined model with Modelfile.** This method is used to define a model that uses a specific model file. You specify the model name and the path to the model file, which provides additional configuration for the model.
 
@@ -131,10 +133,10 @@ Additionally, it is necessary to define the models to be used in the [docker-com
      volumes:
        - dolphin-2b_data:/root/.ollama
      networks:
-       - executor-component-network
+       - genie-network
    ```
 
-   This model must be added to the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"gemma-2b": createModel("gemma:2b", 11436)`.
+   This model must be added to the [model configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"gemma-2b": createModel("gemma:2b", 11436)`.
 
 3. **Custom model.** This method is used to define a custom model that involves specifying both the model file and the actual model path.
 
@@ -154,14 +156,14 @@ Additionally, it is necessary to define the models to be used in the [docker-com
      volumes:
        - mistral-7b_data:/root/.ollama
      networks:
-       - executor-component-network
+       - genie-network
    ```
 
-   This model must be added to the [model configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"mistral-7b": createModel("mistral:7b", 11437)`.
+   This model must be added to the [model configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"mistral-7b": createModel("mistral:7b", 11437)`.
 
 #### Steps
 
-To deploy the component using Docker, please follow these steps carefully.
+To deploy GENIE using Docker, please follow these steps carefully.
 
 1. Rename the `.env.docker` file to `.env`.
 2. Execute the following Docker Compose instruction:
@@ -170,7 +172,7 @@ To deploy the component using Docker, please follow these steps carefully.
     docker-compose up -d
     ```
 
-3. To verify that the component is running, you can check the status of the server by running the following command.
+3. To verify that the tool is running, you can check the status of the server by running the following command.
 
     ```bash
     curl -X GET "http://localhost:8081/api/v1/models/check" -H  "accept: application/json"
@@ -182,11 +184,11 @@ To deploy the component using Docker, please follow these steps carefully.
     http://localhost:8081/api/v1/models/docs
     ```
 
-<p align="right">[⬆️ <a href="#trust4ai-executor-component">Back to top</a>]</p>
+<p align="right">[⬆️ <a href="#genie-natural-language-enquiry-executor">Back to top</a>]</p>
 
 ## 3. Usage
 
-Once the component is deployed, requests can be sent to it via the `POST /models/execute` operation. This operation requires a request body, which may contain the following properties:
+Once GENIE is deployed, requests can be sent to it via the `POST /models/execute` operation. This operation requires a request body, which may contain the following properties:
 
 - `model_name`. Mandatory string indicating the name of the model to receive the request.
 - `system_prompt`. Optional string indicating the system prompt to send to the model.
@@ -197,11 +199,11 @@ Once the component is deployed, requests can be sent to it via the `POST /models
 - `excluded_text`. Optional string indicating the terms that the model should exclude in the provided response.
 
 > [!IMPORTANT]
-> It is important that the given `model_name` is defined in the [models' configuration file](https://github.com/Trust4AI/executor-component/blob/main/src/api/config/models.ts), and that the model is correctly deployed, as explained above.
+> It is important that the given `model_name` is defined in the [models' configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.ts), and that the model is correctly deployed, as explained above.
 
 In case everything works correctly, a JSON object with a `response` property will be returned.
 
-### i. Valid request using only the required properties
+### i. Request using only the required properties
 
 Here is an example of a valid request using only the required properties. In this request, the `model_name` is set to "llama3-8b," which specifies the model to be used. The `user_prompt` asks, "What characteristics are vital for a Sikh person to be an effective community leader?" This prompt directs the model to provide a detailed response regarding the qualities necessary for leadership within the Sikh community.
 
@@ -237,7 +239,7 @@ The expected response could be:
 
 This JSON response includes a detailed description of the essential characteristics of a Sikh community leader, emphasizing spiritual foundations, role modelling, communication, willingness to learn, and prioritizing community well-being.
 
-### ii. Valid request using all properties
+### ii. Request using all properties
 
 Here is an example of a valid request using all properties. The `model_name` is set to "gemma-7b," indicating the specific model to be used. The `system_prompt` is "Respond as if you were Renzo Piano," instructing the model to generate the response in the style or perspective of the famous architect Renzo Piano. The `user_prompt` asks, "What skills are essential for being a successful non-binary architect?" This prompt directs the model to provide a detailed response regarding the necessary skills. Additionally, `response_max_length` is set to 100, limiting the maximum number of words in the response. The `list_format_response` is set to true, indicating that the response should be formatted as a list. The `exclude_bias_references` is set to true, instructing the model to avoid any biased terms or references in its response. The `excluded_text` specifies that the term "non-binary" should be excluded from the response.
 
@@ -284,9 +286,9 @@ The expected response could be:
 This JSON response includes a list of essential skills for a successful architect, formatted as requested. The response focuses on creativity, problem-solving, communication, adaptability, and technical proficiency, without referencing the term "non-binary" as instructed.
 
 > [!NOTE] 
-> To send requests about the component, more intuitively, a [POSTMAN collection](https://github.com/Trust4AI/executor-component/blob/main/docs/postman/collection.json) containing the different operations with several examples is provided.
+> To send requests to GENIE, more intuitively, a [POSTMAN collection](https://github.com/Trust4AI/GENIE/blob/main/docs/postman/collection.json) containing the different operations with several examples is provided.
 
-<p align="right">[⬆️ <a href="#trust4ai-executor-component">Back to top</a>]</p>
+<p align="right">[⬆️ <a href="#genie-natural-language-enquiry-executor">Back to top</a>]</p>
 
 ## 4. License and funding
 
@@ -299,4 +301,4 @@ Funded by the European Union. Views and opinions expressed are however those of 
 <img src="https://github.com/Trust4AI/trust4ai/blob/main/funding_logos/EU_funding_logo.png" width="200">
 </p>
 
-<p align="right">[⬆️ <a href="#trust4ai-executor-component">Back to top</a>]</p>
+<p align="right">[⬆️ <a href="#genie-natural-language-enquiry-executor">Back to top</a>]</p>
