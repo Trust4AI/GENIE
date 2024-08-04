@@ -1,4 +1,10 @@
 import container from '../config/container'
+import {
+    addOrUpdateModel,
+    getModelConfig,
+    getModelIds,
+    removeModel,
+} from '../utils/modelUtils'
 //import { writeResponseToFile } from '../utils/fileUtils'
 
 class ExecutorBaseService {
@@ -7,6 +13,67 @@ class ExecutorBaseService {
         this.ollamaExecutorModelService = container.resolve(
             'ollamaExecutorModelService'
         )
+    }
+
+    async exists(id: string) {
+        return (await getModelConfig(id)) !== null
+    }
+
+    async index() {
+        const modelIds = await getModelIds()
+        const models = await Promise.all(
+            modelIds.map(async (id: string) => {
+                const config = await getModelConfig(id)
+                return {
+                    id,
+                    name: config?.name,
+                    host: config?.host,
+                }
+            })
+        )
+        return models
+    }
+
+    async addOrUpdateModel(id: string, name: string, port: number) {
+        await addOrUpdateModel(id, name, port)
+        return { id, name, port }
+    }
+
+    async remove(id: string) {
+        const config = await getModelConfig(id)
+        if (!config) {
+            throw new Error(`Model with id ${id} does not exist`)
+        }
+        await removeModel(id)
+        return true
+    }
+
+    async indexOllama() {
+        const host = process.env.OLLAMA_HOST
+        let response: any
+        try {
+            response = await fetch(`${host}/api/tags`, {
+                method: 'GET',
+            })
+        } catch (error: any) {
+            throw new Error(`[EXECUTOR] Ollama fetch error: ${error.message}`)
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                `[EXECUTOR] Failed to get Ollama models: ${response.status} ${response.statusText}`
+            )
+        }
+
+        const data = await response.json()
+
+        const filteredModels = data.models.map((model: any) => ({
+            name: model.name,
+            model: model.model,
+            modified_at: model.modified_at,
+        }))
+
+        return filteredModels
     }
 
     check() {

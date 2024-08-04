@@ -1,16 +1,57 @@
 import { check } from 'express-validator'
-import { getModelNames } from '../../config/models'
+import { getModelIds } from '../../utils/modelUtils'
+
+const add = [
+    check('id')
+        .isString()
+        .isLength({ min: 1, max: 30 })
+        .trim()
+        .withMessage(
+            'id must be a string with length greater than 1 and less than 30'
+        ),
+    check('name')
+        .isString()
+        .isLength({ min: 1, max: 30 })
+        .trim()
+        .withMessage(
+            'name must be a string with length greater than 1 and less than 30'
+        ),
+    check('port')
+        .optional()
+        .isInt()
+        .withMessage('port must be an integer')
+        .toInt(),
+]
+
+const update = [
+    check('name')
+        .isString()
+        .isLength({ min: 1, max: 30 })
+        .trim()
+        .withMessage(
+            'name must be a string with length greater than 1 and less than 30'
+        ),
+    check('port')
+        .optional()
+        .isInt()
+        .withMessage('port must be an integer')
+        .toInt(),
+]
 
 const execute = [
     check('model_name')
         .isString()
-        .isIn(getModelNames())
         .trim()
-        .withMessage(
-            `model_name must be a string with one of the following values: ${getModelNames().join(
-                ', '
-            )}`
-        ),
+        .custom(async (value) => {
+            const modelIds = await getModelIds()
+            if (!modelIds.includes(value)) {
+                return Promise.reject(
+                    `model_name must be one of the following values: ${modelIds.join(
+                        ', '
+                    )}`
+                )
+            }
+        }),
     check('system_prompt')
         .optional()
         .isString()
@@ -56,4 +97,4 @@ const execute = [
         ),
 ]
 
-export { execute }
+export { add, update, execute }

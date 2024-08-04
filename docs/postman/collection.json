@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "35b7955e-59fb-4eeb-8afe-cbc0cb682487",
+		"_postman_id": "4934f2ed-617a-4a99-bd0a-7682b836a65e",
 		"name": "GENIE: Natural Language Enquiry Executor",
 		"description": "Component in charge of executing prompts on Large Language Models (LLMs).",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -93,6 +93,170 @@
 							"body": "{\n    \"message\": \"Executor component is working properly!\"\n}"
 						}
 					]
+				},
+				{
+					"name": "GENIE MODELS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/models",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"models"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Valid request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "292"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"124-YSFMSTleDMSg0OTV/n/a8dKt9aA\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 04 Aug 2024 19:21:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"models\": [\n        {\n            \"id\": \"llama3-8b\",\n            \"name\": \"llama3:8b\",\n            \"host\": \"http://127.0.0.1:11434\"\n        },\n        {\n            \"id\": \"llama2-7b\",\n            \"name\": \"llama2:7b\",\n            \"host\": \"http://127.0.0.1:11434\"\n        },\n        {\n            \"id\": \"mistral-7b\",\n            \"name\": \"mistral:7b\",\n            \"host\": \"http://127.0.0.1:11434\"\n        },\n        {\n            \"id\": \"gemma-7b\",\n            \"name\": \"gemma:7b\",\n            \"host\": \"http://127.0.0.1:11434\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "OLLAMA MODELS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/models/ollama",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"models",
+								"ollama"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Valid request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models/ollama",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models",
+										"ollama"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "470"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d6-iMPv5u2VKvVz/BMjSE3UyvVWrCQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 04 Aug 2024 18:07:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"models\": [\n        {\n            \"name\": \"llama3.1:8b\",\n            \"model\": \"llama3.1:8b\",\n            \"modified_at\": \"2024-08-01T12:15:39.507589+02:00\"\n        },\n        {\n            \"name\": \"mistral:7b\",\n            \"model\": \"mistral:7b\",\n            \"modified_at\": \"2024-06-24T12:37:56.3880361+02:00\"\n        },\n        {\n            \"name\": \"llama2:7b\",\n            \"model\": \"llama2:7b\",\n            \"modified_at\": \"2024-06-24T12:25:06.4588201+02:00\"\n        },\n        {\n            \"name\": \"llama3:8b\",\n            \"model\": \"llama3:8b\",\n            \"modified_at\": \"2024-06-24T12:12:59.9622682+02:00\"\n        },\n        {\n            \"name\": \"gemma:7b\",\n            \"model\": \"gemma:7b\",\n            \"modified_at\": \"2024-06-05T00:02:18.2562916+02:00\"\n        }\n    ]\n}"
+						}
+					]
 				}
 			],
 			"description": "Folder containing the API endpoints that use GET as request method."
@@ -100,6 +264,164 @@
 		{
 			"name": "POST ENDPOINTS",
 			"item": [
+				{
+					"name": "ADD MODEL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/models",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"models"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Valid request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"llama3.1-8b\",\r\n    \"name\": \"llama3.1:8b\",\r\n    \"port\": 11434\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "64"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"40-wC19AFYYBXHppZO9cePyE4dTp5E\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 04 Aug 2024 20:20:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": {\n        \"id\": \"llama3.1-8b\",\n        \"name\": \"llama3.1:8b\",\n        \"port\": 11434\n    }\n}"
+						},
+						{
+							"name": "Invalid request - Validation errors",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"id_with_more_than_30_characters\",\r\n    \"name\": \"name_with_more_than_30_characters\",\r\n    \"port\": 11434\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models"
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "329"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"149-KGKaUMpp77OCJTKUlw3OBnzg5S8\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 04 Aug 2024 21:00:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"id_with_more_than_30_characters\",\n        \"msg\": \"id must be a string with length greater than 1 and less than 30\",\n        \"path\": \"id\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"name_with_more_than_30_characters\",\n        \"msg\": \"name must be a string with length greater than 1 and less than 30\",\n        \"path\": \"name\",\n        \"location\": \"body\"\n    }\n]"
+						}
+					]
+				},
 				{
 					"name": "EXECUTE",
 					"request": {
@@ -333,6 +655,433 @@
 				}
 			],
 			"description": "Folder containing the API endpoints that use POST as request method."
+		},
+		{
+			"name": "PUT ENDPOINTS",
+			"item": [
+				{
+					"name": "UPDATE MODEL",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/models/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"models",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Valid request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"new_llama3.1:8b\",\r\n    \"port\": 11435\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "llama3.1-8b"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "68"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"44-s+csESUizX8CmyNa2Vf9pGSkziQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 04 Aug 2024 20:56:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": {\n        \"id\": \"llama3.1-8b\",\n        \"name\": \"new_llama3.1:8b\",\n        \"port\": 11435\n    }\n}"
+						},
+						{
+							"name": "Model not found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"new_model:8b\",\r\n    \"port\": 11434\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "new_model"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "23"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"17-JG2JTE6to/D4sxc2pRx7Kk+opAc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 04 Aug 2024 20:57:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Not found\"\n}"
+						},
+						{
+							"name": "Invalid request - Validation errors",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"name_with_more_than_30_characters\",\r\n    \"port\": 11434\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "llama3.1-8b"
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "168"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a8-b2Zt48X8/ZqrzPs2Kgc+fh9EBbA\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 04 Aug 2024 20:59:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"name_with_more_than_30_characters\",\n        \"msg\": \"name must be a string with length greater than 1 and less than 30\",\n        \"path\": \"name\",\n        \"location\": \"body\"\n    }\n]"
+						}
+					]
+				}
+			],
+			"description": "Folder containing the API endpoints that use PUT as request method."
+		},
+		{
+			"name": "DELETE ENDPOINTS",
+			"item": [
+				{
+					"name": "REMOVE MODEL",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/models/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"models",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Valid request",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "llama3.1-8b"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "35"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"23-d+2Tx1RYfwMeeUron01pibwvadQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 04 Aug 2024 20:51:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Successfully removed.\"\n}"
+						},
+						{
+							"name": "Model not found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "new_model"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "23"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"17-JG2JTE6to/D4sxc2pRx7Kk+opAc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 04 Aug 2024 20:52:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Not found\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Folder containing the API endpoints that use DELETE as request method."
 		}
 	]
 }

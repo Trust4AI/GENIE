@@ -2,9 +2,12 @@ import express from 'express'
 import ExecutorController from '../controllers/ExecutorController'
 import * as ExecutorInputValidation from '../controllers/validation/ExecutorInputValidation'
 import { handleValidation } from '../middlewares/ValidationMiddleware'
+import container from '../config/container'
+import { checkEntityExists } from '../middlewares/EntityMiddleware'
 
 const router = express.Router()
 const executorController = new ExecutorController()
+const executorBaseService = container.resolve('executorBaseService')
 
 /**
  * @swagger
@@ -131,6 +134,26 @@ const executorController = new ExecutorController()
  * tags:
  *  name: Models
  */
+
+router
+    .route('/')
+    .get(executorController.index)
+    .post(ExecutorInputValidation.add, handleValidation, executorController.add)
+
+router
+    .route('/:id')
+    .put(
+        checkEntityExists(executorBaseService, 'id'),
+        ExecutorInputValidation.update,
+        handleValidation,
+        executorController.update
+    )
+    .delete(
+        checkEntityExists(executorBaseService, 'id'),
+        executorController.remove
+    )
+
+router.route('/ollama').get(executorController.indexOllama)
 
 /**
  * @swagger
