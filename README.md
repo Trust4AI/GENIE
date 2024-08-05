@@ -50,7 +50,16 @@ Additionally, you need to download the models that will be used. You can downloa
 ollama pull <model>
 ```
 
-Replace `<model>` with the name of the desired model from the Ollama library. This model must be added to the [model configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.ts), with the format `<model_id>: createModel(<model>, 11434)`.
+Replace `<model>` with the name of the desired model from the Ollama library. This model must be added to the [model configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.json), with the following format:
+
+```json
+<model_id>: {
+  "name": <model_name>,
+  "url": <model_url>
+}
+```
+
+It is also possible to add the models using the API once the tool is running. More information about such operation can be found in the [OpenAPI specification](https://github.com/Trust4AI/GENIE/blob/main/docs/openapi/spec.yaml).
 
 #### Steps
 
@@ -99,7 +108,7 @@ Additionally, it is necessary to define the models to be used in the [docker-com
 
    ```yaml
    gemma-2b:
-     container_name: dolphin-phi
+     container_name: gemma-2b
      image: gemma-2b:latest
      build: 
        context: ./Ollama
@@ -114,7 +123,14 @@ Additionally, it is necessary to define the models to be used in the [docker-com
        - genie-network
    ```
 
-   This model must be added to the [model configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"gemma-2b": createModel("gemma:2b", 11435)`.
+   This model must be added to the [model configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.json), with the following format:
+
+    ```json
+    "gemma-2b": {
+      "name": "gemma:2b",
+      "url": "http://gemma-2b:11435"
+    }
+    ```
 
 2. **Predefined model with Modelfile.** This method is used to define a model that uses a specific model file. You specify the model name and the path to the model file, which provides additional configuration for the model.
 
@@ -136,7 +152,14 @@ Additionally, it is necessary to define the models to be used in the [docker-com
        - genie-network
    ```
 
-   This model must be added to the [model configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"gemma-2b": createModel("gemma:2b", 11436)`.
+    This model must be added to the [model configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.json), with the following format:
+
+    ```json
+    "gemma-2b": {
+      "name": "gemma:2b",
+      "url": "http://gemma-2b:11436"
+    }
+    ```
 
 3. **Custom model.** This method is used to define a custom model that involves specifying both the model file and the actual model path.
 
@@ -159,7 +182,14 @@ Additionally, it is necessary to define the models to be used in the [docker-com
        - genie-network
    ```
 
-   This model must be added to the [model configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.ts), in the format `<model_id>: createModel(<model>, <PORT>)`. In this case, it shall be `"mistral-7b": createModel("mistral:7b", 11437)`.
+    This model must be added to the [model configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.json), with the following format:
+
+    ```json
+    "mistral-7b": {
+      "name": "mistral:7b",
+      "url": "http://mistral-7b:11437"
+    }
+    ```
 
 #### Steps
 
@@ -199,7 +229,7 @@ Once GENIE is deployed, requests can be sent to it via the `POST /models/execute
 - `excluded_text`. Optional string indicating the terms that the model should exclude in the provided response.
 
 > [!IMPORTANT]
-> It is important that the given `model_name` is defined in the [models' configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.ts), and that the model is correctly deployed, as explained above.
+> It is important that the given `model_name` is defined in the [models' configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.json), and that the model is correctly deployed, as explained above.
 
 In case everything works correctly, a JSON object with a `response` property will be returned.
 
@@ -218,7 +248,7 @@ To send this request via _curl_, you can use the following command.
 
 ```bash
 curl -X 'POST' \
-  'http://localhost:8000/api/v1/input/generateWithTemplate?n=10&mode=random' \
+  'http://localhost:8081/api/v1/models/execute' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -259,7 +289,7 @@ To send this request via _curl_, you can use the following command.
 
 ```bash
 curl -X 'POST' \
-  'http://localhost:8000/api/v1/input/generateWithTemplate?n=10&mode=random' \
+  'http://localhost:8081/api/v1/models/execute' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{

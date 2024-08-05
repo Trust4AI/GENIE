@@ -1,0 +1,18 @@
+{
+    "llama3-8b": {
+        "name": "llama3:8b",
+        "url": "http://127.0.0.1:11434"
+    },
+    "llama2-7b": {
+        "name": "llama2:7b",
+        "url": "http://127.0.0.1:11434"
+    },
+    "mistral-7b": {
+        "name": "mistral:7b",
+        "url": "http://127.0.0.1:11434"
+    },
+    "gemma-7b": {
+        "name": "gemma:7b",
+        "url": "http://127.0.0.1:11434"
+    }
+}

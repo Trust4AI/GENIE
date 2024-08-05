@@ -2,14 +2,64 @@ import express from 'express'
 import ExecutorController from '../controllers/ExecutorController'
 import * as ExecutorInputValidation from '../controllers/validation/ExecutorInputValidation'
 import { handleValidation } from '../middlewares/ValidationMiddleware'
+import container from '../config/container'
+import { checkEntityExists } from '../middlewares/EntityMiddleware'
 
 const router = express.Router()
 const executorController = new ExecutorController()
+const executorBaseService = container.resolve('executorBaseService')
 
 /**
  * @swagger
  * components:
  *   schemas:
+ *     GENIEModel:
+ *       type: object
+ *       required:
+ *         - id
+ *         - name
+ *         - url
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The unique identifier of the model
+ *           example: "mistral-7b"
+ *         name:
+ *           type: string
+ *           description: The base name of the model in Ollama
+ *           example: "mistral:7b"
+ *         url:
+ *           type: string
+ *           description: The url to use the model
+ *           example: "http://127.0.0.1:11434"
+ *       example:
+ *         id: "mistral-7b"
+ *         name: "mistral:7b"
+ *         url: "http://127.0.0.1:11434"
+ *     OllamaModel:
+ *       type: object
+ *       required:
+ *         - name
+ *         - model
+ *         - modified_at
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: The name given to the model
+ *           example: "llama3:latest"
+ *         model:
+ *           type: string
+ *           description: The base name of the model
+ *           example: "llama3:8b"
+ *         modified_at:
+ *           type: string
+ *           format: date-time
+ *           description: The date and time the model was last modified
+ *           example: "2024-08-01T12:15:39.507589+02:00"
+ *       example:
+ *         name: "llama3:latest"
+ *         model: "llama3:8b"
+ *         modified_at: "2024-08-01T12:15:39.507589+02:00"
  *     Message:
  *       type: object
  *       required:
@@ -63,6 +113,33 @@ const executorController = new ExecutorController()
  *         msg: "user_prompt must be a string with length greater than 1"
  *         path: "prompt"
  *         location: "body"
+ *     AddOrUpdateModelInput:
+ *       type: object
+ *       required:
+ *         - id
+ *         - name
+ *       properties:
+ *         id:
+ *           description: The unique identifier of the model
+ *           type: string
+ *           example: "mistral-7b"
+ *         name:
+ *           description: The base name of the model in Ollama
+ *           type: string
+ *           example: "mistral:7b"
+ *         base_url:
+ *           description: The base url to use the model
+ *           type: string
+ *           example: "http://127.0.0.1"
+ *         port:
+ *           description: The port to use the model
+ *           type: integer
+ *           example: 11434
+ *       example:
+ *         id: "mistral-7b"
+ *         name: "mistral:7b"
+ *         base_url: "http://127.0.0.1"
+ *         port: 11434
  *     ExecutionInput:
  *       type: object
  *       required:
@@ -131,6 +208,178 @@ const executorController = new ExecutorController()
  * tags:
  *  name: Models
  */
+
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Get the list of models configured in GENIE
+ *     tags: [Models]
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/GENIEModel'
+ *       500:
+ *         description: Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *   post:
+ *     summary: Add a new model to GENIE configuration
+ *     tags: [Models]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/AddOrUpdateModelInput'
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GENIEModel'
+ *       422:
+ *         description: Validation Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/ValidationError'
+ *       500:
+ *         description: Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router
+    .route('/')
+    .get(executorController.index)
+    .post(ExecutorInputValidation.add, handleValidation, executorController.add)
+
+/**
+ * @swagger
+ * /{id}:
+ *   put:
+ *     summary: Update a model configuration in GENIE
+ *     tags: [Models]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The unique identifier of the model
+ *         schema:
+ *           type: string
+ *           example: "mistral-7b"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/AddOrUpdateModelInput'
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GENIEModel'
+ *       404:
+ *         description: Model not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       422:
+ *         description: Validation Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/ValidationError'
+ *       500:
+ *         description: Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *   delete:
+ *     summary: Remove a model configuration from GENIE
+ *     tags: [Models]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The unique identifier of the model
+ *         schema:
+ *           type: string
+ *           example: "mistral-7b"
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/message'
+ *       404:
+ *         description: Model not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router
+    .route('/:id')
+    .put(
+        checkEntityExists(executorBaseService, 'id'),
+        ExecutorInputValidation.update,
+        handleValidation,
+        executorController.update
+    )
+    .delete(
+        checkEntityExists(executorBaseService, 'id'),
+        executorController.remove
+    )
+
+/**
+ * @swagger
+ * /ollama:
+ *   get:
+ *     summary: Get the list of local models available in Ollama
+ *     tags: [Models]
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/OllamaModel'
+ *       500:
+ *         description: Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.route('/ollama').get(executorController.indexOllama)
 
 /**
  * @swagger

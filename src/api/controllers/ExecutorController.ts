@@ -1,13 +1,92 @@
 import container from '../config/container'
 import { Request, Response } from 'express'
+import { getBaseUrl } from '../utils/modelUtils'
 
 class ExecutorController {
     executorBaseService: any
+    ollamaPort: number = parseInt(
+        process.env.OLLAMA_BASE_URL?.split(':')[-1] || '11434'
+    )
     constructor() {
         this.executorBaseService = container.resolve('executorBaseService')
-
+        this.index = this.index.bind(this)
+        this.add = this.add.bind(this)
+        this.update = this.update.bind(this)
+        this.remove = this.remove.bind(this)
+        this.indexOllama = this.indexOllama.bind(this)
         this.check = this.check.bind(this)
         this.execute = this.execute.bind(this)
+    }
+
+    async index(req: Request, res: Response) {
+        try {
+            const models = await this.executorBaseService.index()
+            res.json(models)
+        } catch (error: any) {
+            res.status(500).send({ error: error.message })
+        }
+    }
+
+    async add(req: Request, res: Response) {
+        try {
+            const {
+                id,
+                name,
+                base_url = getBaseUrl(id),
+                port = this.ollamaPort,
+            } = req.body
+            const model = await this.executorBaseService.addOrUpdateModel(
+                id,
+                name,
+                base_url,
+                port
+            )
+            res.json(model)
+        } catch (error: any) {
+            res.status(500).send({ error: error.message })
+        }
+    }
+
+    async update(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            const {
+                name,
+                base_url = getBaseUrl(id),
+                port = this.ollamaPort,
+            } = req.body
+            const model = await this.executorBaseService.addOrUpdateModel(
+                id,
+                name,
+                base_url,
+                port
+            )
+            res.json(model)
+        } catch (error: any) {
+            res.status(500).send({ error: error.message })
+        }
+    }
+
+    async remove(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            const result = await this.executorBaseService.remove(id)
+            const message = result
+                ? 'Successfully removed.'
+                : 'Could not remove model.'
+            res.send({ message })
+        } catch (error: any) {
+            res.status(500).send({ error: error.message })
+        }
+    }
+
+    async indexOllama(req: Request, res: Response) {
+        try {
+            const models = await this.executorBaseService.indexOllama()
+            res.json(models)
+        } catch (error: any) {
+            res.status(500).send({ error: error.message })
+        }
     }
 
     check(req: Request, res: Response) {

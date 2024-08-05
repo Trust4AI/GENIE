@@ -1,16 +1,114 @@
 import { check } from 'express-validator'
-import { getModelNames } from '../../config/models'
+import { getModelIds } from '../../utils/modelUtils'
+import { getOllamaModels } from '../../utils/ollamaUtils'
+
+const add = [
+    check('id')
+        .isString()
+        .trim()
+        .custom(async (value) => {
+            const modelIds = await getModelIds()
+            if (modelIds.includes(value)) {
+                return Promise.reject(
+                    new Error(
+                        `id must be unique and not one of the following values: ${modelIds.join(
+                            `, `
+                        )}. Please use a different id.`
+                    )
+                )
+            } else if (value.length < 1 || value.length > 30) {
+                return Promise.reject(
+                    new Error(
+                        'id must be a string with length greater than 1 and less than 30'
+                    )
+                )
+            }
+        }),
+    check('name')
+        .isString()
+        .trim()
+        .custom(async (value) => {
+            const ollamaBaseURL =
+                process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
+            const ollamaModels = await getOllamaModels(ollamaBaseURL)
+            if (!ollamaModels.map((model: any) => model.name).includes(value)) {
+                return Promise.reject(
+                    new Error(
+                        `name must be one of the following values: [${ollamaModels
+                            .map((model: any) => model.name)
+                            .join(
+                                ', '
+                            )}]. If you want to use other model, pull it from Ollama first.`
+                    )
+                )
+            }
+        }),
+    check('base_url')
+        .optional()
+        .isString()
+        .isLength({ min: 1 })
+        .trim()
+        .withMessage(
+            'base_url must be a string with length greater than 1 if provided'
+        ),
+    check('port')
+        .optional()
+        .isInt()
+        .withMessage('port must be an integer if provided')
+        .toInt(),
+]
+
+const update = [
+    check('name')
+        .isString()
+        .trim()
+        .custom(async (value) => {
+            const ollamaBaseURL =
+                process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
+            const ollamaModels = await getOllamaModels(ollamaBaseURL)
+            if (!ollamaModels.map((model: any) => model.name).includes(value)) {
+                return Promise.reject(
+                    new Error(
+                        `name must be one of the following values: [${ollamaModels
+                            .map((model: any) => model.name)
+                            .join(
+                                ', '
+                            )}]. If you want to use other model, pull it from Ollama first.`
+                    )
+                )
+            }
+        }),
+    check('base_url')
+        .optional()
+        .isString()
+        .isLength({ min: 1 })
+        .trim()
+        .withMessage(
+            'base_url must be a string with length greater than 1 if provided'
+        ),
+    check('port')
+        .optional()
+        .isInt()
+        .withMessage('port must be an integer if provided')
+        .toInt(),
+]
 
 const execute = [
     check('model_name')
         .isString()
-        .isIn(getModelNames())
         .trim()
-        .withMessage(
-            `model_name must be a string with one of the following values: ${getModelNames().join(
-                ', '
-            )}`
-        ),
+        .custom(async (value) => {
+            const modelIds = await getModelIds()
+            if (!modelIds.includes(value)) {
+                return Promise.reject(
+                    new Error(
+                        `model_name must be one of the following values: ${modelIds.join(
+                            ', '
+                        )}`
+                    )
+                )
+            }
+        }),
     check('system_prompt')
         .optional()
         .isString()
@@ -56,4 +154,4 @@ const execute = [
         ),
 ]
 
-export { execute }
+export { add, update, execute }

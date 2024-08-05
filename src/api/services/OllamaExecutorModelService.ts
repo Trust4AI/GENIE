@@ -1,5 +1,5 @@
-import { getModelConfig } from '../config/models'
 import { debugLog } from '../utils/logUtils'
+import { getModelConfig } from '../utils/modelUtils'
 import { sendChatRequest } from '../utils/ollamaUtils'
 
 class OllamaExecutorModelService {
@@ -12,7 +12,7 @@ class OllamaExecutorModelService {
         excludeBiasReferences: boolean,
         excludedText: string
     ): Promise<string> {
-        const modelData = getModelConfig(modelName)
+        const modelData = await getModelConfig(modelName)
 
         if (!modelData) {
             throw new Error(
@@ -21,7 +21,7 @@ class OllamaExecutorModelService {
         }
 
         const model = modelData.name
-        const host = modelData.host
+        const url = modelData.url
 
         const promptComponents = [
             responseMaxLength !== -1
@@ -36,7 +36,7 @@ class OllamaExecutorModelService {
         ]
         const auxSystemPrompt = promptComponents.filter(Boolean).join(' ')
 
-        debugLog(`Host: ${host}`, 'info')
+        debugLog(`URL: ${url}`, 'info')
         debugLog(`Model: ${model}`, 'info')
         debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')
         debugLog(`User prompt: ${userPrompt}`, 'info')
@@ -54,13 +54,17 @@ class OllamaExecutorModelService {
                 content: `${auxSystemPrompt} ${systemPrompt}`,
             })
         }
+        //TODO: Remove once properNames evaluation is reviewed
+        //console.log(messages)
 
         try {
-            const response = await sendChatRequest(host, {
+            const response = await sendChatRequest(url, {
                 model,
                 stream: false,
                 messages,
             }).then((res) => res.message.content)
+            //TODO: Remove once properNames evaluation is reviewed
+            //console.log(response)
             debugLog('Chat posted successfully!', 'info')
             debugLog(`Response from Ollama: ${response}`, 'info')
             return response
