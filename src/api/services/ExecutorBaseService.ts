@@ -5,6 +5,7 @@ import {
     getModelIds,
     removeModel,
 } from '../utils/modelUtils'
+import { getOllamaModels } from '../utils/ollamaUtils'
 //import { writeResponseToFile } from '../utils/fileUtils'
 
 class ExecutorBaseService {
@@ -34,9 +35,14 @@ class ExecutorBaseService {
         return models
     }
 
-    async addOrUpdateModel(id: string, name: string, port: number) {
-        await addOrUpdateModel(id, name, port)
-        return { id, name, port }
+    async addOrUpdateModel(
+        id: string,
+        name: string,
+        base_url: string,
+        port: number
+    ) {
+        await addOrUpdateModel(id, name, base_url, port)
+        return { id, name, host: `${base_url}:${port}` }
     }
 
     async remove(id: string) {
@@ -49,31 +55,10 @@ class ExecutorBaseService {
     }
 
     async indexOllama() {
-        const host = process.env.OLLAMA_HOST
-        let response: any
-        try {
-            response = await fetch(`${host}/api/tags`, {
-                method: 'GET',
-            })
-        } catch (error: any) {
-            throw new Error(`[EXECUTOR] Ollama fetch error: ${error.message}`)
-        }
+        const host = process.env.OLLAMA_HOST || 'http://127.0.0.1:11434'
+        const models = getOllamaModels(host)
 
-        if (!response.ok) {
-            throw new Error(
-                `[EXECUTOR] Failed to get Ollama models: ${response.status} ${response.statusText}`
-            )
-        }
-
-        const data = await response.json()
-
-        const filteredModels = data.models.map((model: any) => ({
-            name: model.name,
-            model: model.model,
-            modified_at: model.modified_at,
-        }))
-
-        return filteredModels
+        return models
     }
 
     check() {

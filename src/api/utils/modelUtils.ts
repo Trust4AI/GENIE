@@ -6,7 +6,7 @@ async function loadModels() {
     return Object.fromEntries(
         Object.entries(models).map(([key, val]: [string, any]) => [
             key,
-            createModel(key, val.name, val.port),
+            extractModel(val.name, val.host),
         ])
     )
 }
@@ -23,9 +23,14 @@ async function getModelIds() {
     return Object.keys(models)
 }
 
-async function addOrUpdateModel(key: string, name: string, port: number) {
+async function addOrUpdateModel(
+    key: string,
+    name: string,
+    base_url: string,
+    port: number
+) {
     const models = await loadModels()
-    models[key] = createModel(key, name, port)
+    models[key] = createModel(name, base_url, port)
     await fs.writeFile(
         'api/config/models.json',
         JSON.stringify(models),
@@ -43,23 +48,32 @@ async function removeModel(key: string) {
     )
 }
 
-const createModel = (key: string, name: string, port: number) => {
+const extractModel = (name: string, host: string) => {
     return {
         name,
-        host: process.env.OLLAMA_HOST || getHostUrl(key, port),
+        host,
     }
 }
 
-const getHostUrl = (key: string, port: number): string => {
+const createModel = (name: string, base_url: string, port: number) => {
+    return {
+        name,
+        host: `${base_url}:${port}`,
+    }
+}
+
+const getBaseUrl = (id: string): string => {
     return process.env.NODE_ENV === 'docker'
-        ? `http://${key}:${port}`
-        : `http://127.0.0.1:${port}`
+        ? `http://${id}`
+        : `${
+              process.env.OLLAMA_HOST?.replace(/:\d+/, '') || 'http://127.0.0.1'
+          }`
 }
 
 export {
     getModelConfig,
     getModelIds,
-    getHostUrl,
+    getBaseUrl,
     addOrUpdateModel,
     removeModel,
 }

@@ -1,11 +1,14 @@
 import container from '../config/container'
 import { Request, Response } from 'express'
+import { getBaseUrl } from '../utils/modelUtils'
 
 class ExecutorController {
     executorBaseService: any
+    ollamaPort: number = parseInt(
+        process.env.OLLAMA_HOST?.split(':')[-1] || '11434'
+    )
     constructor() {
         this.executorBaseService = container.resolve('executorBaseService')
-
         this.index = this.index.bind(this)
         this.add = this.add.bind(this)
         this.update = this.update.bind(this)
@@ -26,10 +29,16 @@ class ExecutorController {
 
     async add(req: Request, res: Response) {
         try {
-            const { id, name, port = 11434 } = req.body
+            const {
+                id,
+                name,
+                base_url = getBaseUrl(id),
+                port = this.ollamaPort,
+            } = req.body
             const model = await this.executorBaseService.addOrUpdateModel(
                 id,
                 name,
+                base_url,
                 port
             )
             res.send({ model })
@@ -41,10 +50,15 @@ class ExecutorController {
     async update(req: Request, res: Response) {
         try {
             const { id } = req.params
-            const { name, port = 11434 } = req.body
+            const {
+                name,
+                base_url = getBaseUrl(id),
+                port = this.ollamaPort,
+            } = req.body
             const model = await this.executorBaseService.addOrUpdateModel(
                 id,
                 name,
+                base_url,
                 port
             )
             res.send({ model })
