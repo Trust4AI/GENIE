@@ -21,7 +21,7 @@ class OllamaExecutorModelService {
         }
 
         const model = modelData.name
-        const host = modelData.host
+        const url = modelData.url
 
         const promptComponents = [
             responseMaxLength !== -1
@@ -36,7 +36,7 @@ class OllamaExecutorModelService {
         ]
         const auxSystemPrompt = promptComponents.filter(Boolean).join(' ')
 
-        debugLog(`Host: ${host}`, 'info')
+        debugLog(`URL: ${url}`, 'info')
         debugLog(`Model: ${model}`, 'info')
         debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')
         debugLog(`User prompt: ${userPrompt}`, 'info')
@@ -58,7 +58,7 @@ class OllamaExecutorModelService {
         //console.log(messages)
 
         try {
-            const response = await sendChatRequest(host, {
+            const response = await sendChatRequest(url, {
                 model,
                 stream: false,
                 messages,

@@ -28,7 +28,7 @@ class ExecutorBaseService {
                 return {
                     id,
                     name: config?.name,
-                    host: config?.host,
+                    url: config?.url,
                 }
             })
         )
@@ -42,7 +42,7 @@ class ExecutorBaseService {
         port: number
     ) {
         await addOrUpdateModel(id, name, base_url, port)
-        return { id, name, host: `${base_url}:${port}` }
+        return { id, name, url: `${base_url}:${port}` }
     }
 
     async remove(id: string) {
@@ -55,8 +55,9 @@ class ExecutorBaseService {
     }
 
     async indexOllama() {
-        const host = process.env.OLLAMA_HOST || 'http://127.0.0.1:11434'
-        const models = getOllamaModels(host)
+        const ollamaBaseURL =
+            process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
+        const models = getOllamaModels(ollamaBaseURL)
 
         return models
     }

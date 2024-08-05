@@ -1,11 +1,11 @@
 const sendChatRequest = async (
-    host: string,
+    baseURL: string,
     requestBody: object
 ): Promise<any> => {
     let response: Response
 
     try {
-        response = await fetch(`${host}/api/chat`, {
+        response = await fetch(`${baseURL}/api/chat`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,10 +24,10 @@ const sendChatRequest = async (
     return response.json()
 }
 
-const getOllamaModels = async (host: string): Promise<any> => {
+const getOllamaModels = async (baseURL: string): Promise<any> => {
     let response: any
     try {
-        response = await fetch(`${host}/api/tags`, {
+        response = await fetch(`${baseURL}/api/tags`, {
             method: 'GET',
         })
     } catch (error: any) {

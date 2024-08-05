@@ -6,16 +6,14 @@ async function loadModels() {
     return Object.fromEntries(
         Object.entries(models).map(([key, val]: [string, any]) => [
             key,
-            extractModel(val.name, val.host),
+            extractModel(val.name, val.url),
         ])
     )
 }
 
 async function getModelConfig(key: string) {
     const models = await loadModels()
-    return models[key]
-        ? { name: models[key].name, host: models[key].host }
-        : null
+    return models[key] ? { name: models[key].name, url: models[key].url } : null
 }
 
 async function getModelIds() {
@@ -48,17 +46,17 @@ async function removeModel(key: string) {
     )
 }
 
-const extractModel = (name: string, host: string) => {
+const extractModel = (name: string, url: string) => {
     return {
         name,
-        host,
+        url,
     }
 }
 
 const createModel = (name: string, base_url: string, port: number) => {
     return {
         name,
-        host: `${base_url}:${port}`,
+        url: `${base_url}:${port}`,
     }
 }
 
@@ -66,7 +64,8 @@ const getBaseUrl = (id: string): string => {
     return process.env.NODE_ENV === 'docker'
         ? `http://${id}`
         : `${
-              process.env.OLLAMA_HOST?.replace(/:\d+/, '') || 'http://127.0.0.1'
+              process.env.OLLAMA_BASE_URL?.replace(/:\d+/, '') ||
+              'http://127.0.0.1'
           }`
 }
 

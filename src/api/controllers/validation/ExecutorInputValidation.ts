@@ -28,9 +28,9 @@ const add = [
         .isString()
         .trim()
         .custom(async (value) => {
-            const ollamaHost =
-                process.env.OLLAMA_HOST || 'http://127.0.0.1:11434'
-            const ollamaModels = await getOllamaModels(ollamaHost)
+            const ollamaBaseURL =
+                process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
+            const ollamaModels = await getOllamaModels(ollamaBaseURL)
             if (!ollamaModels.map((model: any) => model.name).includes(value)) {
                 return Promise.reject(
                     new Error(
@@ -63,9 +63,9 @@ const update = [
         .isString()
         .trim()
         .custom(async (value) => {
-            const ollamaHost =
-                process.env.OLLAMA_HOST || 'http://127.0.0.1:11434'
-            const ollamaModels = await getOllamaModels(ollamaHost)
+            const ollamaBaseURL =
+                process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
+            const ollamaModels = await getOllamaModels(ollamaBaseURL)
             if (!ollamaModels.map((model: any) => model.name).includes(value)) {
                 return Promise.reject(
                     new Error(

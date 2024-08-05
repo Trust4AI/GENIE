@@ -5,7 +5,7 @@ import { getBaseUrl } from '../utils/modelUtils'
 class ExecutorController {
     executorBaseService: any
     ollamaPort: number = parseInt(
-        process.env.OLLAMA_HOST?.split(':')[-1] || '11434'
+        process.env.OLLAMA_BASE_URL?.split(':')[-1] || '11434'
     )
     constructor() {
         this.executorBaseService = container.resolve('executorBaseService')
@@ -21,7 +21,7 @@ class ExecutorController {
     async index(req: Request, res: Response) {
         try {
             const models = await this.executorBaseService.index()
-            res.send({ models })
+            res.json(models)
         } catch (error: any) {
             res.status(500).send({ error: error.message })
         }
@@ -41,7 +41,7 @@ class ExecutorController {
                 base_url,
                 port
             )
-            res.send({ model })
+            res.json(model)
         } catch (error: any) {
             res.status(500).send({ error: error.message })
         }
@@ -61,7 +61,7 @@ class ExecutorController {
                 base_url,
                 port
             )
-            res.send({ model })
+            res.json(model)
         } catch (error: any) {
             res.status(500).send({ error: error.message })
         }
@@ -83,7 +83,7 @@ class ExecutorController {
     async indexOllama(req: Request, res: Response) {
         try {
             const models = await this.executorBaseService.indexOllama()
-            res.send({ models })
+            res.json(models)
         } catch (error: any) {
             res.status(500).send({ error: error.message })
         }
