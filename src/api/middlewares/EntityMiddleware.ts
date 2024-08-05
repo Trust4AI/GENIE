@@ -6,7 +6,7 @@ const checkEntityExists =
                 req.params[idPathParamName]
             )
             if (!entity) {
-                return res.status(404).send({ message: 'Not found' })
+                return res.status(404).send({ error: 'Not found' })
             }
             return next()
         } catch (err) {

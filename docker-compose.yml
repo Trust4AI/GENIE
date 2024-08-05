@@ -13,30 +13,30 @@ services:
       - .env
     networks:
       - genie-network
-  llama3-8b:
-    container_name: llama3-8b
-    image: llama3-8b:latest
-    build: 
-      context: ./Ollama
-      dockerfile: Dockerfile.predefined-model
-      args:
-        MODEL_NAME: "llama3"
-    ports:
-      - "11435:11434"
-    volumes:
-      - llama3-8b_data:/root/.ollama
-    networks:
-      - genie-network
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
+  # llama3-8b:
+  #   container_name: llama3-8b
+  #   image: llama3-8b:latest
+  #   build: 
+  #     context: ./Ollama
+  #     dockerfile: Dockerfile.predefined-model
+  #     args:
+  #       MODEL_NAME: "llama3"
+  #   ports:
+  #     - "11435:11434"
+  #   volumes:
+  #     - llama3-8b_data:/root/.ollama
+  #   networks:
+  #     - genie-network
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: all
+  #             capabilities: [gpu]
 
-volumes:
-  llama3-8b_data:
+# volumes:
+#   llama3-8b_data:
 
 networks:
   genie-network:

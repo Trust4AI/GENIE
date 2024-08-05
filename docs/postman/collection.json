@@ -111,7 +111,8 @@
 								"v1",
 								"models"
 							]
-						}
+						},
+						"description": "This endpoint allows to get the LLMs configured in GENIE."
 					},
 					"response": [
 						{
@@ -151,15 +152,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "292"
+									"value": "277"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"124-YSFMSTleDMSg0OTV/n/a8dKt9aA\""
+									"value": "W/\"115-sM3T+raOqhzMItAkS7CkdyM/w1c\""
 								},
 								{
 									"key": "Date",
-									"value": "Sun, 04 Aug 2024 19:21:24 GMT"
+									"value": "Mon, 05 Aug 2024 10:28:38 GMT"
 								},
 								{
 									"key": "Connection",
@@ -171,7 +172,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"models\": [\n        {\n            \"id\": \"llama3-8b\",\n            \"name\": \"llama3:8b\",\n            \"host\": \"http://127.0.0.1:11434\"\n        },\n        {\n            \"id\": \"llama2-7b\",\n            \"name\": \"llama2:7b\",\n            \"host\": \"http://127.0.0.1:11434\"\n        },\n        {\n            \"id\": \"mistral-7b\",\n            \"name\": \"mistral:7b\",\n            \"host\": \"http://127.0.0.1:11434\"\n        },\n        {\n            \"id\": \"gemma-7b\",\n            \"name\": \"gemma:7b\",\n            \"host\": \"http://127.0.0.1:11434\"\n        }\n    ]\n}"
+							"body": "[\n    {\n        \"id\": \"llama3-8b\",\n        \"name\": \"llama3:8b\",\n        \"url\": \"http://127.0.0.1:11434\"\n    },\n    {\n        \"id\": \"llama2-7b\",\n        \"name\": \"llama2:7b\",\n        \"url\": \"http://127.0.0.1:11434\"\n    },\n    {\n        \"id\": \"mistral-7b\",\n        \"name\": \"mistral:7b\",\n        \"url\": \"http://127.0.0.1:11434\"\n    },\n    {\n        \"id\": \"gemma-7b\",\n        \"name\": \"gemma:7b\",\n        \"url\": \"http://127.0.0.1:11434\"\n    }\n]"
 						}
 					]
 				},
@@ -193,7 +194,8 @@
 								"models",
 								"ollama"
 							]
-						}
+						},
+						"description": "This endpoint allows to obtain the LLMs downloaded locally in Ollama."
 					},
 					"response": [
 						{
@@ -234,15 +236,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "470"
+									"value": "550"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"1d6-iMPv5u2VKvVz/BMjSE3UyvVWrCQ\""
+									"value": "W/\"226-o8JWb9u7d3V9HDGeCnrHBfYxc68\""
 								},
 								{
 									"key": "Date",
-									"value": "Sun, 04 Aug 2024 18:07:29 GMT"
+									"value": "Mon, 05 Aug 2024 10:29:06 GMT"
 								},
 								{
 									"key": "Connection",
@@ -254,7 +256,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"models\": [\n        {\n            \"name\": \"llama3.1:8b\",\n            \"model\": \"llama3.1:8b\",\n            \"modified_at\": \"2024-08-01T12:15:39.507589+02:00\"\n        },\n        {\n            \"name\": \"mistral:7b\",\n            \"model\": \"mistral:7b\",\n            \"modified_at\": \"2024-06-24T12:37:56.3880361+02:00\"\n        },\n        {\n            \"name\": \"llama2:7b\",\n            \"model\": \"llama2:7b\",\n            \"modified_at\": \"2024-06-24T12:25:06.4588201+02:00\"\n        },\n        {\n            \"name\": \"llama3:8b\",\n            \"model\": \"llama3:8b\",\n            \"modified_at\": \"2024-06-24T12:12:59.9622682+02:00\"\n        },\n        {\n            \"name\": \"gemma:7b\",\n            \"model\": \"gemma:7b\",\n            \"modified_at\": \"2024-06-05T00:02:18.2562916+02:00\"\n        }\n    ]\n}"
+							"body": "[\n    {\n        \"name\": \"gemma2:9b\",\n        \"model\": \"gemma2:9b\",\n        \"modified_at\": \"2024-08-05T12:19:22.8637466+02:00\"\n    },\n    {\n        \"name\": \"llama3.1:8b\",\n        \"model\": \"llama3.1:8b\",\n        \"modified_at\": \"2024-08-01T12:15:39.507589+02:00\"\n    },\n    {\n        \"name\": \"mistral:7b\",\n        \"model\": \"mistral:7b\",\n        \"modified_at\": \"2024-06-24T12:37:56.3880361+02:00\"\n    },\n    {\n        \"name\": \"llama2:7b\",\n        \"model\": \"llama2:7b\",\n        \"modified_at\": \"2024-06-24T12:25:06.4588201+02:00\"\n    },\n    {\n        \"name\": \"llama3:8b\",\n        \"model\": \"llama3:8b\",\n        \"modified_at\": \"2024-06-24T12:12:59.9622682+02:00\"\n    },\n    {\n        \"name\": \"gemma:7b\",\n        \"model\": \"gemma:7b\",\n        \"modified_at\": \"2024-06-05T00:02:18.2562916+02:00\"\n    }\n]"
 						}
 					]
 				}
@@ -281,17 +283,18 @@
 								"v1",
 								"models"
 							]
-						}
+						},
+						"description": "This endpoint is used to add a new model to the GENIE configuration file."
 					},
 					"response": [
 						{
-							"name": "Valid request",
+							"name": "Valid request using only the required parameters",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\": \"llama3.1-8b\",\r\n    \"name\": \"llama3.1:8b\",\r\n    \"port\": 11434\r\n}",
+									"raw": "{\r\n    \"id\": \"gemma2-9b\",\r\n    \"name\": \"gemma2:9b\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -330,15 +333,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "64"
+									"value": "68"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"40-wC19AFYYBXHppZO9cePyE4dTp5E\""
+									"value": "W/\"44-7tOAILAiegvnCdNt1tlibb99OQ8\""
 								},
 								{
 									"key": "Date",
-									"value": "Sun, 04 Aug 2024 20:20:40 GMT"
+									"value": "Mon, 05 Aug 2024 10:29:29 GMT"
 								},
 								{
 									"key": "Connection",
@@ -350,7 +353,75 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"model\": {\n        \"id\": \"llama3.1-8b\",\n        \"name\": \"llama3.1:8b\",\n        \"port\": 11434\n    }\n}"
+							"body": "{\n    \"id\": \"gemma2-9b\",\n    \"name\": \"gemma2:9b\",\n    \"url\": \"http://127.0.0.1:11434\"\n}"
+						},
+						{
+							"name": "Valid request with all parameters",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"llama3.1-8b\",\r\n    \"name\": \"llama3.1:8b\",\r\n    \"base_url\": \"http://127.0.0.2\",\r\n    \"port\": 11435\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "72"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"48-cHGHHpWddca5hsPYbw6E7ndBT44\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 05 Aug 2024 10:29:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"llama3.1-8b\",\n    \"name\": \"llama3.1:8b\",\n    \"url\": \"http://127.0.0.2:11435\"\n}"
 						},
 						{
 							"name": "Invalid request - Validation errors",
@@ -359,7 +430,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\": \"id_with_more_than_30_characters\",\r\n    \"name\": \"name_with_more_than_30_characters\",\r\n    \"port\": 11434\r\n}",
+									"raw": "{\r\n    \"id\": \"id_with_more_than_30_characters\",\r\n    \"name\": \"non-existing_model\",\r\n    \"base_url\": \"\",\r\n    \"port\": \"three\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -398,15 +469,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "329"
+									"value": "654"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"149-KGKaUMpp77OCJTKUlw3OBnzg5S8\""
+									"value": "W/\"28e-TcyTFqcEQqFrWvg80XZ+VLxVxQs\""
 								},
 								{
 									"key": "Date",
-									"value": "Sun, 04 Aug 2024 21:00:57 GMT"
+									"value": "Mon, 05 Aug 2024 09:43:48 GMT"
 								},
 								{
 									"key": "Connection",
@@ -418,12 +489,12 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"id_with_more_than_30_characters\",\n        \"msg\": \"id must be a string with length greater than 1 and less than 30\",\n        \"path\": \"id\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"name_with_more_than_30_characters\",\n        \"msg\": \"name must be a string with length greater than 1 and less than 30\",\n        \"path\": \"name\",\n        \"location\": \"body\"\n    }\n]"
+							"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"id_with_more_than_30_characters\",\n        \"msg\": \"id must be a string with length greater than 1 and less than 30\",\n        \"path\": \"id\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"non-existing_model\",\n        \"msg\": \"name must be one of the following values: [llama3.1:8b, mistral:7b, llama2:7b, llama3:8b, gemma:7b]. If you want to use other model, pull it from Ollama first.\",\n        \"path\": \"name\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"base_url must be a string with length greater than 1 if provided\",\n        \"path\": \"base_url\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"three\",\n        \"msg\": \"port must be an integer if provided\",\n        \"path\": \"port\",\n        \"location\": \"body\"\n    }\n]"
 						}
 					]
 				},
 				{
-					"name": "EXECUTE",
+					"name": "SEND REQUEST TO MODEL",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -445,7 +516,7 @@
 					},
 					"response": [
 						{
-							"name": "Valid request to Llama3-8b (using only the necessary parameters)",
+							"name": "Valid request to Llama3-8b (using only the required parameters)",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -683,17 +754,18 @@
 									"value": ""
 								}
 							]
-						}
+						},
+						"description": "This endpoint is used to update a model in the GENIE configuration file."
 					},
 					"response": [
 						{
-							"name": "Valid request",
+							"name": "Valid request using only the required parameters",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"new_llama3.1:8b\",\r\n    \"port\": 11435\r\n}",
+									"raw": "{\r\n    \"name\": \"gemma2:2b\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -716,7 +788,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "llama3.1-8b"
+											"value": "gemma2-9b"
 										}
 									]
 								}
@@ -743,11 +815,11 @@
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"44-s+csESUizX8CmyNa2Vf9pGSkziQ\""
+									"value": "W/\"44-0LauICI98k5U1SRaJfBlw2Vtg3E\""
 								},
 								{
 									"key": "Date",
-									"value": "Sun, 04 Aug 2024 20:56:09 GMT"
+									"value": "Mon, 05 Aug 2024 10:36:25 GMT"
 								},
 								{
 									"key": "Connection",
@@ -759,10 +831,85 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"model\": {\n        \"id\": \"llama3.1-8b\",\n        \"name\": \"new_llama3.1:8b\",\n        \"port\": 11435\n    }\n}"
+							"body": "{\n    \"id\": \"gemma2-9b\",\n    \"name\": \"gemma2:2b\",\n    \"url\": \"http://127.0.0.1:11434\"\n}"
 						},
 						{
-							"name": "Model not found",
+							"name": "Valid request using all parameters",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"gemma2:9b\",\r\n    \"base_url\": \"http://127.0.0.2\",\r\n    \"port\": 11435\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/models/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"models",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "gemma2-9b"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "68"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"44-x6xsbUPpR8va53ZI13HA66PepyQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 05 Aug 2024 10:37:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"gemma2-9b\",\n    \"name\": \"gemma2:9b\",\n    \"url\": \"http://127.0.0.2:11435\"\n}"
+						},
+						{
+							"name": "Invalid request - Model not found",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -814,15 +961,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "23"
+									"value": "21"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"17-JG2JTE6to/D4sxc2pRx7Kk+opAc\""
+									"value": "W/\"15-bm7tJgu8FHlq5QU+Y6gDxOGPfRc\""
 								},
 								{
 									"key": "Date",
-									"value": "Sun, 04 Aug 2024 20:57:15 GMT"
+									"value": "Mon, 05 Aug 2024 11:03:20 GMT"
 								},
 								{
 									"key": "Connection",
@@ -834,7 +981,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"message\": \"Not found\"\n}"
+							"body": "{\n    \"error\": \"Not found\"\n}"
 						},
 						{
 							"name": "Invalid request - Validation errors",
@@ -843,7 +990,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"name_with_more_than_30_characters\",\r\n    \"port\": 11434\r\n}",
+									"raw": "{\r\n    \"name\": \"non-existing_model\",\r\n    \"base_url\": \"\",\r\n    \"port\": \"three\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -866,7 +1013,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "llama3.1-8b"
+											"value": "gemma-7b"
 										}
 									]
 								}
@@ -889,15 +1036,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "168"
+									"value": "515"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"a8-b2Zt48X8/ZqrzPs2Kgc+fh9EBbA\""
+									"value": "W/\"203-lZP4Lcglx8ncaWrFYODSL3AUXtU\""
 								},
 								{
 									"key": "Date",
-									"value": "Sun, 04 Aug 2024 20:59:54 GMT"
+									"value": "Mon, 05 Aug 2024 10:37:40 GMT"
 								},
 								{
 									"key": "Connection",
@@ -909,7 +1056,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"name_with_more_than_30_characters\",\n        \"msg\": \"name must be a string with length greater than 1 and less than 30\",\n        \"path\": \"name\",\n        \"location\": \"body\"\n    }\n]"
+							"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"non-existing_model\",\n        \"msg\": \"name must be one of the following values: [gemma2:2b, gemma2:9b, llama3.1:8b, mistral:7b, llama2:7b, llama3:8b, gemma:7b]. If you want to use other model, pull it from Ollama first.\",\n        \"path\": \"name\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"base_url must be a string with length greater than 1 if provided\",\n        \"path\": \"base_url\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"three\",\n        \"msg\": \"port must be an integer if provided\",\n        \"path\": \"port\",\n        \"location\": \"body\"\n    }\n]"
 						}
 					]
 				}
@@ -943,7 +1090,8 @@
 									"value": ""
 								}
 							]
-						}
+						},
+						"description": "This endpoint is used to remove a model from the GENIE configuration file."
 					},
 					"response": [
 						{
@@ -1013,7 +1161,7 @@
 							"body": "{\n    \"message\": \"Successfully removed.\"\n}"
 						},
 						{
-							"name": "Model not found",
+							"name": "Invalid request - Model not found",
 							"originalRequest": {
 								"method": "DELETE",
 								"header": [],
@@ -1056,15 +1204,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "23"
+									"value": "21"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"17-JG2JTE6to/D4sxc2pRx7Kk+opAc\""
+									"value": "W/\"15-bm7tJgu8FHlq5QU+Y6gDxOGPfRc\""
 								},
 								{
 									"key": "Date",
-									"value": "Sun, 04 Aug 2024 20:52:01 GMT"
+									"value": "Mon, 05 Aug 2024 11:03:37 GMT"
 								},
 								{
 									"key": "Connection",
@@ -1076,7 +1224,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"message\": \"Not found\"\n}"
+							"body": "{\n    \"error\": \"Not found\"\n}"
 						}
 					]
 				}
