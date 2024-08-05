@@ -1,3 +1,7 @@
+<div align = center>
+   <img src="https://github.com/Trust4AI/GENIE/blob/assets/GENIE_logo.png?raw=true" width="150" />
+</div>
+
 ## GENIE: Natural Language Enquiry Executor
 
 GENIE facilitates the deployment and execution of Large Language Models (LLMs). This tool is specifically designed to integrate with [MUSE](https://github.com/Trust4AI/MUSE), which generates test cases following a Metamorphic Testing approach, and [GUARD-ME](https://github.com/Trust4AI/GUARD-ME), which analyzes LLM responses to such test cases for the detection of possible biases.
@@ -14,6 +18,7 @@ Integration options include a Docker image that launches a REST API with interac
    1. [Request using only the required properties](#i-request-using-only-the-required-properties)
    2. [Request using all properties](#ii-request-using-all-properties)
 4. [License and funding](#4-license-and-funding)
+   1. [Logo credits](#logo-credits)
 
 ## 1. Repository structure
 
@@ -53,9 +58,9 @@ ollama pull <model>
 Replace `<model>` with the name of the desired model from the Ollama library. This model must be added to the [model configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.json), with the following format:
 
 ```json
-<model_id>: {
-  "name": <model_name>,
-  "url": <model_url>
+"<model_id>": {
+  "name": "<model_name>",
+  "url": "<model_url>"
 }
 ```
 
@@ -330,5 +335,9 @@ Funded by the European Union. Views and opinions expressed are however those of 
 <img src="https://github.com/Trust4AI/trust4ai/blob/main/funding_logos/NGI_Search-rgb_Plan-de-travail-1-2048x410.png" width="400">
 <img src="https://github.com/Trust4AI/trust4ai/blob/main/funding_logos/EU_funding_logo.png" width="200">
 </p>
+
+### Logo credits
+
+The GENIE logo image was created with the assistance of [DALL·E 3](https://openai.com/index/dall-e-3/).
 
 <p align="right">[⬆️ <a href="#genie-natural-language-enquiry-executor">Back to top</a>]</p>
