@@ -57,11 +57,19 @@ class OllamaExecutorModelService {
         //TODO: Remove once properNames evaluation is reviewed
         //console.log(messages)
 
+        const num_ctx = process.env.NUM_CONTEXT_WINDOW
+        const options: any = {}
+
+        if (num_ctx) {
+            options['num_ctx'] = parseInt(num_ctx)
+        }
+
         try {
             const response = await sendChatRequest(url, {
                 model,
                 stream: false,
                 messages,
+                options,
             }).then((res) => res.message.content)
             //TODO: Remove once properNames evaluation is reviewed
             //console.log(response)
