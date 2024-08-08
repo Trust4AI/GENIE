@@ -12,9 +12,9 @@ info:
     name: GNU General Public License v3.0
     url: https://github.com/Trust4AI/GENIE/blob/main/LICENSE
 servers:
-  - url: http://localhost:8081/api/v1/models/
+  - url: http://localhost:8081/api/v1/
 paths:
-  /:
+  /models:
     get:
       summary: Get the list of models configured in GENIE
       tags:
@@ -65,7 +65,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  "/{id}":
+  "/models/{id}":
     put:
       summary: Update a model configuration in GENIE
       tags:
@@ -142,7 +142,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /ollama:
+  /models/ollama:
     get:
       summary: Get the list of local models available in Ollama
       tags:
@@ -162,7 +162,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /check:
+  /models/check:
     get:
       summary: Check if the executor component API is working properly
       tags:
@@ -180,7 +180,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /execute:
+  /models/execute:
     post:
       summary: Send a prompt under a specific model to generate a response
       tags:

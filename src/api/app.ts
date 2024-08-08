@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(cors())
 
 app.use(
-    `${API_VERSION}/models/docs`,
+    `${API_VERSION}/docs`,
     swaggerUI.serve,
     swaggerUI.setup(swaggerDocs, { explorer: true })
 )

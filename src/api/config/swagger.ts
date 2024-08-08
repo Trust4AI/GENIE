@@ -25,7 +25,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: `http://localhost:${port}/api/v1/models/`,
+                url: `http://localhost:${port}/api/v1/`,
             },
         ],
     },

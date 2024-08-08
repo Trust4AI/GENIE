@@ -94,7 +94,7 @@ To deploy GENIE locally, please follow these steps carefully:
 5. Finally, you can access the API documentation by visiting the following URL in your web browser.
 
     ```
-    http://localhost:8081/api/v1/models/docs
+    http://localhost:8081/api/v1/docs
     ```
 
 ### ii. Docker deployment
@@ -216,7 +216,7 @@ To deploy GENIE using Docker, please follow these steps carefully.
 4. Finally, you can access the API documentation by visiting the following URL in your web browser.
 
     ```
-    http://localhost:8081/api/v1/models/docs
+    http://localhost:8081/api/v1/docs
     ```
 
 <p align="right">[⬆️ <a href="#genie-natural-language-enquiry-executor">Back to top</a>]</p>

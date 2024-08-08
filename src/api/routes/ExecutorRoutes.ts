@@ -211,7 +211,7 @@ const executorBaseService = container.resolve('executorBaseService')
 
 /**
  * @swagger
- * /:
+ * /models:
  *   get:
  *     summary: Get the list of models configured in GENIE
  *     tags: [Models]
@@ -268,7 +268,7 @@ router
 
 /**
  * @swagger
- * /{id}:
+ * /models/{id}:
  *   put:
  *     summary: Update a model configuration in GENIE
  *     tags: [Models]
@@ -359,7 +359,7 @@ router
 
 /**
  * @swagger
- * /ollama:
+ * /models/ollama:
  *   get:
  *     summary: Get the list of local models available in Ollama
  *     tags: [Models]
@@ -383,7 +383,7 @@ router.route('/ollama').get(executorController.indexOllama)
 
 /**
  * @swagger
- * /check:
+ * /models/check:
  *   get:
  *     summary: Check if the executor component API is working properly
  *     tags: [Models]
@@ -405,7 +405,7 @@ router.route('/check').get(executorController.check)
 
 /**
  * @swagger
- * /execute:
+ * /models/execute:
  *   post:
  *     summary: Send a prompt under a specific model to generate a response
  *     tags: [Models]

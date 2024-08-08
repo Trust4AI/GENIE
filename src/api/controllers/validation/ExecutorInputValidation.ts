@@ -11,19 +11,17 @@ const add = [
             if (modelIds.includes(value)) {
                 return Promise.reject(
                     new Error(
-                        `id must be unique and not one of the following values: ${modelIds.join(
+                        `id must be unique and not one of the following values: [${modelIds.join(
                             `, `
-                        )}. Please use a different id.`
-                    )
-                )
-            } else if (value.length < 1 || value.length > 30) {
-                return Promise.reject(
-                    new Error(
-                        'id must be a string with length greater than 1 and less than 30'
+                        )}]. Please use a different id.`
                     )
                 )
             }
-        }),
+        })
+        .isLength({ min: 1, max: 30 })
+        .withMessage(
+            'id must be a string with length greater than 1 and less than 30'
+        ),
     check('name')
         .isString()
         .trim()
@@ -102,9 +100,9 @@ const execute = [
             if (!modelIds.includes(value)) {
                 return Promise.reject(
                     new Error(
-                        `model_name must be one of the following values: ${modelIds.join(
+                        `model_name must be one of the following values: [${modelIds.join(
                             ', '
-                        )}`
+                        )}]`
                     )
                 )
             }

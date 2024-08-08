@@ -1,7 +1,9 @@
 import fs from 'fs/promises'
 
-async function loadModels() {
-    const data = await fs.readFile('api/config/models.json', 'utf-8')
+const MODELS_CONFIG_FILE = 'api/config/models.json'
+
+const loadModels = async () => {
+    const data = await fs.readFile(MODELS_CONFIG_FILE, 'utf8')
     const models = JSON.parse(data)
     return Object.fromEntries(
         Object.entries(models).map(([key, val]: [string, any]) => [
@@ -11,38 +13,38 @@ async function loadModels() {
     )
 }
 
-async function getModelConfig(key: string) {
+const getModelConfig = async (key: string) => {
     const models = await loadModels()
     return models[key] ? { name: models[key].name, url: models[key].url } : null
 }
 
-async function getModelIds() {
+const getModelIds = async () => {
     const models = await loadModels()
     return Object.keys(models)
 }
 
-async function addOrUpdateModel(
+const addOrUpdateModel = async (
     key: string,
     name: string,
     base_url: string,
     port: number
-) {
+) => {
     const models = await loadModels()
     models[key] = createModel(name, base_url, port)
     await fs.writeFile(
-        'api/config/models.json',
-        JSON.stringify(models),
-        'utf-8'
+        MODELS_CONFIG_FILE,
+        JSON.stringify(models, null, 4),
+        'utf8'
     )
 }
 
-async function removeModel(key: string) {
+const removeModel = async (key: string) => {
     const models = await loadModels()
     delete models[key]
     await fs.writeFile(
-        'api/config/models.json',
-        JSON.stringify(models),
-        'utf-8'
+        MODELS_CONFIG_FILE,
+        JSON.stringify(models, null, 4),
+        'utf8'
     )
 }
 
