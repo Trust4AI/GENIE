@@ -1,11 +1,11 @@
 const sendChatRequest = async (
-    baseURL: string,
+    ollamaBaseUrl: string,
     requestBody: object
 ): Promise<any> => {
     let response: Response
 
     try {
-        response = await fetch(`${baseURL}/api/chat`, {
+        response = await fetch(`${ollamaBaseUrl}/api/chat`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -13,30 +13,30 @@ const sendChatRequest = async (
             body: JSON.stringify(requestBody),
         })
     } catch (error: any) {
-        throw new Error(`[EXECUTOR] Ollama fetch error: ${error.message}`)
+        throw new Error(`[GENIE] Ollama fetch error: ${error.message}`)
     }
 
     if (!response.ok) {
         throw new Error(
-            `[EXECUTOR] Failed to post chat to Ollama: ${response.status} ${response.statusText}`
+            `[GENIE] Failed to post chat to Ollama: ${response.status} ${response.statusText}`
         )
     }
     return response.json()
 }
 
-const getOllamaModels = async (baseURL: string): Promise<any> => {
+const getOllamaModels = async (ollamaBaseUrl: string): Promise<any> => {
     let response: any
     try {
-        response = await fetch(`${baseURL}/api/tags`, {
+        response = await fetch(`${ollamaBaseUrl}/api/tags`, {
             method: 'GET',
         })
     } catch (error: any) {
-        throw new Error(`[EXECUTOR] Ollama fetch error: ${error.message}`)
+        throw new Error(`[GENIE] Ollama fetch error: ${error.message}`)
     }
 
     if (!response.ok) {
         throw new Error(
-            `[EXECUTOR] Failed to get Ollama models: ${response.status} ${response.statusText}`
+            `[GENIE] Failed to get Ollama models: ${response.status} ${response.statusText}`
         )
     }
 

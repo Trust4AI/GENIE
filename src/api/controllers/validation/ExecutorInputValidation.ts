@@ -2,6 +2,8 @@ import { check } from 'express-validator'
 import { getModelIds } from '../../utils/modelUtils'
 import { getOllamaModels } from '../../utils/ollamaUtils'
 
+const ollamaBaseUrl = process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
+
 const add = [
     check('id')
         .isString()
@@ -26,9 +28,7 @@ const add = [
         .isString()
         .trim()
         .custom(async (value) => {
-            const ollamaBaseURL =
-                process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
-            const ollamaModels = await getOllamaModels(ollamaBaseURL)
+            const ollamaModels = await getOllamaModels(ollamaBaseUrl)
             if (!ollamaModels.map((model: any) => model.name).includes(value)) {
                 return Promise.reject(
                     new Error(
@@ -61,9 +61,7 @@ const update = [
         .isString()
         .trim()
         .custom(async (value) => {
-            const ollamaBaseURL =
-                process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
-            const ollamaModels = await getOllamaModels(ollamaBaseURL)
+            const ollamaModels = await getOllamaModels(ollamaBaseUrl)
             if (!ollamaModels.map((model: any) => model.name).includes(value)) {
                 return Promise.reject(
                     new Error(
@@ -122,13 +120,9 @@ const execute = [
         .withMessage('user_prompt must be a string with length greater than 1'),
     check('response_max_length')
         .optional()
-        .custom(
-            (value) =>
-                value === -1 ||
-                (Number.isInteger(value) && value >= 1 && value <= 2000)
-        )
+        .isInt({ min: 1, max: 2000 })
         .withMessage(
-            'response_max_length is optional but must be an integer between 1 and 2000 or -1 if provided'
+            'response_max_length is optional but must be an integer between 1 and 2000 if provided'
         ),
     check('list_format_response')
         .optional()
@@ -149,6 +143,14 @@ const execute = [
         .trim()
         .withMessage(
             'excluded_text is optional but must be a string with length between 1 and 30 if provided'
+        ),
+    check('format')
+        .optional()
+        .isString()
+        .trim()
+        .isIn(['json', 'text'])
+        .withMessage(
+            'format is optional but must be one of the following values: [json, text] if provided'
         ),
 ]
 

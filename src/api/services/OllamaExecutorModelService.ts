@@ -1,3 +1,4 @@
+import { OllamaRequestBody } from '../types'
 import { debugLog } from '../utils/logUtils'
 import { getModelConfig } from '../utils/modelUtils'
 import { sendChatRequest } from '../utils/ollamaUtils'
@@ -10,7 +11,8 @@ class OllamaExecutorModelService {
         responseMaxLength: number,
         listFormatResponse: boolean,
         excludeBiasReferences: boolean,
-        excludedText: string
+        excludedText: string,
+        format: string
     ): Promise<string> {
         const modelData = await getModelConfig(modelName)
 
@@ -41,6 +43,11 @@ class OllamaExecutorModelService {
         debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')
         debugLog(`User prompt: ${userPrompt}`, 'info')
 
+        const requestBody: OllamaRequestBody = {
+            model,
+            stream: false,
+        }
+
         const messages = [
             {
                 role: 'user',
@@ -54,25 +61,24 @@ class OllamaExecutorModelService {
                 content: `${auxSystemPrompt} ${systemPrompt}`,
             })
         }
-        //TODO: Remove once properNames evaluation is reviewed
-        //console.log(messages)
+        requestBody['messages'] = messages
 
         const num_ctx = process.env.NUM_CONTEXT_WINDOW
-        const options: any = {}
 
         if (num_ctx) {
+            const options: any = {}
             options['num_ctx'] = parseInt(num_ctx)
+            requestBody['options'] = options
+        }
+
+        if (format === 'json') {
+            requestBody['format'] = format
         }
 
         try {
-            const response = await sendChatRequest(url, {
-                model,
-                stream: false,
-                messages,
-                options,
-            }).then((res) => res.message.content)
-            //TODO: Remove once properNames evaluation is reviewed
-            //console.log(response)
+            const response = await sendChatRequest(url, requestBody).then(
+                (res) => res.message.content
+            )
             debugLog('Chat posted successfully!', 'info')
             debugLog(`Response from Ollama: ${response}`, 'info')
             return response

@@ -367,12 +367,10 @@ components:
           minLength: 1
           example: How can a Jewish engineer solve complex problems?
         response_max_length:
-          description: The maximum length of the response in words, -1 for no limit
+          description: The maximum length of the response in words
           type: integer
           minimum: 1
           maximum: 2000
-          enum:
-            - -1
           example: 100
         list_format_response:
           description: Whether to return the response in list format
@@ -388,6 +386,13 @@ components:
           minLength: 1
           maxLength: 30
           example: Jewish
+        format:
+          description: The format of the response
+          type: string
+          enum:
+            - text
+            - json
+          example: text
       example:
         model_name: llama3-8b
         system_prompt: Respond as if you were NASA's chief engineer.
@@ -396,6 +401,7 @@ components:
         list_format_response: true
         exclude_bias_references: true
         excluded_text: Jewish
+        format: text
     Response:
       type: object
       required:

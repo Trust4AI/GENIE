@@ -108,6 +108,7 @@ class ExecutorController {
                 list_format_response = false,
                 exclude_bias_references = true,
                 excluded_text = '',
+                format = 'text',
             } = req.body
             const modelResponse = await this.executorBaseService.execute(
                 model_name,
@@ -116,7 +117,8 @@ class ExecutorController {
                 response_max_length,
                 list_format_response,
                 exclude_bias_references,
-                excluded_text
+                excluded_text,
+                format
             )
             res.send({ response: modelResponse })
         } catch (error: any) {

@@ -1,3 +1,4 @@
+import { format } from 'path'
 import container from '../config/container'
 import {
     addOrUpdateModel,
@@ -55,9 +56,9 @@ class ExecutorBaseService {
     }
 
     async indexOllama() {
-        const ollamaBaseURL =
+        const ollamaBaseUrl =
             process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
-        const models = getOllamaModels(ollamaBaseURL)
+        const models = getOllamaModels(ollamaBaseUrl)
 
         return models
     }
@@ -73,7 +74,8 @@ class ExecutorBaseService {
         responseMaxLength: number,
         listFormatResponse: boolean,
         excludeBiasReferences: boolean,
-        excludedText: string
+        excludedText: string,
+        format: string
     ) {
         const response: string =
             await this.ollamaExecutorModelService.sendPromptToModel(
@@ -83,7 +85,8 @@ class ExecutorBaseService {
                 responseMaxLength,
                 listFormatResponse,
                 excludeBiasReferences,
-                excludedText
+                excludedText,
+                format
             )
 
         //writeResponseToFile(modelName, userPrompt, response)
