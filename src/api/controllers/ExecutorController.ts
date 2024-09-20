@@ -30,12 +30,14 @@ class ExecutorController {
     async add(req: Request, res: Response) {
         try {
             const {
+                category,
                 id,
                 name,
                 base_url = getBaseUrl(id),
                 port = this.ollamaPort,
             } = req.body
             const model = await this.executorBaseService.addOrUpdateModel(
+                category,
                 id,
                 name,
                 base_url,
@@ -51,11 +53,13 @@ class ExecutorController {
         try {
             const { id } = req.params
             const {
+                category,
                 name,
                 base_url = getBaseUrl(id),
                 port = this.ollamaPort,
             } = req.body
             const model = await this.executorBaseService.addOrUpdateModel(
+                category,
                 id,
                 name,
                 base_url,

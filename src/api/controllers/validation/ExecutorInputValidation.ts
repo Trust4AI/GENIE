@@ -1,10 +1,17 @@
 import { check } from 'express-validator'
-import { getModelIds } from '../../utils/modelUtils'
+import { getModelCategories, getModelIds } from '../../utils/modelUtils'
 import { getOllamaModels } from '../../utils/ollamaUtils'
 
 const ollamaBaseUrl = process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
 
 const add = [
+    check('category')
+        .isString()
+        .trim()
+        .isIn(getModelCategories())
+        .withMessage(
+            'category must be one of the following values: [ollama, openai, gemini]'
+        ),
     check('id')
         .isString()
         .trim()
@@ -25,6 +32,7 @@ const add = [
             'id must be a string with length greater than 1 and less than 30'
         ),
     check('name')
+        .if((value, { req }) => req.body.category === 'ollama')
         .isString()
         .trim()
         .custom(async (value) => {

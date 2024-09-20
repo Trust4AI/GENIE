@@ -93,7 +93,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"message\": \"Executor component is working properly!\"\n}"
+									"body": "{\n    \"message\": \"GENIE is working properly!\"\n}"
 								}
 							]
 						},

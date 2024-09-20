@@ -68,7 +68,7 @@ const executorBaseService = container.resolve('executorBaseService')
  *         message:
  *           type: string
  *       example:
- *         message: Executor component generator is working properly!
+ *         message: GENIE is working properly!
  *     Error:
  *       type: object
  *       required:
@@ -390,7 +390,7 @@ router.route('/ollama').get(executorController.indexOllama)
  * @swagger
  * /models/check:
  *   get:
- *     summary: Check if the executor component API is working properly
+ *     summary: Check if GENIE is working properly
  *     tags: [Models]
  *     responses:
  *       200:

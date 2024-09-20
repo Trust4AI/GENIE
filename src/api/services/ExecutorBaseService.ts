@@ -1,9 +1,9 @@
-import { format } from 'path'
 import container from '../config/container'
 import {
     addOrUpdateModel,
     getModelConfig,
     getModelIds,
+    getModels,
     removeModel,
 } from '../utils/modelUtils'
 import { getOllamaModels } from '../utils/ollamaUtils'
@@ -11,9 +11,17 @@ import { getOllamaModels } from '../utils/ollamaUtils'
 
 class ExecutorBaseService {
     ollamaExecutorModelService: any
+    openaiExecutorModelService: any
+    geminiExecutorModelService: any
     constructor() {
         this.ollamaExecutorModelService = container.resolve(
             'ollamaExecutorModelService'
+        )
+        this.openaiExecutorModelService = container.resolve(
+            'openaiExecutorModelService'
+        )
+        this.geminiExecutorModelService = container.resolve(
+            'geminiExecutorModelService'
         )
     }
 
@@ -22,28 +30,22 @@ class ExecutorBaseService {
     }
 
     async index() {
-        const modelIds = await getModelIds()
-        const models = await Promise.all(
-            modelIds.map(async (id: string) => {
-                const config = await getModelConfig(id)
-                return {
-                    id,
-                    name: config?.name,
-                    url: config?.url,
-                }
-            })
-        )
+        const models = await getModels()
         return models
     }
 
     async addOrUpdateModel(
+        category: string,
         id: string,
         name: string,
         base_url: string,
         port: number
     ) {
-        await addOrUpdateModel(id, name, base_url, port)
-        return { id, name, url: `${base_url}:${port}` }
+        await addOrUpdateModel(category, id, name, base_url, port)
+        if (category === 'ollama') {
+            return { category, id, name, url: base_url }
+        }
+        return { category, id }
     }
 
     async remove(id: string) {
@@ -64,7 +66,7 @@ class ExecutorBaseService {
     }
 
     check() {
-        return { message: 'Executor component is working properly!' }
+        return { message: 'GENIE is working properly!' }
     }
 
     async execute(
@@ -77,20 +79,35 @@ class ExecutorBaseService {
         excludedText: string,
         format: string
     ) {
-        const response: string =
-            await this.ollamaExecutorModelService.sendPromptToModel(
-                modelName,
-                systemPrompt,
-                userPrompt,
-                responseMaxLength,
-                listFormatResponse,
-                excludeBiasReferences,
-                excludedText,
-                format
-            )
+        const executorModelService = await this.getExecutorModelService(
+            modelName
+        )
+        const response: string = await executorModelService.sendPromptToModel(
+            modelName,
+            systemPrompt,
+            userPrompt,
+            responseMaxLength,
+            listFormatResponse,
+            excludeBiasReferences,
+            excludedText,
+            format
+        )
 
         //writeResponseToFile(modelName, userPrompt, response)
         return response
+    }
+
+    private async getExecutorModelService(modelName: string) {
+        const openAIModelIds = await getModelIds('openai')
+        const geminiModelIds = await getModelIds('gemini')
+
+        if (openAIModelIds.includes(modelName)) {
+            return this.openaiExecutorModelService
+        }
+        if (geminiModelIds.includes(modelName)) {
+            return this.geminiExecutorModelService
+        }
+        return this.ollamaExecutorModelService
     }
 }
 

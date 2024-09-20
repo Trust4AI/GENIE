@@ -1,36 +1,73 @@
 import fs from 'fs/promises'
 
 const MODELS_CONFIG_FILE = 'api/config/models.json'
+const MODEL_CATEGORIES = ['openai', 'gemini', 'ollama']
+
+const readFile = async () => {
+    const data = await fs.readFile(MODELS_CONFIG_FILE, 'utf8')
+    return JSON.parse(data)
+}
 
 const loadModels = async () => {
-    const data = await fs.readFile(MODELS_CONFIG_FILE, 'utf8')
-    const models = JSON.parse(data)
-    return Object.fromEntries(
-        Object.entries(models).map(([key, val]: [string, any]) => [
+    const jsonData = await readFile()
+    const ollamaModels = Object.fromEntries(
+        Object.entries(jsonData.ollama).map(([key, val]: [string, any]) => [
             key,
             extractModel(val.name, val.url),
         ])
     )
+    return {
+        ...jsonData,
+        ollama: ollamaModels,
+    }
+}
+
+const getModelCategories = () => {
+    return MODEL_CATEGORIES
+}
+
+const getModelIds = async (category?: string) => {
+    const data = await readFile()
+
+    if (category) {
+        if (category === 'ollama') {
+            return Object.keys(data.ollama)
+        }
+        return data[category] || []
+    }
+
+    const openaiModels = data.openai
+    const geminiModels = data.gemini
+    const ollamaModels = Object.keys(data.ollama)
+
+    return [...openaiModels, ...geminiModels, ...ollamaModels]
+}
+
+const getModels = async () => {
+    const models = await loadModels()
+    return models
 }
 
 const getModelConfig = async (key: string) => {
     const models = await loadModels()
-    return models[key] ? { name: models[key].name, url: models[key].url } : null
-}
-
-const getModelIds = async () => {
-    const models = await loadModels()
-    return Object.keys(models)
+    return models.ollama[key] ? models.ollama[key] : null
 }
 
 const addOrUpdateModel = async (
-    key: string,
+    category: string,
+    id: string,
     name: string,
     base_url: string,
     port: number
 ) => {
-    const models = await loadModels()
-    models[key] = createModel(name, base_url, port)
+    const models = await readFile()
+
+    if (category !== 'ollama' && !models[category].includes(id)) {
+        models[category].push(id)
+    } else {
+        models.ollama[id] = createModel(name, base_url, port)
+    }
+
     await fs.writeFile(
         MODELS_CONFIG_FILE,
         JSON.stringify(models, null, 4),
@@ -38,9 +75,13 @@ const addOrUpdateModel = async (
     )
 }
 
-const removeModel = async (key: string) => {
-    const models = await loadModels()
-    delete models[key]
+const removeModel = async (id: string) => {
+    const models = await readFile()
+    for (const category of MODEL_CATEGORIES) {
+        if (models[category]?.includes(id)) {
+            models[category] = models[category].filter((k: string) => k !== id)
+        }
+    }
     await fs.writeFile(
         MODELS_CONFIG_FILE,
         JSON.stringify(models, null, 4),
@@ -72,8 +113,10 @@ const getBaseUrl = (id: string): string => {
 }
 
 export {
-    getModelConfig,
     getModelIds,
+    getModels,
+    getModelCategories,
+    getModelConfig,
     getBaseUrl,
     addOrUpdateModel,
     removeModel,
