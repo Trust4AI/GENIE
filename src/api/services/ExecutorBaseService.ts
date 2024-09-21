@@ -1,7 +1,7 @@
 import container from '../config/container'
 import {
-    addOrUpdateModel,
-    getModelConfig,
+    addModel,
+    updateModel,
     getModelIds,
     getModels,
     removeModel,
@@ -26,7 +26,8 @@ class ExecutorBaseService {
     }
 
     async exists(id: string) {
-        return (await getModelConfig(id)) !== null
+        const modelIds = await getModelIds()
+        return modelIds.includes(id)
     }
 
     async index() {
@@ -34,25 +35,31 @@ class ExecutorBaseService {
         return models
     }
 
-    async addOrUpdateModel(
+    async addModel(
         category: string,
         id: string,
         name: string,
         base_url: string,
         port: number
     ) {
-        await addOrUpdateModel(category, id, name, base_url, port)
+        await addModel(category, id, name, base_url, port)
         if (category === 'ollama') {
             return { category, id, name, url: base_url }
         }
         return { category, id }
     }
 
+    async updateModel(
+        id: string,
+        name: string,
+        base_url: string,
+        port: number
+    ) {
+        await updateModel(id, name, base_url, port)
+        return { id, name, url: base_url }
+    }
+
     async remove(id: string) {
-        const config = await getModelConfig(id)
-        if (!config) {
-            throw new Error(`Model with id ${id} does not exist`)
-        }
         await removeModel(id)
         return true
     }

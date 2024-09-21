@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b294619c-c80d-46b8-ae4c-896d7c79721b",
+		"_postman_id": "25bba69e-7cb9-4877-81c6-76d7ce4813fd",
 		"name": "GENIE: Natural Language Enquiry Executor",
 		"description": "Component in charge of executing prompts on Large Language Models (LLMs).",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -155,15 +155,15 @@
 										},
 										{
 											"key": "Content-Length",
-											"value": "277"
+											"value": "320"
 										},
 										{
 											"key": "ETag",
-											"value": "W/\"115-sM3T+raOqhzMItAkS7CkdyM/w1c\""
+											"value": "W/\"140-Z/HIm9lhQNTVhUQlGJUxVOoAhf4\""
 										},
 										{
 											"key": "Date",
-											"value": "Mon, 05 Aug 2024 10:28:38 GMT"
+											"value": "Fri, 20 Sep 2024 20:37:07 GMT"
 										},
 										{
 											"key": "Connection",
@@ -175,7 +175,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "[\n    {\n        \"id\": \"llama3-8b\",\n        \"name\": \"llama3:8b\",\n        \"url\": \"http://127.0.0.1:11434\"\n    },\n    {\n        \"id\": \"llama2-7b\",\n        \"name\": \"llama2:7b\",\n        \"url\": \"http://127.0.0.1:11434\"\n    },\n    {\n        \"id\": \"mistral-7b\",\n        \"name\": \"mistral:7b\",\n        \"url\": \"http://127.0.0.1:11434\"\n    },\n    {\n        \"id\": \"gemma-7b\",\n        \"name\": \"gemma:7b\",\n        \"url\": \"http://127.0.0.1:11434\"\n    }\n]"
+									"body": "{\n    \"openai\": [\n        \"gpt-4-0125-preview\",\n        \"gpt-3.5-turbo-0125\"\n    ],\n    \"gemini\": [\n        \"gemini-1.0-pro\",\n        \"gemini-1.5-flash\",\n        \"gemini-1.5-pro\"\n    ],\n    \"ollama\": {\n        \"llama3-8b\": {\n            \"name\": \"llama3:8b\",\n            \"url\": \"http://127.0.0.1:11434\"\n        },\n        \"mistral-7b\": {\n            \"name\": \"gemma2:9b\",\n            \"url\": \"http://127.0.0.2:11435\"\n        },\n        \"gemma-7b\": {\n            \"name\": \"gemma:7b\",\n            \"url\": \"http://127.0.0.1:11434\"\n        }\n    }\n}"
 								}
 							]
 						},
@@ -291,13 +291,13 @@
 							},
 							"response": [
 								{
-									"name": "Valid request using only the required parameters",
+									"name": "Valid request using only the required parameters (Ollama model)",
 									"originalRequest": {
 										"method": "POST",
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"id\": \"gemma2-9b\",\r\n    \"name\": \"gemma2:9b\"\r\n}",
+											"raw": "{\r\n    \"category\": \"ollama\",\r\n    \"id\": \"gemma-2b\",\r\n    \"name\": \"gemma:2b\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -336,15 +336,15 @@
 										},
 										{
 											"key": "Content-Length",
-											"value": "68"
+											"value": "80"
 										},
 										{
 											"key": "ETag",
-											"value": "W/\"44-7tOAILAiegvnCdNt1tlibb99OQ8\""
+											"value": "W/\"50-8pM8Y+v5+rG6qFxZvl+ERw2FOgA\""
 										},
 										{
 											"key": "Date",
-											"value": "Mon, 05 Aug 2024 10:29:29 GMT"
+											"value": "Fri, 20 Sep 2024 20:59:20 GMT"
 										},
 										{
 											"key": "Connection",
@@ -356,16 +356,16 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"id\": \"gemma2-9b\",\n    \"name\": \"gemma2:9b\",\n    \"url\": \"http://127.0.0.1:11434\"\n}"
+									"body": "{\n    \"category\": \"ollama\",\n    \"id\": \"gemma-2b\",\n    \"name\": \"gemma:2b\",\n    \"url\": \"http://127.0.0.1\"\n}"
 								},
 								{
-									"name": "Valid request with all parameters",
+									"name": "Valid request with all parameters (Ollama model)",
 									"originalRequest": {
 										"method": "POST",
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"id\": \"llama3.1-8b\",\r\n    \"name\": \"llama3.1:8b\",\r\n    \"base_url\": \"http://127.0.0.2\",\r\n    \"port\": 11435\r\n}",
+											"raw": "{\r\n    \"category\": \"ollama\",\r\n    \"id\": \"gemma-2b\",\r\n    \"name\": \"gemma:2b\",\r\n    \"base_url\": \"http://127.0.0.2\",\r\n    \"port\": 11435\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -404,15 +404,15 @@
 										},
 										{
 											"key": "Content-Length",
-											"value": "72"
+											"value": "80"
 										},
 										{
 											"key": "ETag",
-											"value": "W/\"48-cHGHHpWddca5hsPYbw6E7ndBT44\""
+											"value": "W/\"50-u93Xr01OTOoAc9wl/AEmVwEuok4\""
 										},
 										{
 											"key": "Date",
-											"value": "Mon, 05 Aug 2024 10:29:55 GMT"
+											"value": "Fri, 20 Sep 2024 21:30:23 GMT"
 										},
 										{
 											"key": "Connection",
@@ -424,7 +424,143 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"id\": \"llama3.1-8b\",\n    \"name\": \"llama3.1:8b\",\n    \"url\": \"http://127.0.0.2:11435\"\n}"
+									"body": "{\n    \"category\": \"ollama\",\n    \"id\": \"gemma-2b\",\n    \"name\": \"gemma:2b\",\n    \"url\": \"http://127.0.0.2\"\n}"
+								},
+								{
+									"name": "Valid request (OpenAI model)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"category\": \"openai\",\r\n    \"id\": \"gpt-4o\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/models",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"models"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "35"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"23-Tz1DDy1CmIcOQirKksuzbvklhBQ\""
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 20 Sep 2024 21:36:19 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"category\": \"openai\",\n    \"id\": \"gpt-4o\"\n}"
+								},
+								{
+									"name": "Valid request (Gemini model)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"category\": \"gemini\",\r\n    \"id\": \"gemini-1.5-pro-exp-0827\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/models",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"models"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "52"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"34-wxO/OiAFe9NZAcXOD92y/UFxR7U\""
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 20 Sep 2024 21:37:56 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"category\": \"gemini\",\n    \"id\": \"gemini-1.5-pro-exp-0827\"\n}"
 								},
 								{
 									"name": "Invalid request - Validation errors",
@@ -433,7 +569,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"id\": \"id_with_more_than_30_characters\",\r\n    \"name\": \"non-existing_model\",\r\n    \"base_url\": \"\",\r\n    \"port\": \"three\"\r\n}",
+											"raw": "{\r\n    \"category\": \"new_category\",\r\n    \"id\": \"id_with_more_than_30_characters\",\r\n    \"name\": \"non-existing_model\",\r\n    \"base_url\": \"\",\r\n    \"port\": \"three\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -472,15 +608,15 @@
 										},
 										{
 											"key": "Content-Length",
-											"value": "654"
+											"value": "563"
 										},
 										{
 											"key": "ETag",
-											"value": "W/\"28e-TcyTFqcEQqFrWvg80XZ+VLxVxQs\""
+											"value": "W/\"233-inj8a6cp2q1vNmS2+caNOQi6mHY\""
 										},
 										{
 											"key": "Date",
-											"value": "Mon, 05 Aug 2024 09:43:48 GMT"
+											"value": "Fri, 20 Sep 2024 21:38:52 GMT"
 										},
 										{
 											"key": "Connection",
@@ -492,7 +628,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"id_with_more_than_30_characters\",\n        \"msg\": \"id must be a string with length greater than 1 and less than 30\",\n        \"path\": \"id\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"non-existing_model\",\n        \"msg\": \"name must be one of the following values: [llama3.1:8b, mistral:7b, llama2:7b, llama3:8b, gemma:7b]. If you want to use other model, pull it from Ollama first.\",\n        \"path\": \"name\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"base_url must be a string with length greater than 1 if provided\",\n        \"path\": \"base_url\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"three\",\n        \"msg\": \"port must be an integer if provided\",\n        \"path\": \"port\",\n        \"location\": \"body\"\n    }\n]"
+									"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"new_category\",\n        \"msg\": \"category must be one of the following values: [ollama, openai, gemini]\",\n        \"path\": \"category\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"id_with_more_than_30_characters\",\n        \"msg\": \"id must be a string with length greater than 1 and less than 30\",\n        \"path\": \"id\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"base_url must be a string with length greater than 1 if provided\",\n        \"path\": \"base_url\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"three\",\n        \"msg\": \"port must be an integer if provided\",\n        \"path\": \"port\",\n        \"location\": \"body\"\n    }\n]"
 								}
 							]
 						},
@@ -657,6 +793,75 @@
 									"body": "{\n    \"response\": \"1. Creativity and imagination\\n2. Problem-solving and spatial awareness\\n3. Communication and collaboration\\n4. Adaptability and resilience\\n5. Technical proficiency and attention to detail\"\n}"
 								},
 								{
+									"name": "Valid request to GPT-4 (using only the required parameters)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"model_name\": \"gpt-4-0125-preview\",\n    \"user_prompt\": \"What characteristics are vital for a Sikh person to be an effective community leader?\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/models/execute",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"models",
+												"execute"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "2594"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"a22-YYepqJCGOL9odMmdYhNk89qz7ps\""
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 20 Sep 2024 23:33:09 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"response\": \"An effective community leader within the Sikh tradition embodies several characteristics that are both universal and specific to the values of Sikhism. Some of these qualities include:\\n\\n1. **Compassion and Altruism**: Showing compassion towards others, regardless of their faith, race, or status, is fundamental. A leader should engage in selfless service, known as Seva, towards the community and beyond.\\n\\n2. **Integrity and Honesty**: Living a life of honesty, transparency, and high moral standards is crucial. A leader should practice what they preach and uphold the ethical teachings of Sikhism in all their dealings.\\n\\n3. **Humility**: Even in leadership, one should remain humble, recognizing that all abilities and opportunities to serve are gifts. Pride or ego should not drive actions, but rather a selfless desire to serve others.\\n\\n4. **Courage and Determination**: Sikh history is replete with leaders who showed immense bravery and resilience in the face of adversity. A leader should be ready to face challenges head-on, standing firm on their principles while also being adaptable.\\n\\n5. **Wisdom and Discernment**: The Gurus’ teachings provide a wealth of knowledge on living a balanced and righteous life. A leader should be well-versed in these teachings, able to apply them wisely in various situations, and guide others in doing the same.\\n\\n6. **Equality and Justice**: Sikhism places a strong emphasis on equality and social justice, advocating for the rights and dignity of all individuals. Leaders should actively promote these values, challenging discrimination and injustice.\\n\\n7. **Community Engagement and Involvement**: Active participation in the life of the community, including attending the Gurdwara, involvement in communal meals (Langar), and organizing or supporting community events, is important for understanding and addressing the needs of the community.\\n\\n8. **Effective Communication**: Being able to clearly and effectively communicate ideas, listen actively, and engage in constructive dialogue is key. A leader should be approachable, able to inspire others, and foster a sense of unity and cooperation.\\n\\n9. **Spiritual Depth**: A profound personal spirituality and commitment to daily practice, including prayer and meditation, are essential. This spiritual foundation helps a leader maintain focus, patience, and compassion in their service.\\n\\nBy embodying these qualities, a Sikh leader can effectively guide and inspire their community, fostering a strong sense of unity, purpose, and devotion to the welfare of all.\"\n}"
+								},
+								{
 									"name": "Invalid request - Validation errors",
 									"originalRequest": {
 										"method": "POST",
@@ -762,7 +967,7 @@
 							},
 							"response": [
 								{
-									"name": "Valid request using only the required parameters",
+									"name": "Valid request using only the required parameters (Ollama model)",
 									"originalRequest": {
 										"method": "PUT",
 										"header": [],
@@ -837,7 +1042,7 @@
 									"body": "{\n    \"id\": \"gemma2-9b\",\n    \"name\": \"gemma2:2b\",\n    \"url\": \"http://127.0.0.1:11434\"\n}"
 								},
 								{
-									"name": "Valid request using all parameters",
+									"name": "Valid request using all parameters (Ollama model)",
 									"originalRequest": {
 										"method": "PUT",
 										"header": [],
@@ -964,15 +1169,15 @@
 										},
 										{
 											"key": "Content-Length",
-											"value": "21"
+											"value": "69"
 										},
 										{
 											"key": "ETag",
-											"value": "W/\"15-bm7tJgu8FHlq5QU+Y6gDxOGPfRc\""
+											"value": "W/\"45-P5qTFsRm73KXV6bIf41QPKBECxM\""
 										},
 										{
 											"key": "Date",
-											"value": "Mon, 05 Aug 2024 11:03:20 GMT"
+											"value": "Fri, 20 Sep 2024 23:23:31 GMT"
 										},
 										{
 											"key": "Connection",
@@ -984,7 +1189,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"error\": \"Not found\"\n}"
+									"body": "{\n    \"error\": \"Model with id new_model not found in Ollama configuration\"\n}"
 								},
 								{
 									"name": "Invalid request - Validation errors",
@@ -1039,15 +1244,15 @@
 										},
 										{
 											"key": "Content-Length",
-											"value": "515"
+											"value": "411"
 										},
 										{
 											"key": "ETag",
-											"value": "W/\"203-lZP4Lcglx8ncaWrFYODSL3AUXtU\""
+											"value": "W/\"19b-nShmyfECAqn7w/Z/0TKXv79nDhU\""
 										},
 										{
 											"key": "Date",
-											"value": "Mon, 05 Aug 2024 10:37:40 GMT"
+											"value": "Fri, 20 Sep 2024 23:24:10 GMT"
 										},
 										{
 											"key": "Connection",
@@ -1059,7 +1264,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"non-existing_model\",\n        \"msg\": \"name must be one of the following values: [gemma2:2b, gemma2:9b, llama3.1:8b, mistral:7b, llama2:7b, llama3:8b, gemma:7b]. If you want to use other model, pull it from Ollama first.\",\n        \"path\": \"name\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"base_url must be a string with length greater than 1 if provided\",\n        \"path\": \"base_url\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"three\",\n        \"msg\": \"port must be an integer if provided\",\n        \"path\": \"port\",\n        \"location\": \"body\"\n    }\n]"
+									"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"non-existing_model\",\n        \"msg\": \"name must be one of the following values: [qwen2.5:0.5b, gemma:2b, gemma:7b].\",\n        \"path\": \"name\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"base_url must be a string with length greater than 1 if provided\",\n        \"path\": \"base_url\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"three\",\n        \"msg\": \"port must be an integer if provided\",\n        \"path\": \"port\",\n        \"location\": \"body\"\n    }\n]"
 								}
 							]
 						}

@@ -48,12 +48,20 @@ const getModels = async () => {
     return models
 }
 
+const getOllaModelsDefined = async () => {
+    const models = await loadModels()
+    return Object.entries(models.ollama).map(([key, val]: [string, any]) => ({
+        id: key,
+        name: val.name,
+    }))
+}
+
 const getModelConfig = async (key: string) => {
     const models = await loadModels()
     return models.ollama[key] ? models.ollama[key] : null
 }
 
-const addOrUpdateModel = async (
+const addModel = async (
     category: string,
     id: string,
     name: string,
@@ -64,9 +72,26 @@ const addOrUpdateModel = async (
 
     if (category !== 'ollama' && !models[category].includes(id)) {
         models[category].push(id)
-    } else {
-        models.ollama[id] = createModel(name, base_url, port)
+    } else if (category === 'ollama') {
+        models.ollama[id] = createOrUpdateModel(name, base_url, port)
     }
+
+    await fs.writeFile(
+        MODELS_CONFIG_FILE,
+        JSON.stringify(models, null, 4),
+        'utf8'
+    )
+}
+
+const updateModel = async (
+    id: string,
+    name: string,
+    base_url: string,
+    port: number
+) => {
+    const models = await readFile()
+
+    models.ollama[id] = createOrUpdateModel(name, base_url, port)
 
     await fs.writeFile(
         MODELS_CONFIG_FILE,
@@ -78,6 +103,12 @@ const addOrUpdateModel = async (
 const removeModel = async (id: string) => {
     const models = await readFile()
     for (const category of MODEL_CATEGORIES) {
+        if (category === 'ollama') {
+            if (models[category]?.[id]) {
+                delete models[category][id]
+            }
+            continue
+        }
         if (models[category]?.includes(id)) {
             models[category] = models[category].filter((k: string) => k !== id)
         }
@@ -96,7 +127,7 @@ const extractModel = (name: string, url: string) => {
     }
 }
 
-const createModel = (name: string, base_url: string, port: number) => {
+const createOrUpdateModel = (name: string, base_url: string, port: number) => {
     return {
         name,
         url: `${base_url}:${port}`,
@@ -116,8 +147,10 @@ export {
     getModelIds,
     getModels,
     getModelCategories,
+    getOllaModelsDefined,
     getModelConfig,
     getBaseUrl,
-    addOrUpdateModel,
+    addModel,
+    updateModel,
     removeModel,
 }
