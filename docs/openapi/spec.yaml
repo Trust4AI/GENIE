@@ -27,7 +27,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/GENIEModels"
+                  type: string
         "500":
           description: Server Error
           content:
@@ -50,7 +50,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ModelDetails"
+                $ref: "#/components/schemas/AddModelResponse"
         "422":
           description: Validation Error
           content:
@@ -90,7 +90,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ModelDetails"
+                $ref: "#/components/schemas/UpdateModelResponse"
         "404":
           description: Model not found
           content:
@@ -136,6 +136,26 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+        "500":
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /models/details:
+    get:
+      summary: Get the list of models configured in GENIE with details
+      tags:
+        - Models
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GENIEModels"
         "500":
           description: Server Error
           content:
@@ -234,7 +254,7 @@ components:
                 type: string
               url:
                 type: string
-    ModelDetails:
+    AddModelResponse:
       type: object
       required:
         - category
@@ -258,6 +278,27 @@ components:
           example: http://127.0.0.1:11434
       example:
         category: ollama
+        id: mistral-7b
+        name: mistral:7b
+        url: http://127.0.0.1:11434
+    UpdateModelResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the model
+          example: mistral-7b
+        name:
+          type: string
+          description: The base name of the model in Ollama
+          example: mistral:7b
+        url:
+          type: string
+          description: The url to use the model
+          example: http://127.0.0.1:11434
+      example:
         id: mistral-7b
         name: mistral:7b
         url: http://127.0.0.1:11434

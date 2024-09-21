@@ -1,6 +1,6 @@
 import { OllamaRequestBody } from '../types'
 import { debugLog } from '../utils/logUtils'
-import { getModelConfig } from '../utils/modelUtils'
+import { getOllamaModelConfig } from '../utils/modelUtils'
 import { sendChatRequest } from '../utils/ollamaUtils'
 
 class OllamaExecutorModelService {
@@ -14,7 +14,7 @@ class OllamaExecutorModelService {
         excludedText: string,
         format: string
     ): Promise<string> {
-        const modelData = await getModelConfig(modelName)
+        const modelData = await getOllamaModelConfig(modelName)
 
         if (!modelData) {
             throw new Error(

@@ -10,10 +10,11 @@ class ExecutorController {
     constructor() {
         this.executorBaseService = container.resolve('executorBaseService')
         this.index = this.index.bind(this)
+        this.indexDetails = this.indexDetails.bind(this)
+        this.indexOllama = this.indexOllama.bind(this)
         this.add = this.add.bind(this)
         this.update = this.update.bind(this)
         this.remove = this.remove.bind(this)
-        this.indexOllama = this.indexOllama.bind(this)
         this.check = this.check.bind(this)
         this.execute = this.execute.bind(this)
     }
@@ -21,6 +22,15 @@ class ExecutorController {
     async index(req: Request, res: Response) {
         try {
             const models = await this.executorBaseService.index()
+            res.json(models)
+        } catch (error: any) {
+            res.status(500).send({ error: error.message })
+        }
+    }
+
+    async indexDetails(req: Request, res: Response) {
+        try {
+            const models = await this.executorBaseService.indexDetails()
             res.json(models)
         } catch (error: any) {
             res.status(500).send({ error: error.message })

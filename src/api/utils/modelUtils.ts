@@ -26,6 +26,11 @@ const getModelCategories = () => {
     return MODEL_CATEGORIES
 }
 
+const getModels = async () => {
+    const models = await loadModels()
+    return models
+}
+
 const getModelIds = async (category?: string) => {
     const data = await readFile()
 
@@ -43,12 +48,7 @@ const getModelIds = async (category?: string) => {
     return [...openaiModels, ...geminiModels, ...ollamaModels]
 }
 
-const getModels = async () => {
-    const models = await loadModels()
-    return models
-}
-
-const getOllaModelsDefined = async () => {
+const getUsedOllaModels = async () => {
     const models = await loadModels()
     return Object.entries(models.ollama).map(([key, val]: [string, any]) => ({
         id: key,
@@ -56,7 +56,7 @@ const getOllaModelsDefined = async () => {
     }))
 }
 
-const getModelConfig = async (key: string) => {
+const getOllamaModelConfig = async (key: string) => {
     const models = await loadModels()
     return models.ollama[key] ? models.ollama[key] : null
 }
@@ -144,11 +144,11 @@ const getBaseUrl = (id: string): string => {
 }
 
 export {
-    getModelIds,
     getModels,
+    getModelIds,
     getModelCategories,
-    getOllaModelsDefined,
-    getModelConfig,
+    getUsedOllaModels,
+    getOllamaModelConfig,
     getBaseUrl,
     addModel,
     updateModel,

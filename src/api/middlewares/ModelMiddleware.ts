@@ -1,16 +1,18 @@
-import { getOllaModelsDefined } from '../utils/modelUtils'
+import { getUsedOllaModels } from '../utils/modelUtils'
 
 const checkOllamaModelExists =
     (idPathParamName: string) => async (req: any, res: any, next: any) => {
         const id = req.params[idPathParamName]
 
-        const modelIds = await getOllaModelsDefined().then((models: any) =>
+        const ollamaModelIds = await getUsedOllaModels().then((models: any) =>
             models.map((model: any) => model.id)
         )
 
-        if (!modelIds.includes(id)) {
+        if (!ollamaModelIds.includes(id)) {
             return res.status(404).send({
-                error: `Model with id ${id} not found in Ollama configuration`,
+                error: `Model with id ${id} not found in Ollama configuration. Please provide a id from the following values: [${ollamaModelIds.join(
+                    ', '
+                )}].`,
             })
         }
 

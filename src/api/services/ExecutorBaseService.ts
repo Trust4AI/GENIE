@@ -31,6 +31,11 @@ class ExecutorBaseService {
     }
 
     async index() {
+        const models = await getModelIds()
+        return models
+    }
+
+    async indexDetails() {
         const models = await getModels()
         return models
     }

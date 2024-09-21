@@ -1,9 +1,9 @@
 import { check } from 'express-validator'
 import {
     getModelCategories,
-    getModelConfig,
+    getOllamaModelConfig,
     getModelIds,
-    getOllaModelsDefined,
+    getUsedOllaModels,
 } from '../../utils/modelUtils'
 import { getOllamaModels } from '../../utils/ollamaUtils'
 
@@ -15,7 +15,9 @@ const add = [
         .trim()
         .isIn(getModelCategories())
         .withMessage(
-            'category must be one of the following values: [ollama, openai, gemini]'
+            'category must be one of the following values: [' +
+                getModelCategories().join(', ') +
+                '].'
         ),
     check('id')
         .isString()
@@ -41,27 +43,25 @@ const add = [
         .isString()
         .trim()
         .custom(async (value, { req }) => {
-            const ollamaModelsUsed = await getOllaModelsDefined().then(
-                (models: any) => models.map((model: any) => model.name)
-            )
-            let ollamaModelsInstalled = await getOllamaModels(
-                ollamaBaseUrl
-            ).then((models: any) => models.map((model: any) => model.name))
-            const validOllamaModels = ollamaModelsInstalled.filter(
-                (model: string) => !ollamaModelsUsed.includes(model)
-            )
-
-            if (
-                req.body.category === 'ollama' &&
-                !validOllamaModels.includes(value)
-            ) {
-                return Promise.reject(
-                    new Error(
-                        `name can be one of the following values: [${validOllamaModels.join(
-                            ', '
-                        )}]. If you want to use other model, pull it from Ollama first.`
-                    )
+            if (req.body.category === 'ollama') {
+                const usedOllamaModels = await getUsedOllaModels().then(
+                    (models: any) => models.map((model: any) => model.name)
                 )
+                let installedOllamaModels = await getOllamaModels(
+                    ollamaBaseUrl
+                ).then((models: any) => models.map((model: any) => model.name))
+                const validOllamaModels = installedOllamaModels.filter(
+                    (model: string) => !usedOllamaModels.includes(model)
+                )
+                if (!validOllamaModels.includes(value)) {
+                    return Promise.reject(
+                        new Error(
+                            `name can be one of the following values: [${validOllamaModels.join(
+                                ', '
+                            )}]. If you want to use other model, pull it from Ollama first.`
+                        )
+                    )
+                }
             }
         }),
     check('base_url')
@@ -84,18 +84,18 @@ const update = [
         .isString()
         .trim()
         .custom(async (value, { req }) => {
-            const ollamaModelsUsed = await getOllaModelsDefined().then(
+            const usedOllamaModels = await getUsedOllaModels().then(
                 (models: any) => models.map((model: any) => model.name)
             )
-            const ollamaModelsInstalled = await getOllamaModels(
+            const installedOllamaModels = await getOllamaModels(
                 ollamaBaseUrl
             ).then((models: any) => models.map((model: any) => model.name))
 
-            let validOllamaModels = ollamaModelsInstalled.filter(
-                (model: string) => !ollamaModelsUsed.includes(model)
+            let validOllamaModels = installedOllamaModels.filter(
+                (model: string) => !usedOllamaModels.includes(model)
             )
             const id = req.params?.id
-            const currentModel = await getModelConfig(id)
+            const currentModel = await getOllamaModelConfig(id)
             validOllamaModels = [...validOllamaModels, currentModel.name]
 
             if (!validOllamaModels.includes(value)) {
