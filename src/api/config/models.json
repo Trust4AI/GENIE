@@ -15,7 +15,7 @@
         },
         "mistral-7b": {
             "name": "mistral:7b",
-            "url": "http://127.0.0.2:11434"
+            "url": "http://127.0.0.1:11434"
         },
         "gemma-7b": {
             "name": "gemma:7b",
