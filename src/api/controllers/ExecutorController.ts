@@ -118,9 +118,11 @@ class ExecutorController {
                 user_prompt,
                 response_max_length = -1,
                 list_format_response = false,
-                exclude_bias_references = true,
+                exclude_bias_references = false,
                 excluded_text = '',
                 format = 'text',
+                temperature = 0.5,
+                history = [],
             } = req.body
             const modelResponse = await this.executorBaseService.execute(
                 model_name,
@@ -130,7 +132,9 @@ class ExecutorController {
                 list_format_response,
                 exclude_bias_references,
                 excluded_text,
-                format
+                format,
+                temperature,
+                history
             )
             res.send({ response: modelResponse })
         } catch (error: any) {

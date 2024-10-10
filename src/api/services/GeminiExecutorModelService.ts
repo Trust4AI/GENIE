@@ -1,3 +1,4 @@
+import { HistoryItem } from '../interfaces/interfaces'
 import { debugLog } from '../utils/logUtils'
 
 import { GoogleGenerativeAI } from '@google/generative-ai'
@@ -15,14 +16,16 @@ class GeminiExecutorModelService {
         listFormatResponse: boolean,
         excludeBiasReferences: boolean,
         excludedText: string,
-        format: string
+        format: string,
+        temperature: number,
+        history: HistoryItem[]
     ): Promise<string> {
         const model = genAI.getGenerativeModel({
             model: modelName,
         })
 
         const generationConfig = {
-            temperature: 1,
+            temperature: temperature,
             topP: 0.95,
             topK: 64,
             maxOutputTokens: 8192,
@@ -49,27 +52,21 @@ class GeminiExecutorModelService {
         debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')
         debugLog(`User prompt: ${userPrompt}`, 'info')
 
-        const parts = [
-            {
-                text: userPrompt,
-            },
-        ]
-
         if (systemPrompt || auxSystemPrompt) {
-            parts.unshift({
-                text: `${auxSystemPrompt} ${systemPrompt}`,
+            history.push({
+                role: 'user',
+                parts: [
+                    {
+                        text: `${auxSystemPrompt} ${systemPrompt}`.trim(),
+                    },
+                ],
             })
         }
 
         try {
             const chatSession = model.startChat({
                 generationConfig,
-                history: [
-                    {
-                        role: 'user',
-                        parts,
-                    },
-                ],
+                history: history,
             })
 
             const result = await chatSession.sendMessage(userPrompt)

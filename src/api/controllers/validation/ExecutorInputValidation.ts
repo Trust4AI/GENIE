@@ -6,6 +6,7 @@ import {
     getUsedOllaModels,
 } from '../../utils/modelUtils'
 import { getOllamaModels } from '../../utils/ollamaUtils'
+import { HistoryItem } from '../../interfaces/interfaces'
 
 const ollamaBaseUrl = process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
 
@@ -186,6 +187,39 @@ const execute = [
         .withMessage(
             'format is optional but must be one of the following values: [json, text] if provided'
         ),
+    check('temperature')
+        .optional()
+        .isFloat({ min: 0, max: 1 })
+        .withMessage(
+            'temperature is optional but must be a float between 0 and 1 if provided'
+        )
+        .toFloat(),
+    check('history')
+        .optional()
+        .isArray()
+        .withMessage('history must be an array')
+        .custom((value: HistoryItem[]) => {
+            value.forEach((item: HistoryItem) => {
+                if (
+                    typeof item.role !== 'string' ||
+                    (item.role !== 'user' && item.role !== 'model')
+                ) {
+                    throw new Error(
+                        'Each history entry must have a role that is either "user" or "model"'
+                    )
+                }
+                if (
+                    !Array.isArray(item.parts) ||
+                    item.parts.some((part) => typeof part.text !== 'string')
+                ) {
+                    throw new Error(
+                        'Each history entry must have parts, and each part must have a text string'
+                    )
+                }
+            })
+            return true
+        })
+        .withMessage('history must be an array of objects with role and parts'),
 ]
 
 export { add, update, execute }

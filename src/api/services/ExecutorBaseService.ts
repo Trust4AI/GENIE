@@ -1,4 +1,5 @@
 import container from '../config/container'
+import { HistoryItem } from '../interfaces/interfaces'
 import {
     addModel,
     updateModel,
@@ -89,7 +90,9 @@ class ExecutorBaseService {
         listFormatResponse: boolean,
         excludeBiasReferences: boolean,
         excludedText: string,
-        format: string
+        format: string,
+        temperature: number,
+        history: HistoryItem[]
     ) {
         const executorModelService = await this.getExecutorModelService(
             modelName
@@ -102,7 +105,9 @@ class ExecutorBaseService {
             listFormatResponse,
             excludeBiasReferences,
             excludedText,
-            format
+            format,
+            temperature,
+            history
         )
 
         //writeResponseToFile(modelName, userPrompt, response)
