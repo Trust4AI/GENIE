@@ -49,27 +49,23 @@ class GeminiExecutorModelService {
         debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')
         debugLog(`User prompt: ${userPrompt}`, 'info')
 
-        const parts = [
-            {
-                text: userPrompt,
-            },
-        ]
+        const history = []
 
         if (systemPrompt || auxSystemPrompt) {
-            parts.unshift({
-                text: `${auxSystemPrompt} ${systemPrompt}`,
+            history.push({
+                role: 'user',
+                parts: [
+                    {
+                        text: `${auxSystemPrompt} ${systemPrompt}`.trim(),
+                    },
+                ],
             })
         }
 
         try {
             const chatSession = model.startChat({
                 generationConfig,
-                history: [
-                    {
-                        role: 'user',
-                        parts,
-                    },
-                ],
+                history: history,
             })
 
             const result = await chatSession.sendMessage(userPrompt)

@@ -118,7 +118,7 @@ class ExecutorController {
                 user_prompt,
                 response_max_length = -1,
                 list_format_response = false,
-                exclude_bias_references = true,
+                exclude_bias_references = false,
                 excluded_text = '',
                 format = 'text',
             } = req.body
