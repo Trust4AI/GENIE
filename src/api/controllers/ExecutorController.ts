@@ -10,10 +10,11 @@ class ExecutorController {
     constructor() {
         this.executorBaseService = container.resolve('executorBaseService')
         this.index = this.index.bind(this)
+        this.indexDetails = this.indexDetails.bind(this)
+        this.indexOllama = this.indexOllama.bind(this)
         this.add = this.add.bind(this)
         this.update = this.update.bind(this)
         this.remove = this.remove.bind(this)
-        this.indexOllama = this.indexOllama.bind(this)
         this.check = this.check.bind(this)
         this.execute = this.execute.bind(this)
     }
@@ -27,15 +28,26 @@ class ExecutorController {
         }
     }
 
+    async indexDetails(req: Request, res: Response) {
+        try {
+            const models = await this.executorBaseService.indexDetails()
+            res.json(models)
+        } catch (error: any) {
+            res.status(500).send({ error: error.message })
+        }
+    }
+
     async add(req: Request, res: Response) {
         try {
             const {
+                category,
                 id,
                 name,
                 base_url = getBaseUrl(id),
                 port = this.ollamaPort,
             } = req.body
-            const model = await this.executorBaseService.addOrUpdateModel(
+            const model = await this.executorBaseService.addModel(
+                category,
                 id,
                 name,
                 base_url,
@@ -55,7 +67,7 @@ class ExecutorController {
                 base_url = getBaseUrl(id),
                 port = this.ollamaPort,
             } = req.body
-            const model = await this.executorBaseService.addOrUpdateModel(
+            const model = await this.executorBaseService.updateModel(
                 id,
                 name,
                 base_url,
@@ -106,7 +118,7 @@ class ExecutorController {
                 user_prompt,
                 response_max_length = -1,
                 list_format_response = false,
-                exclude_bias_references = true,
+                exclude_bias_references = false,
                 excluded_text = '',
                 format = 'text',
             } = req.body

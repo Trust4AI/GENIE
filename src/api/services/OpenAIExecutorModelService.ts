@@ -1,9 +1,11 @@
-import { OllamaRequestBody } from '../types'
+import OpenAI from 'openai'
 import { debugLog } from '../utils/logUtils'
-import { getOllamaModelConfig } from '../utils/modelUtils'
-import { sendChatRequest } from '../utils/ollamaUtils'
 
-class OllamaExecutorModelService {
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY || '',
+})
+
+class OpenAIExecutorModelService {
     async sendPromptToModel(
         modelName: string,
         systemPrompt: string,
@@ -14,17 +16,6 @@ class OllamaExecutorModelService {
         excludedText: string,
         format: string
     ): Promise<string> {
-        const modelData = await getOllamaModelConfig(modelName)
-
-        if (!modelData) {
-            throw new Error(
-                'Model specified does not exist. Please check the models defined in the configuration.'
-            )
-        }
-
-        const model = modelData.name
-        const url = modelData.url
-
         const promptComponents = [
             responseMaxLength !== -1
                 ? `Answer the question in no more than ${responseMaxLength} words.`
@@ -38,17 +29,11 @@ class OllamaExecutorModelService {
         ]
         const auxSystemPrompt = promptComponents.filter(Boolean).join(' ')
 
-        debugLog(`URL: ${url}`, 'info')
-        debugLog(`Model: ${model}`, 'info')
+        debugLog(`Model: ${modelName}`, 'info')
         debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')
         debugLog(`User prompt: ${userPrompt}`, 'info')
 
-        const requestBody: OllamaRequestBody = {
-            model,
-            stream: false,
-        }
-
-        const messages = [
+        const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
             {
                 role: 'user',
                 content: userPrompt,
@@ -61,27 +46,30 @@ class OllamaExecutorModelService {
                 content: `${auxSystemPrompt} ${systemPrompt}`,
             })
         }
-        requestBody['messages'] = messages
 
-        const num_ctx = process.env.NUM_CONTEXT_WINDOW
-
-        if (num_ctx) {
-            const options: any = {}
-            options['num_ctx'] = parseInt(num_ctx)
-            requestBody['options'] = options
+        const params: OpenAI.Chat.ChatCompletionCreateParams = {
+            model: modelName,
+            messages,
         }
 
         if (format === 'json') {
-            requestBody['format'] = format
+            params['response_format'] = {
+                type: 'json_object',
+            }
         }
 
         try {
-            const response = await sendChatRequest(url, requestBody).then(
-                (res) => res.message.content
-            )
+            const completion = await openai.chat.completions.create(params)
             debugLog('Chat posted successfully!', 'info')
-            debugLog(`Response from Ollama: ${response}`, 'info')
-            return response
+            const content = completion.choices[0].message.content
+
+            if (content) {
+                debugLog(`Response from OpenAI: ${content}`, 'info')
+                return content
+            }
+            throw new Error(
+                '[GUARD-ME] No content found in OpenAI GPT response'
+            )
         } catch (error: any) {
             debugLog('Error posting chat!', 'error')
             debugLog(error, 'error')
@@ -90,4 +78,4 @@ class OllamaExecutorModelService {
     }
 }
 
-export default OllamaExecutorModelService
+export default OpenAIExecutorModelService

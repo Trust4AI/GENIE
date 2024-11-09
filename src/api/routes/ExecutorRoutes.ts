@@ -4,6 +4,7 @@ import * as ExecutorInputValidation from '../controllers/validation/ExecutorInpu
 import { handleValidation } from '../middlewares/ValidationMiddleware'
 import container from '../config/container'
 import { checkEntityExists } from '../middlewares/EntityMiddleware'
+import { checkOllamaModelExists } from '../middlewares/ModelMiddleware'
 
 const router = express.Router()
 const executorController = new ExecutorController()
@@ -13,12 +14,57 @@ const executorBaseService = container.resolve('executorBaseService')
  * @swagger
  * components:
  *   schemas:
- *     GENIEModel:
+ *     GENIEModels:
+ *       type: object
+ *       properties:
+ *         openai:
+ *           type: array
+ *           items:
+ *             type: string
+ *         gemini:
+ *           type: array
+ *           items:
+ *             type: string
+ *         ollama:
+ *           type: object
+ *           additionalProperties:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               url:
+ *                 type: string
+ *     AddModelResponse:
+ *       type: object
+ *       required:
+ *         - category
+ *         - id
+ *       properties:
+ *         category:
+ *           type: string
+ *           description: The category of the model
+ *           example: "ollama"
+ *         id:
+ *           type: string
+ *           description: The unique identifier of the model
+ *           example: "mistral-7b"
+ *         name:
+ *           type: string
+ *           description: The base name of the model in Ollama
+ *           example: "mistral:7b"
+ *         url:
+ *           type: string
+ *           description: The url to use the model
+ *           example: "http://127.0.0.1:11434"
+ *       example:
+ *         category: "ollama"
+ *         id: "mistral-7b"
+ *         name: "mistral:7b"
+ *         url: "http://127.0.0.1:11434"
+ *     UpdateModelResponse:
  *       type: object
  *       required:
  *         - id
- *         - name
- *         - url
  *       properties:
  *         id:
  *           type: string
@@ -68,7 +114,7 @@ const executorBaseService = container.resolve('executorBaseService')
  *         message:
  *           type: string
  *       example:
- *         message: Executor component generator is working properly!
+ *         message: GENIE is working properly!
  *     Error:
  *       type: object
  *       required:
@@ -113,7 +159,40 @@ const executorBaseService = container.resolve('executorBaseService')
  *         msg: "user_prompt must be a string with length greater than 1"
  *         path: "prompt"
  *         location: "body"
- *     AddOrUpdateModelInput:
+ *     AddModelInput:
+ *       type: object
+ *       required:
+ *         - category
+ *         - id
+ *       properties:
+ *         category:
+ *           description: The category of the model
+ *           type: string
+ *           enum: ["ollama", "openai", "gemini"]
+ *           example: "ollama"
+ *         id:
+ *           description: The unique identifier of the model
+ *           type: string
+ *           example: "mistral-7b"
+ *         name:
+ *           description: The base name of the model in Ollama
+ *           type: string
+ *           example: "mistral:7b"
+ *         base_url:
+ *           description: The base url to use the model
+ *           type: string
+ *           example: "http://127.0.0.1"
+ *         port:
+ *           description: The port to use the model
+ *           type: integer
+ *           example: 11434
+ *       example:
+ *         category: "ollama"
+ *         id: "mistral-7b"
+ *         name: "mistral:7b"
+ *         base_url: "http://127.0.0.1"
+ *         port: 11434
+ *     UpdateModelInput:
  *       type: object
  *       required:
  *         - id
@@ -228,7 +307,7 @@ const executorBaseService = container.resolve('executorBaseService')
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/GENIEModel'
+ *                 type: string
  *       500:
  *         description: Server Error
  *         content:
@@ -243,14 +322,14 @@ const executorBaseService = container.resolve('executorBaseService')
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/AddOrUpdateModelInput'
+ *             $ref: '#/components/schemas/AddModelInput'
  *     responses:
  *       200:
  *         description: Successful response
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/GENIEModel'
+ *               $ref: '#/components/schemas/AddModelResponse'
  *       422:
  *         description: Validation Error
  *         content:
@@ -290,14 +369,14 @@ router
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/AddOrUpdateModelInput'
+ *             $ref: '#/components/schemas/UpdateModelInput'
  *     responses:
  *       200:
  *         description: Successful response
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/GENIEModel'
+ *               $ref: '#/components/schemas/UpdateModelResponse'
  *       404:
  *         description: Model not found
  *         content:
@@ -352,7 +431,7 @@ router
 router
     .route('/:id')
     .put(
-        checkEntityExists(executorBaseService, 'id'),
+        checkOllamaModelExists('id'),
         ExecutorInputValidation.update,
         handleValidation,
         executorController.update
@@ -361,6 +440,30 @@ router
         checkEntityExists(executorBaseService, 'id'),
         executorController.remove
     )
+
+/**
+ * @swagger
+ * /models/details:
+ *   get:
+ *     summary: Get the list of models configured in GENIE with details
+ *     tags: [Models]
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/GENIEModels'
+ *       500:
+ *         description: Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.route('/details').get(executorController.indexDetails)
 
 /**
  * @swagger
@@ -390,7 +493,7 @@ router.route('/ollama').get(executorController.indexOllama)
  * @swagger
  * /models/check:
  *   get:
- *     summary: Check if the executor component API is working properly
+ *     summary: Check if GENIE is working properly
  *     tags: [Models]
  *     responses:
  *       200:

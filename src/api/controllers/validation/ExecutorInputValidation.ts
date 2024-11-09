@@ -1,10 +1,24 @@
 import { check } from 'express-validator'
-import { getModelIds } from '../../utils/modelUtils'
+import {
+    getModelCategories,
+    getOllamaModelConfig,
+    getModelIds,
+    getUsedOllaModels,
+} from '../../utils/modelUtils'
 import { getOllamaModels } from '../../utils/ollamaUtils'
 
 const ollamaBaseUrl = process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
 
 const add = [
+    check('category')
+        .isString()
+        .trim()
+        .isIn(getModelCategories())
+        .withMessage(
+            'category must be one of the following values: [' +
+                getModelCategories().join(', ') +
+                '].'
+        ),
     check('id')
         .isString()
         .trim()
@@ -25,20 +39,29 @@ const add = [
             'id must be a string with length greater than 1 and less than 30'
         ),
     check('name')
+        .if((value, { req }) => req.body.category === 'ollama')
         .isString()
         .trim()
-        .custom(async (value) => {
-            const ollamaModels = await getOllamaModels(ollamaBaseUrl)
-            if (!ollamaModels.map((model: any) => model.name).includes(value)) {
-                return Promise.reject(
-                    new Error(
-                        `name must be one of the following values: [${ollamaModels
-                            .map((model: any) => model.name)
-                            .join(
+        .custom(async (value, { req }) => {
+            if (req.body.category === 'ollama') {
+                const usedOllamaModels = await getUsedOllaModels().then(
+                    (models: any) => models.map((model: any) => model.name)
+                )
+                let installedOllamaModels = await getOllamaModels(
+                    ollamaBaseUrl
+                ).then((models: any) => models.map((model: any) => model.name))
+                const validOllamaModels = installedOllamaModels.filter(
+                    (model: string) => !usedOllamaModels.includes(model)
+                )
+                if (!validOllamaModels.includes(value)) {
+                    return Promise.reject(
+                        new Error(
+                            `name can be one of the following values: [${validOllamaModels.join(
                                 ', '
                             )}]. If you want to use other model, pull it from Ollama first.`
+                        )
                     )
-                )
+                }
             }
         }),
     check('base_url')
@@ -60,16 +83,27 @@ const update = [
     check('name')
         .isString()
         .trim()
-        .custom(async (value) => {
-            const ollamaModels = await getOllamaModels(ollamaBaseUrl)
-            if (!ollamaModels.map((model: any) => model.name).includes(value)) {
+        .custom(async (value, { req }) => {
+            const usedOllamaModels = await getUsedOllaModels().then(
+                (models: any) => models.map((model: any) => model.name)
+            )
+            const installedOllamaModels = await getOllamaModels(
+                ollamaBaseUrl
+            ).then((models: any) => models.map((model: any) => model.name))
+
+            let validOllamaModels = installedOllamaModels.filter(
+                (model: string) => !usedOllamaModels.includes(model)
+            )
+            const id = req.params?.id
+            const currentModel = await getOllamaModelConfig(id)
+            validOllamaModels = [...validOllamaModels, currentModel.name]
+
+            if (!validOllamaModels.includes(value)) {
                 return Promise.reject(
                     new Error(
-                        `name must be one of the following values: [${ollamaModels
-                            .map((model: any) => model.name)
-                            .join(
-                                ', '
-                            )}]. If you want to use other model, pull it from Ollama first.`
+                        `name must be one of the following values: [${validOllamaModels.join(
+                            ', '
+                        )}].`
                     )
                 )
             }
