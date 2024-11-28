@@ -120,8 +120,6 @@ Additionally, it is necessary to define the models to be used in the [docker-com
        dockerfile: Dockerfile.predefined-model
        args:
          MODEL_NAME: "gemma:2b"
-     ports:
-       - "11435:11434"
      volumes:
        - gemma-2b_data:/root/.ollama
      networks:
@@ -133,26 +131,24 @@ Additionally, it is necessary to define the models to be used in the [docker-com
     ```json
     "gemma-2b": {
       "name": "gemma:2b",
-      "url": "http://gemma-2b:11435"
+      "url": "http://gemma-2b:11434"
     }
     ```
 
 2. **Predefined model with Modelfile.** This method is used to define a model that uses a specific model file. You specify the model name and the path to the model file, which provides additional configuration for the model.
 
    ```yaml
-   gemma-2b:
-     container_name: gemma-2b
-     image: gemma-2b:latest
+   qwen-4b:
+     container_name: qwen-4b
+     image: qwen-4b:latest
      build: 
        context: ./Ollama
        dockerfile: Dockerfile.predefined-model-modelfile
        args:
-         MODEL_NAME: "gemma:2b"
-         MODELFILE_PATH: "modelfiles/Modelfile-gemma-2b"
-     ports:
-       - "11436:11434"
+         MODEL_NAME: "qwen:4b"
+         MODELFILE_PATH: "modelfiles/Modelfile-qwen-4b"
      volumes:
-       - dolphin-2b_data:/root/.ollama
+       - qwen-4b_data:/root/.ollama
      networks:
        - genie-network
    ```
@@ -160,9 +156,9 @@ Additionally, it is necessary to define the models to be used in the [docker-com
     This model must be added to the [model configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.json), with the following format:
 
     ```json
-    "gemma-2b": {
-      "name": "gemma:2b",
-      "url": "http://gemma-2b:11436"
+    "qwen-4b": {
+      "name": "qwen:4b",
+      "url": "http://qwen-4b:11434"
     }
     ```
 
@@ -179,8 +175,6 @@ Additionally, it is necessary to define the models to be used in the [docker-com
          MODEL_NAME: "mistral:7b"
          MODELFILE_PATH: "modelfiles/Modelfile-mistral"
          MODEL_PATH: "models/mistral-7b-instruct-v0.2.Q2_K.gguf"
-     ports:
-       - "11437:11434"
      volumes:
        - mistral-7b_data:/root/.ollama
      networks:
@@ -192,7 +186,7 @@ Additionally, it is necessary to define the models to be used in the [docker-com
     ```json
     "mistral-7b": {
       "name": "mistral:7b",
-      "url": "http://mistral-7b:11437"
+      "url": "http://mistral-7b:11434"
     }
     ```
 
@@ -229,7 +223,7 @@ Once GENIE is deployed, requests can be sent to it via the `POST /models/execute
 - `system_prompt`. Optional string indicating the system prompt to send to the model.
 - `user_prompt`. Mandatory string indicating the user prompt to send to the model.
 - `response_max_length`. Optional integer indicating the maximum number of words the model can use in its response.
-- `list_format_response`. Optional boolean indicating whether the model should return the response as a structured list of points.
+- `list_format_response`. Optional boolean indicating whether the response of the model should be returned as a structured list of points.
 - `exclude_bias_references`. Optional boolean indicating whether the model should exclude any terms in the response provided.
 - `excluded_text`. Optional string indicating the terms that the model should exclude in the provided response.
 

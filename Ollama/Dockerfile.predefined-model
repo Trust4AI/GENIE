@@ -1,4 +1,4 @@
-FROM ollama/ollama:0.1.39
+FROM ollama/ollama:0.4.6
 
 ARG MODEL_NAME
 
