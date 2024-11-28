@@ -190,7 +190,7 @@ Additionally, it is necessary to define the models to be used in the [docker-com
     }
     ```
 
-#### Steps 
+#### Steps
 
 To deploy GENIE using Docker, please follow these steps carefully.
 
