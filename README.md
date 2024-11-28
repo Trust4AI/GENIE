@@ -229,7 +229,7 @@ Once GENIE is deployed, requests can be sent to it via the `POST /models/execute
 - `system_prompt`. Optional string indicating the system prompt to send to the model.
 - `user_prompt`. Mandatory string indicating the user prompt to send to the model.
 - `response_max_length`. Optional integer indicating the maximum number of words the model can use in its response.
-- `list_format_response`. Optional boolean indicating whether the model should return the response in list format.
+- `list_format_response`. Optional boolean indicating whether the model should return the response as a structured list of points.
 - `exclude_bias_references`. Optional boolean indicating whether the model should exclude any terms in the response provided.
 - `excluded_text`. Optional string indicating the terms that the model should exclude in the provided response.
 

@@ -247,7 +247,7 @@ const executorBaseService = container.resolve('executorBaseService')
  *           maximum: 2000
  *           example: 100
  *         list_format_response:
- *           description: Whether to return the model under test response in list format.
+ *           description: Whether to return the model under test response as a structured list of points.
  *           type: boolean
  *           example: true
  *         exclude_bias_references:
