@@ -50,10 +50,10 @@ services:
   #   networks:
   #     - genie-network
 
-volumes:
-  # llama3-8b_data:
-  # gemma-7b_data:
-  # mistral-7b_data:
+# volumes:
+#   llama3-8b_data:
+#   gemma-7b_data:
+#   mistral-7b_data:
 
 networks:
   genie-network:

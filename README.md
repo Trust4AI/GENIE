@@ -24,7 +24,7 @@ Integration options include a Docker image that launches a REST API with interac
 
 This repository is structured as follows:
 
-- `docs/openapi/spec.yaml`: This file describes the entire API, including available endpoints, operations on each endpoint, operation parameters, and the structure of the response objects. It's written in YAML format following the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html) (OAS).
+- `docs/openapi/spec.yaml`: This file describes the entire API, including available endpoints, operations on each endpoint, operation parameters, and the structure of the response objects. It is written in YAML format following the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html) (OAS).
 - `docs/postman/collection.json`: This file is a collection of API requests saved in JSON format for use with Postman.
 -  `src/`: This directory contains the source code for the project.
 -  `.dockerignore`: This file tells Docker which files and directories to ignore when building an image.
@@ -229,7 +229,7 @@ Once GENIE is deployed, requests can be sent to it via the `POST /models/execute
 - `excluded_text`. Optional string indicating the terms that the model should exclude in the provided response.
 
 > [!IMPORTANT]
-> It is important that the given `model_name` is defined in the [models' configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.json), and that the model is correctly deployed, as explained above.
+> It is important that the given `model_name` is defined in the [models configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.json), and that the model is correctly deployed, as explained above.
 
 In case everything works correctly, a JSON object with a `response` property will be returned.
 
