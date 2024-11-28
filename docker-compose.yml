@@ -20,23 +20,40 @@ services:
   #     context: ./Ollama
   #     dockerfile: Dockerfile.predefined-model
   #     args:
-  #       MODEL_NAME: "llama3"
-  #   ports:
-  #     - "11435:11434"
+  #       MODEL_NAME: "llama3:8b"
   #   volumes:
   #     - llama3-8b_data:/root/.ollama
   #   networks:
   #     - genie-network
-  #   deploy:
-  #     resources:
-  #       reservations:
-  #         devices:
-  #           - driver: nvidia
-  #             count: all
-  #             capabilities: [gpu]
+  # gemma-7b:
+  #   container_name: gemma-7b
+  #   image: gemma-7b:latest
+  #   build: 
+  #     context: ./Ollama
+  #     dockerfile: Dockerfile.predefined-model
+  #     args:
+  #       MODEL_NAME: "gemma:7b"
+  #   volumes:
+  #     - gemma-7b_data:/root/.ollama
+  #   networks:
+  #     - genie-network
+  # mistral-7b:
+  #   container_name: mistral-7b
+  #   image: mistral-7b:latest
+  #   build: 
+  #     context: ./Ollama
+  #     dockerfile: Dockerfile.predefined-model
+  #     args:
+  #       MODEL_NAME: "mistral:7b"
+  #   volumes:
+  #     - mistral-7b_data:/root/.ollama
+  #   networks:
+  #     - genie-network
 
 # volumes:
 #   llama3-8b_data:
+#   gemma-7b_data:
+#   mistral-7b_data:
 
 networks:
   genie-network:
