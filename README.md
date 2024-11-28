@@ -190,7 +190,7 @@ Additionally, it is necessary to define the models to be used in the [docker-com
     }
     ```
 
-#### Steps
+#### Steps 
 
 To deploy GENIE using Docker, please follow these steps carefully.
 
@@ -200,6 +200,7 @@ To deploy GENIE using Docker, please follow these steps carefully.
     ```bash
     docker-compose up -d
     ```
+     **Note**: If you encounter an error like `/ollama_setup.sh: not found` when executing the command, verify that the line endings in the [ollama bash script](https://github.com/Trust4AI/GENIE/blob/main/Ollama/ollama_setup.sh) are set to LF (Linux/Unix format), not CRLF (Windows format).
 
 3. To verify that the tool is running, you can check the status of the server by running the following command.
 
