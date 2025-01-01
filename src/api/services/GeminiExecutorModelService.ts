@@ -1,6 +1,11 @@
+import { GenerationConfig } from '../interfaces/Gemini'
 import { debugLog } from '../utils/logUtils'
 
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import {
+    ChatSession,
+    GenerativeModel,
+    GoogleGenerativeAI,
+} from '@google/generative-ai'
 
 const geminiAPIKey = process.env.GEMINI_API_KEY || ''
 
@@ -17,11 +22,11 @@ class GeminiExecutorModelService {
         excludedText: string,
         format: string
     ): Promise<string> {
-        const model = genAI.getGenerativeModel({
+        const model: GenerativeModel = genAI.getGenerativeModel({
             model: modelName,
         })
 
-        const generationConfig = {
+        const generationConfig: GenerationConfig = {
             temperature: 1,
             topP: 0.95,
             topK: 64,
@@ -63,7 +68,7 @@ class GeminiExecutorModelService {
         }
 
         try {
-            const chatSession = model.startChat({
+            const chatSession: ChatSession = model.startChat({
                 generationConfig,
                 history: history,
             })

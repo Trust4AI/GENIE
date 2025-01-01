@@ -7,12 +7,15 @@ import {
     removeModel,
 } from '../utils/modelUtils'
 import { getOllamaModels } from '../utils/ollamaUtils'
-//import { writeResponseToFile } from '../utils/fileUtils'
+import GeminiExecutorModelService from './GeminiExecutorModelService'
+import OllamaExecutorModelService from './OllamaExecutorModelService'
+import OpenAIExecutorModelService from './OpenAIExecutorModelService'
+//import { writeOutputToFile } from '../utils/fileUtils'
 
 class ExecutorBaseService {
-    ollamaExecutorModelService: any
-    openaiExecutorModelService: any
-    geminiExecutorModelService: any
+    ollamaExecutorModelService: OllamaExecutorModelService
+    openaiExecutorModelService: OpenAIExecutorModelService
+    geminiExecutorModelService: GeminiExecutorModelService
     constructor() {
         this.ollamaExecutorModelService = container.resolve(
             'ollamaExecutorModelService'
@@ -25,47 +28,42 @@ class ExecutorBaseService {
         )
     }
 
-    async exists(id: string) {
-        const modelIds = await getModelIds()
+    exists(id: string): boolean {
+        const modelIds: string[] = getModelIds()
         return modelIds.includes(id)
     }
 
-    async index() {
-        const models = await getModelIds()
+    index(): string[] {
+        const models: string[] = getModelIds()
         return models
     }
 
-    async indexDetails() {
-        const models = await getModels()
+    indexDetails() {
+        const models = getModels()
         return models
     }
 
-    async addModel(
+    addModel(
         category: string,
         id: string,
         name: string,
         base_url: string,
         port: number
     ) {
-        await addModel(category, id, name, base_url, port)
+        addModel(category, id, name, base_url, port)
         if (category === 'ollama') {
             return { category, id, name, url: base_url }
         }
         return { category, id }
     }
 
-    async updateModel(
-        id: string,
-        name: string,
-        base_url: string,
-        port: number
-    ) {
-        await updateModel(id, name, base_url, port)
+    updateModel(id: string, name: string, base_url: string, port: number) {
+        updateModel(id, name, base_url, port)
         return { id, name, url: base_url }
     }
 
-    async remove(id: string) {
-        await removeModel(id)
+    remove(id: string) {
+        removeModel(id)
         return true
     }
 
@@ -91,9 +89,7 @@ class ExecutorBaseService {
         excludedText: string,
         format: string
     ) {
-        const executorModelService = await this.getExecutorModelService(
-            modelName
-        )
+        const executorModelService = this.getExecutorModelService(modelName)
         const response: string = await executorModelService.sendPromptToModel(
             modelName,
             systemPrompt,
@@ -105,13 +101,13 @@ class ExecutorBaseService {
             format
         )
 
-        //writeResponseToFile(modelName, userPrompt, response)
+        //writeOutputToFile(modelName, userPrompt, response)
         return response
     }
 
-    private async getExecutorModelService(modelName: string) {
-        const openAIModelIds = await getModelIds('openai')
-        const geminiModelIds = await getModelIds('gemini')
+    private getExecutorModelService(modelName: string) {
+        const openAIModelIds = getModelIds('openai')
+        const geminiModelIds = getModelIds('gemini')
 
         if (openAIModelIds.includes(modelName)) {
             return this.openaiExecutorModelService

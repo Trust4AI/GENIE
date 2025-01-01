@@ -1,9 +1,10 @@
 import container from '../config/container'
 import { Request, Response } from 'express'
 import { getBaseUrl } from '../utils/modelUtils'
+import ExecutorBaseService from '../services/ExecutorBaseService'
 
 class ExecutorController {
-    executorBaseService: any
+    executorBaseService: ExecutorBaseService
     ollamaPort: number = parseInt(
         process.env.OLLAMA_BASE_URL?.split(':')[-1] || '11434'
     )
@@ -19,25 +20,25 @@ class ExecutorController {
         this.execute = this.execute.bind(this)
     }
 
-    async index(req: Request, res: Response) {
+    index(req: Request, res: Response): void {
         try {
-            const models = await this.executorBaseService.index()
+            const models: string[] = this.executorBaseService.index()
             res.json(models)
         } catch (error: any) {
             res.status(500).send({ error: error.message })
         }
     }
 
-    async indexDetails(req: Request, res: Response) {
+    indexDetails(req: Request, res: Response): void {
         try {
-            const models = await this.executorBaseService.indexDetails()
+            const models = this.executorBaseService.indexDetails()
             res.json(models)
         } catch (error: any) {
             res.status(500).send({ error: error.message })
         }
     }
 
-    async add(req: Request, res: Response) {
+    add(req: Request, res: Response): void {
         try {
             const {
                 category,
@@ -45,8 +46,14 @@ class ExecutorController {
                 name,
                 base_url = getBaseUrl(id),
                 port = this.ollamaPort,
+            }: {
+                category: string
+                id: string
+                name: string
+                base_url: string
+                port: number
             } = req.body
-            const model = await this.executorBaseService.addModel(
+            const model = this.executorBaseService.addModel(
                 category,
                 id,
                 name,
@@ -59,15 +66,19 @@ class ExecutorController {
         }
     }
 
-    async update(req: Request, res: Response) {
+    update(req: Request, res: Response): void {
         try {
             const { id } = req.params
             const {
                 name,
                 base_url = getBaseUrl(id),
                 port = this.ollamaPort,
+            }: {
+                name: string
+                base_url: string
+                port: number
             } = req.body
-            const model = await this.executorBaseService.updateModel(
+            const model = this.executorBaseService.updateModel(
                 id,
                 name,
                 base_url,
@@ -79,11 +90,11 @@ class ExecutorController {
         }
     }
 
-    async remove(req: Request, res: Response) {
+    remove(req: Request, res: Response): void {
         try {
             const { id } = req.params
-            const result = await this.executorBaseService.remove(id)
-            const message = result
+            const result: boolean = this.executorBaseService.remove(id)
+            const message: string = result
                 ? 'Successfully removed.'
                 : 'Could not remove model.'
             res.send({ message })
@@ -92,7 +103,7 @@ class ExecutorController {
         }
     }
 
-    async indexOllama(req: Request, res: Response) {
+    async indexOllama(req: Request, res: Response): Promise<void> {
         try {
             const models = await this.executorBaseService.indexOllama()
             res.json(models)
@@ -101,7 +112,7 @@ class ExecutorController {
         }
     }
 
-    check(req: Request, res: Response) {
+    check(req: Request, res: Response): void {
         try {
             const message = this.executorBaseService.check()
             res.json(message)
@@ -110,7 +121,7 @@ class ExecutorController {
         }
     }
 
-    async execute(req: Request, res: Response) {
+    async execute(req: Request, res: Response): Promise<void> {
         try {
             const {
                 model_name,
@@ -121,6 +132,15 @@ class ExecutorController {
                 exclude_bias_references = false,
                 excluded_text = '',
                 format = 'text',
+            }: {
+                model_name: string
+                system_prompt: string
+                user_prompt: string
+                response_max_length: number
+                list_format_response: boolean
+                exclude_bias_references: boolean
+                excluded_text: string
+                format: string
             } = req.body
             const modelResponse = await this.executorBaseService.execute(
                 model_name,

@@ -1,7 +1,7 @@
 import OpenAI from 'openai'
 import { debugLog } from '../utils/logUtils'
 
-const openai = new OpenAI({
+const openai: OpenAI = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY || '',
 })
 
@@ -16,7 +16,7 @@ class OpenAIExecutorModelService {
         excludedText: string,
         format: string
     ): Promise<string> {
-        const promptComponents = [
+        const promptComponents: string[] = [
             responseMaxLength !== -1
                 ? `Answer the question in no more than ${responseMaxLength} words.`
                 : '',
@@ -27,7 +27,9 @@ class OpenAIExecutorModelService {
                 ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
                 : '',
         ]
-        const auxSystemPrompt = promptComponents.filter(Boolean).join(' ')
+        const auxSystemPrompt: string = promptComponents
+            .filter(Boolean)
+            .join(' ')
 
         debugLog(`Model: ${modelName}`, 'info')
         debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')

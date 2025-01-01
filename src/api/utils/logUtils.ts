@@ -1,8 +1,8 @@
 type LogType = 'error' | 'warn' | 'info' | 'log'
 
-const debugMode = process.env.DEBUG_MODE === 'true'
+const debugMode: boolean = process.env.DEBUG_MODE === 'true'
 
-const debugLog = (message: string, type: LogType = 'log') => {
+const debugLog = (message: string, type: LogType = 'log'): void => {
     if (debugMode) {
         switch (type) {
             case 'error':

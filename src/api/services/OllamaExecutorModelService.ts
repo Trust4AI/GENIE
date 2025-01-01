@@ -14,7 +14,7 @@ class OllamaExecutorModelService {
         excludedText: string,
         format: string
     ): Promise<string> {
-        const modelData = await getOllamaModelConfig(modelName)
+        const modelData = getOllamaModelConfig(modelName)
 
         if (!modelData) {
             throw new Error(
@@ -22,10 +22,10 @@ class OllamaExecutorModelService {
             )
         }
 
-        const model = modelData.name
-        const url = modelData.url
+        const model: string = modelData.name
+        const url: string = modelData.url
 
-        const promptComponents = [
+        const promptComponents: string[] = [
             responseMaxLength !== -1
                 ? `Answer the question in no more than ${responseMaxLength} words.`
                 : '',
@@ -36,7 +36,9 @@ class OllamaExecutorModelService {
                 ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
                 : '',
         ]
-        const auxSystemPrompt = promptComponents.filter(Boolean).join(' ')
+        const auxSystemPrompt: string = promptComponents
+            .filter(Boolean)
+            .join(' ')
 
         debugLog(`URL: ${url}`, 'info')
         debugLog(`Model: ${model}`, 'info')
