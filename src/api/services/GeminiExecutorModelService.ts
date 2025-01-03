@@ -26,22 +26,69 @@ class GeminiExecutorModelService {
             throw new Error('[GENIE] GEMINI_API_KEY is not defined')
         }
 
-        const model: GenerativeModel = genAI.getGenerativeModel({
-            model: modelName,
-        })
+        const model = this.getModel(modelName)
+        const generationConfig = this.getGenerationConfig(modelName, format)
 
-        const generationConfig: GenerationConfig = {
+        const auxSystemPrompt = this.buildAuxSystemPrompt(
+            responseMaxLength,
+            listFormatResponse,
+            excludeBiasReferences,
+            excludedText
+        )
+        this.logPrompts(modelName, auxSystemPrompt, systemPrompt, userPrompt)
+
+        const history = this.buildChatHistory(systemPrompt, auxSystemPrompt)
+
+        try {
+            const chatSession: ChatSession = model.startChat({
+                generationConfig,
+                history: history,
+            })
+
+            const result = await chatSession.sendMessage(userPrompt)
+            debugLog('Chat posted successfully!', 'info')
+
+            const content = result.response.text()
+            if (content) {
+                debugLog(`Response from Gemini: ${content}`, 'info')
+                return content
+            }
+
+            throw new Error('[GENIE] No content found in Gemini response')
+        } catch (error: any) {
+            debugLog('Error posting chat!', 'error')
+            debugLog(error, 'error')
+            throw new Error(error.message)
+        }
+    }
+
+    private getModel(modelName: string): GenerativeModel {
+        return genAI.getGenerativeModel({ model: modelName })
+    }
+
+    private getGenerationConfig(
+        modelName: string,
+        format: string
+    ): GenerationConfig {
+        return {
             temperature: 1,
             topP: 0.95,
             topK: 64,
             maxOutputTokens: 8192,
             response_mime_type:
-                format == 'json' && modelName.includes('gemini-1.5')
+                format === 'json' && modelName.includes('gemini-1.5')
                     ? 'application/json'
                     : 'text/plain',
         }
+    }
 
-        const promptComponents = [
+    private buildAuxSystemPrompt(
+        responseMaxLength: number,
+        listFormatResponse: boolean,
+        excludeBiasReferences: boolean,
+        excludedText: string
+    ): string {
+        const components = [
             responseMaxLength !== -1
                 ? `Answer the question in no more than ${responseMaxLength} words.`
                 : '',
@@ -52,12 +99,25 @@ class GeminiExecutorModelService {
                 ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
                 : '',
         ]
-        const auxSystemPrompt = promptComponents.filter(Boolean).join(' ')
 
+        return components.filter(Boolean).join(' ')
+    }
+
+    private logPrompts(
+        modelName: string,
+        auxSystemPrompt: string,
+        systemPrompt: string,
+        userPrompt: string
+    ): void {
         debugLog(`Model: ${modelName}`, 'info')
         debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')
         debugLog(`User prompt: ${userPrompt}`, 'info')
+    }
 
+    private buildChatHistory(
+        systemPrompt: string,
+        auxSystemPrompt: string
+    ): Array<{ role: string; parts: Array<{ text: string }> }> {
         const history = []
 
         if (systemPrompt || auxSystemPrompt) {
@@ -71,26 +131,7 @@ class GeminiExecutorModelService {
             })
         }
 
-        try {
-            const chatSession: ChatSession = model.startChat({
-                generationConfig,
-                history: history,
-            })
-
-            const result = await chatSession.sendMessage(userPrompt)
-            debugLog('Chat posted successfully!', 'info')
-            const content = result.response.text()
-
-            if (content) {
-                debugLog(`Response from Gemini: ${content}`, 'info')
-                return content
-            }
-            throw new Error('[GENIE] No content found in Gemini response')
-        } catch (error: any) {
-            debugLog('Error posting chat!', 'error')
-            debugLog(error, 'error')
-            throw new Error(error.message)
-        }
+        return history
     }
 }
 

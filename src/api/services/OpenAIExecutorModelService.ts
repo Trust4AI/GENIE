@@ -22,7 +22,41 @@ class OpenAIExecutorModelService {
             throw new Error('[GENIE] OPENAI_API_KEY is not defined')
         }
 
-        const promptComponents: string[] = [
+        const auxSystemPrompt = this.buildAuxSystemPrompt(
+            responseMaxLength,
+            listFormatResponse,
+            excludeBiasReferences,
+            excludedText
+        )
+
+        this.logPrompts(modelName, auxSystemPrompt, systemPrompt, userPrompt)
+
+        const messages = this.buildMessages(
+            auxSystemPrompt,
+            systemPrompt,
+            userPrompt
+        )
+        const params = this.buildParams(modelName, messages, format)
+
+        try {
+            const response = await this.fetchCompletion(params)
+            debugLog('Chat posted successfully!', 'info')
+            debugLog(`Response from OpenAI: ${response}`, 'info')
+            return response
+        } catch (error: any) {
+            debugLog('Error posting chat!', 'error')
+            debugLog(error, 'error')
+            throw new Error(error.message)
+        }
+    }
+
+    private buildAuxSystemPrompt(
+        responseMaxLength: number,
+        listFormatResponse: boolean,
+        excludeBiasReferences: boolean,
+        excludedText: string
+    ): string {
+        const components = [
             responseMaxLength !== -1
                 ? `Answer the question in no more than ${responseMaxLength} words.`
                 : '',
@@ -33,56 +67,68 @@ class OpenAIExecutorModelService {
                 ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
                 : '',
         ]
-        const auxSystemPrompt: string = promptComponents
-            .filter(Boolean)
-            .join(' ')
 
+        return components.filter(Boolean).join(' ')
+    }
+
+    private logPrompts(
+        modelName: string,
+        auxSystemPrompt: string,
+        systemPrompt: string,
+        userPrompt: string
+    ): void {
         debugLog(`Model: ${modelName}`, 'info')
         debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')
         debugLog(`User prompt: ${userPrompt}`, 'info')
+    }
 
+    private buildMessages(
+        auxSystemPrompt: string,
+        systemPrompt: string,
+        userPrompt: string
+    ): OpenAI.Chat.ChatCompletionMessageParam[] {
         const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
-            {
-                role: 'user',
-                content: userPrompt,
-            },
+            { role: 'user', content: userPrompt },
         ]
 
         if (systemPrompt || auxSystemPrompt) {
             messages.unshift({
                 role: 'system',
-                content: `${auxSystemPrompt} ${systemPrompt}`,
+                content: `${auxSystemPrompt} ${systemPrompt}`.trim(),
             })
         }
 
+        return messages
+    }
+
+    private buildParams(
+        modelName: string,
+        messages: OpenAI.Chat.ChatCompletionMessageParam[],
+        format: string
+    ): OpenAI.Chat.ChatCompletionCreateParams {
         const params: OpenAI.Chat.ChatCompletionCreateParams = {
             model: modelName,
             messages,
         }
 
         if (format === 'json') {
-            params['response_format'] = {
-                type: 'json_object',
-            }
+            params.response_format = { type: 'json_object' }
         }
 
-        try {
-            const completion = await openai.chat.completions.create(params)
-            debugLog('Chat posted successfully!', 'info')
-            const content = completion.choices[0].message.content
+        return params
+    }
 
-            if (content) {
-                debugLog(`Response from OpenAI: ${content}`, 'info')
-                return content
-            }
+    private async fetchCompletion(params: any): Promise<string> {
+        const completion = await openai.chat.completions.create(params)
+        const content = completion.choices[0]?.message?.content
+
+        if (!content) {
             throw new Error(
                 '[GUARD-ME] No content found in OpenAI GPT response'
             )
-        } catch (error: any) {
-            debugLog('Error posting chat!', 'error')
-            debugLog(error, 'error')
-            throw new Error(error.message)
         }
+
+        return content
     }
 }
 
