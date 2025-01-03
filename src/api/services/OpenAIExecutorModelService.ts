@@ -1,8 +1,10 @@
 import OpenAI from 'openai'
 import { debugLog } from '../utils/logUtils'
 
+const openaiAPIKey: string = process.env.OPENAI_API_KEY ?? ''
+
 const openai: OpenAI = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY || '',
+    apiKey: openaiAPIKey,
 })
 
 class OpenAIExecutorModelService {
@@ -16,6 +18,10 @@ class OpenAIExecutorModelService {
         excludedText: string,
         format: string
     ): Promise<string> {
+        if (!openaiAPIKey) {
+            throw new Error('[GENIE] OPENAI_API_KEY is not defined')
+        }
+
         const promptComponents: string[] = [
             responseMaxLength !== -1
                 ? `Answer the question in no more than ${responseMaxLength} words.`

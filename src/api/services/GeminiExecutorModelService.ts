@@ -7,7 +7,7 @@ import {
     GoogleGenerativeAI,
 } from '@google/generative-ai'
 
-const geminiAPIKey = process.env.GEMINI_API_KEY || ''
+const geminiAPIKey = process.env.GEMINI_API_KEY ?? ''
 
 const genAI = new GoogleGenerativeAI(geminiAPIKey)
 
@@ -22,6 +22,10 @@ class GeminiExecutorModelService {
         excludedText: string,
         format: string
     ): Promise<string> {
+        if (!geminiAPIKey) {
+            throw new Error('[GENIE] GEMINI_API_KEY is not defined')
+        }
+
         const model: GenerativeModel = genAI.getGenerativeModel({
             model: modelName,
         })
