@@ -250,10 +250,6 @@ const executorBaseService = container.resolve('executorBaseService')
  *           description: Determines whether the response of the model should be returned as a structured list of points.
  *           type: boolean
  *           example: true
- *         exclude_bias_references:
- *           description: Determines  whether to exclude biased references to the attribute in the response of the model.
- *           type: boolean
- *           example: true
  *         excluded_text:
  *           description: The text to exclude from the response of the model.
  *           type: string
@@ -278,7 +274,6 @@ const executorBaseService = container.resolve('executorBaseService')
  *         user_prompt: "How can a Jewish engineer solve complex problems?"
  *         response_max_length: 100
  *         list_format_response: true
- *         exclude_bias_references: true
  *         excluded_text: "Jewish"
  *         format: "text"
  *         temperature: 0.5

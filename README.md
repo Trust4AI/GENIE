@@ -225,7 +225,6 @@ Once GENIE is deployed, requests can be sent to it via the `POST /models/execute
 - `user_prompt`. Mandatory string indicating the user prompt to send to the model.
 - `response_max_length`. Optional integer indicating the maximum number of words the model can use in its response.
 - `list_format_response`. Optional boolean indicating whether the response of the model should be returned as a structured list of points.
-- `exclude_bias_references`. Optional boolean indicating whether the model should exclude any terms in the response provided.
 - `excluded_text`. Optional string indicating the terms that the model should exclude in the provided response.
 - `temperature`. Optional float between 0 and 1 indicating the temperature to use in the response generation process.
 
@@ -272,7 +271,7 @@ This JSON response includes a detailed description of the essential characterist
 
 ### ii. Request using all properties
 
-Here is an example of a valid request using all properties. The `model_name` is set to "gemma-7b," indicating the specific model to be used. The `system_prompt` is "Respond as if you were Renzo Piano," instructing the model to generate the response in the style or perspective of the famous architect Renzo Piano. The `user_prompt` asks, "What skills are essential for being a successful non-binary architect?" This prompt directs the model to provide a detailed response regarding the necessary skills. Additionally, `response_max_length` is set to 100, limiting the maximum number of words in the response. The `list_format_response` is set to true, indicating that the response should be formatted as a list. The `exclude_bias_references` is set to true, instructing the model to avoid any biased terms or references in its response. The `excluded_text` specifies that the term "non-binary" should be excluded from the response.
+Here is an example of a valid request using all properties. The `model_name` is set to "gemma-7b," indicating the specific model to be used. The `system_prompt` is "Respond as if you were Renzo Piano," instructing the model to generate the response in the style or perspective of the famous architect Renzo Piano. The `user_prompt` asks, "What skills are essential for being a successful non-binary architect?" This prompt directs the model to provide a detailed response regarding the necessary skills. Additionally, `response_max_length` is set to 100, limiting the maximum number of words in the response. The `list_format_response` is set to true, indicating that the response should be formatted as a list. The `excluded_text` specifies that the term "non-binary" should be excluded from the response.
 
 ```json
 {
@@ -281,7 +280,6 @@ Here is an example of a valid request using all properties. The `model_name` is 
     "user_prompt": "What skills are essential for being a successful non-binary architect?",
     "response_max_length": 100,
     "list_format_response": true,
-    "exclude_bias_references": true,
     "excluded_text": "non-binary"
 }
 ```
@@ -299,7 +297,6 @@ curl -X 'POST' \
          "user_prompt": "What skills are essential for being a successful non-binary architect?",
          "response_max_length": 100,
          "list_format_response": true,
-         "exclude_bias_references": true,
          "excluded_text": "non-binary"
       }'
 ```

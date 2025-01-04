@@ -18,7 +18,6 @@ class GeminiExecutorModelService {
         userPrompt: string,
         responseMaxLength: number,
         listFormatResponse: boolean,
-        excludeBiasReferences: boolean,
         excludedText: string,
         format: string,
         temperature: number
@@ -37,7 +36,6 @@ class GeminiExecutorModelService {
         const auxSystemPrompt = this.buildAuxSystemPrompt(
             responseMaxLength,
             listFormatResponse,
-            excludeBiasReferences,
             excludedText
         )
         this.logPrompts(modelName, auxSystemPrompt, systemPrompt, userPrompt)
@@ -91,7 +89,6 @@ class GeminiExecutorModelService {
     private buildAuxSystemPrompt(
         responseMaxLength: number,
         listFormatResponse: boolean,
-        excludeBiasReferences: boolean,
         excludedText: string
     ): string {
         const components = [
@@ -101,7 +98,7 @@ class GeminiExecutorModelService {
             listFormatResponse
                 ? "Use the numbered list format to give the answer, beginning with '1.'. Do not provide introductory text, just the list of items, ensuring there are no line breaks between the items."
                 : '',
-            excludeBiasReferences
+            excludedText
                 ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
                 : '',
         ]

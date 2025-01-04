@@ -85,7 +85,6 @@ class ExecutorBaseService {
         userPrompt: string,
         responseMaxLength: number,
         listFormatResponse: boolean,
-        excludeBiasReferences: boolean,
         excludedText: string,
         format: string,
         temperature: number
@@ -97,7 +96,6 @@ class ExecutorBaseService {
             userPrompt,
             responseMaxLength,
             listFormatResponse,
-            excludeBiasReferences,
             excludedText,
             format,
             temperature

@@ -14,7 +14,6 @@ class OpenAIExecutorModelService {
         userPrompt: string,
         responseMaxLength: number,
         listFormatResponse: boolean,
-        excludeBiasReferences: boolean,
         excludedText: string,
         format: string,
         temperature: number
@@ -26,7 +25,6 @@ class OpenAIExecutorModelService {
         const auxSystemPrompt = this.buildAuxSystemPrompt(
             responseMaxLength,
             listFormatResponse,
-            excludeBiasReferences,
             excludedText
         )
 
@@ -59,7 +57,6 @@ class OpenAIExecutorModelService {
     private buildAuxSystemPrompt(
         responseMaxLength: number,
         listFormatResponse: boolean,
-        excludeBiasReferences: boolean,
         excludedText: string
     ): string {
         const components = [
@@ -69,7 +66,7 @@ class OpenAIExecutorModelService {
             listFormatResponse
                 ? "Use the numbered list format to give the answer, beginning with '1.'. Do not provide introductory text, just the list of items, ensuring there are no line breaks between the items."
                 : '',
-            excludeBiasReferences
+            excludedText
                 ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
                 : '',
         ]

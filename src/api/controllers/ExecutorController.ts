@@ -129,7 +129,6 @@ class ExecutorController {
                 user_prompt,
                 response_max_length = -1,
                 list_format_response = false,
-                exclude_bias_references = false,
                 excluded_text = '',
                 format = 'text',
                 temperature = 0.5,
@@ -139,7 +138,6 @@ class ExecutorController {
                 user_prompt: string
                 response_max_length: number
                 list_format_response: boolean
-                exclude_bias_references: boolean
                 excluded_text: string
                 format: string
                 temperature: number
@@ -150,7 +148,6 @@ class ExecutorController {
                 user_prompt,
                 response_max_length,
                 list_format_response,
-                exclude_bias_references,
                 excluded_text,
                 format,
                 temperature

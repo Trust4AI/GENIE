@@ -164,12 +164,6 @@ const execute = [
         .withMessage(
             'list_format_response is optional but must be a boolean if provided'
         ),
-    check('exclude_bias_references')
-        .optional()
-        .isBoolean()
-        .withMessage(
-            'exclude_bias_references is optional but must be a boolean if provided'
-        ),
     check('excluded_text')
         .optional()
         .isString()
