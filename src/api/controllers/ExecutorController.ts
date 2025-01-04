@@ -132,6 +132,7 @@ class ExecutorController {
                 exclude_bias_references = false,
                 excluded_text = '',
                 format = 'text',
+                temperature = 0.5,
             }: {
                 model_name: string
                 system_prompt: string
@@ -141,6 +142,7 @@ class ExecutorController {
                 exclude_bias_references: boolean
                 excluded_text: string
                 format: string
+                temperature: number
             } = req.body
             const modelResponse = await this.executorBaseService.execute(
                 model_name,
@@ -150,7 +152,8 @@ class ExecutorController {
                 list_format_response,
                 exclude_bias_references,
                 excluded_text,
-                format
+                format,
+                temperature
             )
             res.send({ response: modelResponse })
         } catch (error: any) {

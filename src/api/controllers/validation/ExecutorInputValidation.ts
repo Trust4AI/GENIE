@@ -186,6 +186,12 @@ const execute = [
         .withMessage(
             'format is optional but must be one of the following values: [json, text] if provided'
         ),
+    check('temperature')
+        .optional()
+        .isFloat({ min: 0.0, max: 1.0 })
+        .withMessage(
+            'temperature is optional but must be a float between 0.0 and 1.0 if provided'
+        ),
 ]
 
 export { add, update, execute }

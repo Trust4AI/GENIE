@@ -227,6 +227,7 @@ Once GENIE is deployed, requests can be sent to it via the `POST /models/execute
 - `list_format_response`. Optional boolean indicating whether the response of the model should be returned as a structured list of points.
 - `exclude_bias_references`. Optional boolean indicating whether the model should exclude any terms in the response provided.
 - `excluded_text`. Optional string indicating the terms that the model should exclude in the provided response.
+- `temperature`. Optional float between 0 and 1 indicating the temperature to use in the response generation process.
 
 > [!IMPORTANT]
 > It is important that the given `model_name` is defined in the [models configuration file](https://github.com/Trust4AI/GENIE/blob/main/src/api/config/models.json), and that the model is correctly deployed, as explained above.

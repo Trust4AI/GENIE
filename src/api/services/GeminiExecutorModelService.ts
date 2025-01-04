@@ -20,14 +20,19 @@ class GeminiExecutorModelService {
         listFormatResponse: boolean,
         excludeBiasReferences: boolean,
         excludedText: string,
-        format: string
+        format: string,
+        temperature: number
     ): Promise<string> {
         if (!geminiAPIKey) {
             throw new Error('[GENIE] GEMINI_API_KEY is not defined')
         }
 
         const model = this.getModel(modelName)
-        const generationConfig = this.getGenerationConfig(modelName, format)
+        const generationConfig = this.getGenerationConfig(
+            modelName,
+            format,
+            temperature
+        )
 
         const auxSystemPrompt = this.buildAuxSystemPrompt(
             responseMaxLength,
@@ -68,10 +73,11 @@ class GeminiExecutorModelService {
 
     private getGenerationConfig(
         modelName: string,
-        format: string
+        format: string,
+        temperature: number
     ): GenerationConfig {
         return {
-            temperature: 1,
+            temperature: temperature,
             topP: 0.95,
             topK: 64,
             maxOutputTokens: 8192,

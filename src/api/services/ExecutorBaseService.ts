@@ -87,7 +87,8 @@ class ExecutorBaseService {
         listFormatResponse: boolean,
         excludeBiasReferences: boolean,
         excludedText: string,
-        format: string
+        format: string,
+        temperature: number
     ) {
         const executorModelService = this.getExecutorModelService(modelName)
         const response: string = await executorModelService.sendPromptToModel(
@@ -98,7 +99,8 @@ class ExecutorBaseService {
             listFormatResponse,
             excludeBiasReferences,
             excludedText,
-            format
+            format,
+            temperature
         )
 
         //writeOutputToFile(modelName, userPrompt, response)

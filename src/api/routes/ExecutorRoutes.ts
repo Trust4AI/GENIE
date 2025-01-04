@@ -265,6 +265,13 @@ const executorBaseService = container.resolve('executorBaseService')
  *           type: string
  *           enum: ["text", "json"]
  *           example: "text"
+ *         temperature:
+ *           description: The temperature to use for the response generation.
+ *           type: number
+ *           minimum: 0.0
+ *           maximum: 1.0
+ *           default: 0.5
+ *           example: 0.5
  *       example:
  *         model_name: "llama3-8b"
  *         system_prompt: "Respond as if you were NASA's chief engineer."
@@ -274,6 +281,7 @@ const executorBaseService = container.resolve('executorBaseService')
  *         exclude_bias_references: true
  *         excluded_text: "Jewish"
  *         format: "text"
+ *         temperature: 0.5
  *     Response:
  *       type: object
  *       required:

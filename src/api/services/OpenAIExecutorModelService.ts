@@ -16,7 +16,8 @@ class OpenAIExecutorModelService {
         listFormatResponse: boolean,
         excludeBiasReferences: boolean,
         excludedText: string,
-        format: string
+        format: string,
+        temperature: number
     ): Promise<string> {
         if (!openaiAPIKey) {
             throw new Error('[GENIE] OPENAI_API_KEY is not defined')
@@ -36,7 +37,12 @@ class OpenAIExecutorModelService {
             systemPrompt,
             userPrompt
         )
-        const params = this.buildParams(modelName, messages, format)
+        const params = this.buildParams(
+            modelName,
+            messages,
+            format,
+            temperature
+        )
 
         try {
             const response = await this.fetchCompletion(params)
@@ -104,11 +110,13 @@ class OpenAIExecutorModelService {
     private buildParams(
         modelName: string,
         messages: OpenAI.Chat.ChatCompletionMessageParam[],
-        format: string
+        format: string,
+        temperature: number
     ): OpenAI.Chat.ChatCompletionCreateParams {
         const params: OpenAI.Chat.ChatCompletionCreateParams = {
             model: modelName,
             messages,
+            temperature,
         }
 
         if (format === 'json') {

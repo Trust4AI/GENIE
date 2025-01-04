@@ -12,7 +12,8 @@ class OllamaExecutorModelService {
         listFormatResponse: boolean,
         excludeBiasReferences: boolean,
         excludedText: string,
-        format: string
+        format: string,
+        temperature: number
     ): Promise<string> {
         const modelData = getOllamaModelConfig(modelName)
 
@@ -42,7 +43,8 @@ class OllamaExecutorModelService {
             auxSystemPrompt,
             systemPrompt,
             userPrompt,
-            format
+            format,
+            temperature
         )
 
         try {
@@ -58,18 +60,6 @@ class OllamaExecutorModelService {
             debugLog(error, 'error')
             throw new Error(error.message)
         }
-    }
-
-    private getModelData(modelName: string) {
-        const modelData = getOllamaModelConfig(modelName)
-
-        if (!modelData) {
-            throw new Error(
-                'Model specified does not exist. Please check the models defined in the configuration.'
-            )
-        }
-
-        return modelData
     }
 
     private buildAuxSystemPrompt(
@@ -111,7 +101,8 @@ class OllamaExecutorModelService {
         auxSystemPrompt: string,
         systemPrompt: string,
         userPrompt: string,
-        format: string
+        format: string,
+        temperature: number
     ): OllamaRequestBody {
         const messages = [{ role: 'user', content: userPrompt }]
 
@@ -128,9 +119,11 @@ class OllamaExecutorModelService {
             messages,
         }
 
+        requestBody.options = { temperature }
+
         const num_ctx = process.env.NUM_CONTEXT_WINDOW
         if (num_ctx) {
-            requestBody.options = { num_ctx: parseInt(num_ctx) }
+            requestBody.options.num_ctx = parseInt(num_ctx)
         }
 
         if (format === 'json') {
