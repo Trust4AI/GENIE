@@ -1,19 +1,23 @@
+import config from '../config/config'
 import { OllamaRequestBody } from '../types'
 import { debugLog } from '../utils/logUtils'
 import { getOllamaModelConfig } from '../utils/modelUtils'
+import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
 import { sendChatRequest } from '../utils/ollamaUtils'
 
 class OllamaExecutorModelService {
-    async sendPromptToModel(
-        modelName: string,
-        systemPrompt: string,
-        userPrompt: string,
-        responseMaxLength: number,
-        listFormatResponse: boolean,
-        excludedText: string,
-        format: string,
-        temperature: number
-    ): Promise<string> {
+    async sendPromptToModel(dto: ExecuteRequestDTO): Promise<string> {
+        const {
+            modelName,
+            systemPrompt,
+            userPrompt,
+            responseMaxLength,
+            listFormatResponse,
+            excludedText,
+            format,
+            temperature,
+        } = dto
+
         const modelData = getOllamaModelConfig(modelName)
 
         if (!modelData) {
@@ -118,9 +122,9 @@ class OllamaExecutorModelService {
 
         requestBody.options = { temperature }
 
-        const num_ctx = process.env.NUM_CONTEXT_WINDOW
-        if (num_ctx) {
-            requestBody.options.num_ctx = parseInt(num_ctx)
+        const numCtx = config.numContextWindow
+        if (numCtx) {
+            requestBody.options.num_ctx = parseInt(numCtx)
         }
 
         if (format === 'json') {

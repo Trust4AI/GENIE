@@ -1,4 +1,5 @@
-import { GenerationConfig } from '../interfaces/Gemini'
+import config from '../config/config'
+import { GeminiGenerationConfig } from '../types'
 import { debugLog } from '../utils/logUtils'
 
 import {
@@ -6,22 +7,25 @@ import {
     GenerativeModel,
     GoogleGenerativeAI,
 } from '@google/generative-ai'
+import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
 
-const geminiAPIKey = process.env.GEMINI_API_KEY ?? ''
+const geminiAPIKey = config.geminiAPIKey
 
 const genAI = new GoogleGenerativeAI(geminiAPIKey)
 
 class GeminiExecutorModelService {
-    async sendPromptToModel(
-        modelName: string,
-        systemPrompt: string,
-        userPrompt: string,
-        responseMaxLength: number,
-        listFormatResponse: boolean,
-        excludedText: string,
-        format: string,
-        temperature: number
-    ): Promise<string> {
+    async sendPromptToModel(dto: ExecuteRequestDTO): Promise<string> {
+        const {
+            modelName,
+            systemPrompt,
+            userPrompt,
+            responseMaxLength,
+            listFormatResponse,
+            excludedText,
+            format,
+            temperature,
+        } = dto
+
         if (!geminiAPIKey) {
             throw new Error('[GENIE] GEMINI_API_KEY is not defined')
         }
@@ -73,7 +77,7 @@ class GeminiExecutorModelService {
         modelName: string,
         format: string,
         temperature: number
-    ): GenerationConfig {
+    ): GeminiGenerationConfig {
         return {
             temperature: temperature,
             topP: 0.95,

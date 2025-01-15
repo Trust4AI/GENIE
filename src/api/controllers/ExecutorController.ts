@@ -2,12 +2,12 @@ import container from '../config/container'
 import { Request, Response } from 'express'
 import { getBaseUrl } from '../utils/modelUtils'
 import ExecutorBaseService from '../services/ExecutorBaseService'
+import config from '../config/config'
+import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
 
 class ExecutorController {
     executorBaseService: ExecutorBaseService
-    ollamaPort: number = parseInt(
-        process.env.OLLAMA_BASE_URL?.split(':')[-1] || '11434'
-    )
+    ollamaPort: number = parseInt(config.ollamaPort)
     constructor() {
         this.executorBaseService = container.resolve('executorBaseService')
         this.index = this.index.bind(this)
@@ -123,35 +123,8 @@ class ExecutorController {
 
     async execute(req: Request, res: Response): Promise<void> {
         try {
-            const {
-                model_name,
-                system_prompt = '',
-                user_prompt,
-                response_max_length = -1,
-                list_format_response = false,
-                excluded_text = '',
-                format = 'text',
-                temperature = 0.5,
-            }: {
-                model_name: string
-                system_prompt: string
-                user_prompt: string
-                response_max_length: number
-                list_format_response: boolean
-                excluded_text: string
-                format: string
-                temperature: number
-            } = req.body
-            const modelResponse = await this.executorBaseService.execute(
-                model_name,
-                system_prompt,
-                user_prompt,
-                response_max_length,
-                list_format_response,
-                excluded_text,
-                format,
-                temperature
-            )
+            const dto: ExecuteRequestDTO = new ExecuteRequestDTO(req.body)
+            const modelResponse = await this.executorBaseService.execute(dto)
             res.send({ response: modelResponse })
         } catch (error: any) {
             res.status(500).send({ error: error.message })

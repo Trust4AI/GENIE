@@ -1,6 +1,7 @@
-type LogType = 'error' | 'warn' | 'info' | 'log'
+import config from '../config/config'
+import { LogType } from '../types'
 
-const debugMode: boolean = process.env.DEBUG_MODE === 'true'
+const debugMode: boolean = config.debugMode
 
 const debugLog = (message: string, type: LogType = 'log'): void => {
     if (debugMode) {

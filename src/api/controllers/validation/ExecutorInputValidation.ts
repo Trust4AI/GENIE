@@ -6,9 +6,9 @@ import {
     getUsedOllaModels,
 } from '../../utils/modelUtils'
 import { getOllamaModels } from '../../utils/ollamaUtils'
+import config from '../../config/config'
 
-const ollamaBaseUrl: string =
-    process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
+const ollamaBaseUrl: string = config.ollamaBaseUrl
 
 const add = [
     check('category')

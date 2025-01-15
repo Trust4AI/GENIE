@@ -1,3 +1,4 @@
+import config from '../config/config'
 import container from '../config/container'
 import {
     addModel,
@@ -6,6 +7,7 @@ import {
     getModels,
     removeModel,
 } from '../utils/modelUtils'
+import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
 import { getOllamaModels } from '../utils/ollamaUtils'
 import GeminiExecutorModelService from './GeminiExecutorModelService'
 import OllamaExecutorModelService from './OllamaExecutorModelService'
@@ -68,8 +70,7 @@ class ExecutorBaseService {
     }
 
     async indexOllama() {
-        const ollamaBaseUrl =
-            process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
+        const ollamaBaseUrl = config.ollamaBaseUrl
         const models = getOllamaModels(ollamaBaseUrl)
 
         return models
@@ -79,26 +80,10 @@ class ExecutorBaseService {
         return { message: 'GENIE is working properly!' }
     }
 
-    async execute(
-        modelName: string,
-        systemPrompt: string,
-        userPrompt: string,
-        responseMaxLength: number,
-        listFormatResponse: boolean,
-        excludedText: string,
-        format: string,
-        temperature: number
-    ) {
-        const executorModelService = this.getExecutorModelService(modelName)
+    async execute(dto: ExecuteRequestDTO) {
+        const executorModelService = this.getExecutorModelService(dto.modelName)
         const response: string = await executorModelService.sendPromptToModel(
-            modelName,
-            systemPrompt,
-            userPrompt,
-            responseMaxLength,
-            listFormatResponse,
-            excludedText,
-            format,
-            temperature
+            dto
         )
 
         //writeOutputToFile(modelName, userPrompt, response)

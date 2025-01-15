@@ -1,23 +1,26 @@
 import OpenAI from 'openai'
 import { debugLog } from '../utils/logUtils'
+import config from '../config/config'
+import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
 
-const openaiAPIKey: string = process.env.OPENAI_API_KEY ?? ''
+const openaiAPIKey: string = config.openaiAPIKey
 
 const openai: OpenAI = new OpenAI({
     apiKey: openaiAPIKey,
 })
 
 class OpenAIExecutorModelService {
-    async sendPromptToModel(
-        modelName: string,
-        systemPrompt: string,
-        userPrompt: string,
-        responseMaxLength: number,
-        listFormatResponse: boolean,
-        excludedText: string,
-        format: string,
-        temperature: number
-    ): Promise<string> {
+    async sendPromptToModel(dto: ExecuteRequestDTO): Promise<string> {
+        const {
+            modelName,
+            systemPrompt,
+            userPrompt,
+            responseMaxLength,
+            listFormatResponse,
+            excludedText,
+            format,
+            temperature,
+        } = dto
         if (!openaiAPIKey) {
             throw new Error('[GENIE] OPENAI_API_KEY is not defined')
         }
