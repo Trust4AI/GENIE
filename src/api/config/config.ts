@@ -1,3 +1,5 @@
+import './loadEnv'
+
 const config = {
     port: process.env.PORT || '8081',
     numContextWindow: process.env.NUM_CONTEXT_WINDOW,
