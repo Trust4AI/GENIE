@@ -1,12 +1,12 @@
-import { createContainer, asClass } from 'awilix'
+import { createContainer, asClass, AwilixContainer } from 'awilix'
 
 import ExecutorBaseService from '../services/ExecutorBaseService'
 import OllamaExecutorModelService from '../services/OllamaExecutorModelService'
 import OpenAIExecutorModelService from '../services/OpenAIExecutorModelService'
 import GeminiExecutorModelService from '../services/GeminiExecutorModelService'
 
-function initContainer() {
-    const container = createContainer()
+function initContainer(): AwilixContainer {
+    const container: AwilixContainer = createContainer()
 
     container.register({
         executorBaseService: asClass(ExecutorBaseService).singleton(),
@@ -23,6 +23,6 @@ function initContainer() {
     return container
 }
 
-const container = initContainer()
+const container: AwilixContainer = initContainer()
 
 export default container

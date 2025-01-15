@@ -1,6 +1,7 @@
+import config from './config/config'
 import './config/loadEnv'
 
-const port: string = process.env.PORT || '8081'
+const port: string = config.port
 
 const app = require('./app')
 

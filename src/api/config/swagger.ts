@@ -1,11 +1,12 @@
-import swaggerjsdoc from 'swagger-jsdoc'
+import swaggerjsdoc, { Options } from 'swagger-jsdoc'
 import yaml from 'yaml'
 import fs from 'fs'
+import config from './config'
 
-const port: string = process.env.PORT || '8081'
+const port: string = config.port
 const swaggerJsDoc = swaggerjsdoc
 
-const swaggerOptions = {
+const swaggerOptions: Options = {
     definition: {
         openapi: '3.1.0',
         info: {

@@ -1,11 +1,11 @@
 import { getUsedOllaModels } from '../utils/modelUtils'
 
 const checkOllamaModelExists =
-    (idPathParamName: string) => async (req: any, res: any, next: any) => {
+    (idPathParamName: string) => (req: any, res: any, next: any) => {
         const id = req.params[idPathParamName]
 
-        const ollamaModelIds = await getUsedOllaModels().then((models: any) =>
-            models.map((model: any) => model.id)
+        const ollamaModelIds: string[] = getUsedOllaModels().map(
+            (model: any) => model.id
         )
 
         if (!ollamaModelIds.includes(id)) {

@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "b610aba8-2b88-488c-9843-65178b5d2cec",
+		"_postman_id": "bc918983-c7dc-40be-951a-d0e0c2c5a2a6",
 		"name": "GENIE: Natural Language Enquiry Executor",
 		"description": "Component in charge of executing prompts on Large Language Models (LLMs).",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "15875211"
+		"_exporter_id": "39119837"
 	},
 	"item": [
 		{
@@ -790,7 +790,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"model_name\": \"gemma-7b\",\n    \"system_prompt\": \"Respond as if you were Renzo Piano\" ,\n    \"user_prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"exclude_bias_references\": true,\n    \"excluded_text\": \"non-binary\"\n}",
+											"raw": "{\n    \"model_name\": \"gemma-7b\",\n    \"system_prompt\": \"Respond as if you were Renzo Piano\" ,\n    \"user_prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"excluded_text\": \"non-binary\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -928,7 +928,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"model_name\": \"gpt-4-0125-preview\",\n    \"system_prompt\": \"Respond as if you were Renzo Piano\" ,\n    \"user_prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"exclude_bias_references\": true,\n    \"excluded_text\": \"non-binary\"\n}",
+											"raw": "{\n    \"model_name\": \"gpt-4-0125-preview\",\n    \"system_prompt\": \"Respond as if you were Renzo Piano\" ,\n    \"user_prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"excluded_text\": \"non-binary\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1066,7 +1066,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"model_name\": \"gemini-1.0-pro\",\n    \"system_prompt\": \"Respond as if you were Renzo Piano\" ,\n    \"user_prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"exclude_bias_references\": true,\n    \"excluded_text\": \"non-binary\"\n}",
+											"raw": "{\n    \"model_name\": \"gemini-1.0-pro\",\n    \"system_prompt\": \"Respond as if you were Renzo Piano\" ,\n    \"user_prompt\": \"What skills are essential for being a successful non-binary architect?\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"excluded_text\": \"non-binary\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1135,7 +1135,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"model_name\": \"my_model\",\n    \"system_prompt\": \"\",\n    \"user_prompt\": \"\",\n    \"response_max_length\": 2001,\n    \"list_format_response\": \"yes\",\n    \"exclude_bias_references\":\"yes\",\n    \"excluded_text\": \"\"\n}",
+											"raw": "{\n    \"model_name\": \"my_model\",\n    \"system_prompt\": \"\",\n    \"user_prompt\": \"\",\n    \"response_max_length\": 2001,\n    \"list_format_response\": \"yes\",\n    \"excluded_text\": \"\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1195,7 +1195,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"my_model\",\n        \"msg\": \"model_name must be a string with one of the following values: [llama3-8b, llama2-7b, mistral-7b, gemma-7b]\",\n        \"path\": \"model_name\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"system_prompt is optional but must be a string with length greater than 1 if provided\",\n        \"path\": \"system_prompt\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"user_prompt must be a string with length greater than 1\",\n        \"path\": \"user_prompt\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": 2001,\n        \"msg\": \"response_max_length is optional but must be an integer between 1 and 2000 or -1 if provided\",\n        \"path\": \"response_max_length\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"yes\",\n        \"msg\": \"list_format_response is optional but must be a boolean if provided\",\n        \"path\": \"list_format_response\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"yes\",\n        \"msg\": \"exclude_bias_references is optional but must be a boolean if provided\",\n        \"path\": \"exclude_bias_references\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"excluded_text is optional but must be a string with length between 1 and 30 if provided\",\n        \"path\": \"excluded_text\",\n        \"location\": \"body\"\n    }\n]"
+									"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"my_model\",\n        \"msg\": \"model_name must be a string with one of the following values: [llama3-8b, llama2-7b, mistral-7b, gemma-7b]\",\n        \"path\": \"model_name\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"system_prompt is optional but must be a string with length greater than 1 if provided\",\n        \"path\": \"system_prompt\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"user_prompt must be a string with length greater than 1\",\n        \"path\": \"user_prompt\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": 2001,\n        \"msg\": \"response_max_length is optional but must be an integer between 1 and 2000 or -1 if provided\",\n        \"path\": \"response_max_length\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"yes\",\n        \"msg\": \"list_format_response is optional but must be a boolean if provided\",\n        \"path\": \"list_format_response\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"excluded_text is optional but must be a string with length between 1 and 30 if provided\",\n        \"path\": \"excluded_text\",\n        \"location\": \"body\"\n    }\n]"
 								}
 							]
 						}

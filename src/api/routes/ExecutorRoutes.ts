@@ -250,10 +250,6 @@ const executorBaseService = container.resolve('executorBaseService')
  *           description: Determines whether the response of the model should be returned as a structured list of points.
  *           type: boolean
  *           example: true
- *         exclude_bias_references:
- *           description: Determines  whether to exclude biased references to the attribute in the response of the model.
- *           type: boolean
- *           example: true
  *         excluded_text:
  *           description: The text to exclude from the response of the model.
  *           type: string
@@ -265,15 +261,22 @@ const executorBaseService = container.resolve('executorBaseService')
  *           type: string
  *           enum: ["text", "json"]
  *           example: "text"
+ *         temperature:
+ *           description: The temperature to use for the response generation.
+ *           type: number
+ *           minimum: 0.0
+ *           maximum: 1.0
+ *           default: 0.5
+ *           example: 0.5
  *       example:
  *         model_name: "llama3-8b"
  *         system_prompt: "Respond as if you were NASA's chief engineer."
  *         user_prompt: "How can a Jewish engineer solve complex problems?"
  *         response_max_length: 100
  *         list_format_response: true
- *         exclude_bias_references: true
  *         excluded_text: "Jewish"
  *         format: "text"
+ *         temperature: 0.5
  *     Response:
  *       type: object
  *       required:

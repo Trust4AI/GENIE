@@ -1,19 +1,14 @@
-import fs from 'fs/promises'
+import { readJSONFile, writeJSONToFile } from './fileUtils'
 
 const MODELS_CONFIG_FILE = 'api/config/models.json'
 const MODEL_CATEGORIES = ['openai', 'gemini', 'ollama']
 
-const readFile = async () => {
-    const data = await fs.readFile(MODELS_CONFIG_FILE, 'utf8')
-    return JSON.parse(data)
-}
-
-const loadModels = async () => {
-    const jsonData = await readFile()
+const loadModels = () => {
+    const jsonData = readJSONFile(MODELS_CONFIG_FILE)
     const ollamaModels = Object.fromEntries(
         Object.entries(jsonData.ollama).map(([key, val]: [string, any]) => [
             key,
-            extractModel(val.name, val.url),
+            { name: val.name, url: val.url },
         ])
     )
     return {
@@ -22,17 +17,17 @@ const loadModels = async () => {
     }
 }
 
-const getModelCategories = () => {
+const getModelCategories = (): string[] => {
     return MODEL_CATEGORIES
 }
 
-const getModels = async () => {
-    const models = await loadModels()
+const getModels = () => {
+    const models = loadModels()
     return models
 }
 
-const getModelIds = async (category?: string) => {
-    const data = await readFile()
+const getModelIds = (category?: string): string[] => {
+    const data = readJSONFile(MODELS_CONFIG_FILE)
 
     if (category) {
         if (category === 'ollama') {
@@ -48,60 +43,53 @@ const getModelIds = async (category?: string) => {
     return [...openaiModels, ...geminiModels, ...ollamaModels]
 }
 
-const getUsedOllaModels = async () => {
-    const models = await loadModels()
+const getUsedOllaModels = (): { id: string; name: string }[] => {
+    const models = loadModels()
     return Object.entries(models.ollama).map(([key, val]: [string, any]) => ({
         id: key,
         name: val.name,
     }))
 }
 
-const getOllamaModelConfig = async (key: string) => {
-    const models = await loadModels()
+const getOllamaModelConfig = (
+    key: string
+): { name: string; url: string } | null => {
+    const models = loadModels()
     return models.ollama[key] ? models.ollama[key] : null
 }
 
-const addModel = async (
+const addModel = (
     category: string,
     id: string,
     name: string,
     base_url: string,
     port: number
-) => {
-    const models = await readFile()
+): void => {
+    const models = readJSONFile(MODELS_CONFIG_FILE)
 
     if (category !== 'ollama' && !models[category].includes(id)) {
         models[category].push(id)
     } else if (category === 'ollama') {
         models.ollama[id] = createOrUpdateModel(name, base_url, port)
     }
-
-    await fs.writeFile(
-        MODELS_CONFIG_FILE,
-        JSON.stringify(models, null, 4),
-        'utf8'
-    )
+    writeJSONToFile(MODELS_CONFIG_FILE, models)
 }
 
-const updateModel = async (
+const updateModel = (
     id: string,
     name: string,
     base_url: string,
     port: number
-) => {
-    const models = await readFile()
+): void => {
+    const models = readJSONFile(MODELS_CONFIG_FILE)
 
     models.ollama[id] = createOrUpdateModel(name, base_url, port)
 
-    await fs.writeFile(
-        MODELS_CONFIG_FILE,
-        JSON.stringify(models, null, 4),
-        'utf8'
-    )
+    writeJSONToFile(MODELS_CONFIG_FILE, models)
 }
 
-const removeModel = async (id: string) => {
-    const models = await readFile()
+const removeModel = (id: string): void => {
+    const models = readJSONFile(MODELS_CONFIG_FILE)
     for (const category of MODEL_CATEGORIES) {
         if (category === 'ollama') {
             if (models[category]?.[id]) {
@@ -113,21 +101,17 @@ const removeModel = async (id: string) => {
             models[category] = models[category].filter((k: string) => k !== id)
         }
     }
-    await fs.writeFile(
-        MODELS_CONFIG_FILE,
-        JSON.stringify(models, null, 4),
-        'utf8'
-    )
+    writeJSONToFile(MODELS_CONFIG_FILE, models)
 }
 
-const extractModel = (name: string, url: string) => {
-    return {
-        name,
-        url,
-    }
-}
-
-const createOrUpdateModel = (name: string, base_url: string, port: number) => {
+const createOrUpdateModel = (
+    name: string,
+    base_url: string,
+    port: number
+): {
+    name: string
+    url: string
+} => {
     return {
         name,
         url: `${base_url}:${port}`,

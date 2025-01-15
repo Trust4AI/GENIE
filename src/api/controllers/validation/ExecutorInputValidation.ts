@@ -6,8 +6,9 @@ import {
     getUsedOllaModels,
 } from '../../utils/modelUtils'
 import { getOllamaModels } from '../../utils/ollamaUtils'
+import config from '../../config/config'
 
-const ollamaBaseUrl = process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
+const ollamaBaseUrl: string = config.ollamaBaseUrl
 
 const add = [
     check('category')
@@ -22,17 +23,16 @@ const add = [
     check('id')
         .isString()
         .trim()
-        .custom(async (value) => {
-            const modelIds = await getModelIds()
+        .custom((value: string): boolean => {
+            const modelIds: string[] = getModelIds()
             if (modelIds.includes(value)) {
-                return Promise.reject(
-                    new Error(
-                        `id must be unique and not one of the following values: [${modelIds.join(
-                            `, `
-                        )}]. Please use a different id.`
-                    )
+                throw new Error(
+                    `id must be unique and not one of the following values: [${modelIds.join(
+                        `, `
+                    )}]. Please use a different id.`
                 )
             }
+            return true
         })
         .isLength({ min: 1, max: 30 })
         .withMessage(
@@ -42,26 +42,26 @@ const add = [
         .if((value, { req }) => req.body.category === 'ollama')
         .isString()
         .trim()
-        .custom(async (value, { req }) => {
+        .custom(async (value: string, { req }) => {
             if (req.body.category === 'ollama') {
-                const usedOllamaModels = await getUsedOllaModels().then(
-                    (models: any) => models.map((model: any) => model.name)
+                const usedOllamaModels: string[] = getUsedOllaModels().map(
+                    (model: any) => model.name
                 )
-                let installedOllamaModels = await getOllamaModels(
+                let installedOllamaModels: string[] = await getOllamaModels(
                     ollamaBaseUrl
                 ).then((models: any) => models.map((model: any) => model.name))
-                const validOllamaModels = installedOllamaModels.filter(
-                    (model: string) => !usedOllamaModels.includes(model)
-                )
+                const validOllamaModels: string[] =
+                    installedOllamaModels.filter(
+                        (model: string) => !usedOllamaModels.includes(model)
+                    )
                 if (!validOllamaModels.includes(value)) {
-                    return Promise.reject(
-                        new Error(
-                            `name can be one of the following values: [${validOllamaModels.join(
-                                ', '
-                            )}]. If you want to use other model, pull it from Ollama first.`
-                        )
+                    throw new Error(
+                        `name can be one of the following values: [${validOllamaModels.join(
+                            ', '
+                        )}]. If you want to use other model, pull it from Ollama first.`
                     )
                 }
+                return true
             }
         }),
     check('base_url')
@@ -83,30 +83,31 @@ const update = [
     check('name')
         .isString()
         .trim()
-        .custom(async (value, { req }) => {
-            const usedOllamaModels = await getUsedOllaModels().then(
-                (models: any) => models.map((model: any) => model.name)
+        .custom(async (value: string, { req }) => {
+            const usedOllamaModels: string[] = getUsedOllaModels().map(
+                (model: any) => model.name
             )
-            const installedOllamaModels = await getOllamaModels(
+            const installedOllamaModels: string[] = await getOllamaModels(
                 ollamaBaseUrl
             ).then((models: any) => models.map((model: any) => model.name))
 
-            let validOllamaModels = installedOllamaModels.filter(
+            let validOllamaModels: string[] = installedOllamaModels.filter(
                 (model: string) => !usedOllamaModels.includes(model)
             )
-            const id = req.params?.id
-            const currentModel = await getOllamaModelConfig(id)
-            validOllamaModels = [...validOllamaModels, currentModel.name]
+            const id: string = req.params?.id
+            const currentModel = getOllamaModelConfig(id)
+            if (currentModel) {
+                validOllamaModels = [...validOllamaModels, currentModel.name]
+            }
 
             if (!validOllamaModels.includes(value)) {
-                return Promise.reject(
-                    new Error(
-                        `name must be one of the following values: [${validOllamaModels.join(
-                            ', '
-                        )}].`
-                    )
+                throw new Error(
+                    `name must be one of the following values: [${validOllamaModels.join(
+                        ', '
+                    )}].`
                 )
             }
+            return true
         }),
     check('base_url')
         .optional()
@@ -127,17 +128,16 @@ const execute = [
     check('model_name')
         .isString()
         .trim()
-        .custom(async (value) => {
-            const modelIds = await getModelIds()
+        .custom((value: string): boolean => {
+            const modelIds: string[] = getModelIds()
             if (!modelIds.includes(value)) {
-                return Promise.reject(
-                    new Error(
-                        `model_name must be one of the following values: [${modelIds.join(
-                            ', '
-                        )}]`
-                    )
+                throw new Error(
+                    `model_name must be one of the following values: [${modelIds.join(
+                        ', '
+                    )}]`
                 )
             }
+            return true
         }),
     check('system_prompt')
         .optional()
@@ -164,12 +164,6 @@ const execute = [
         .withMessage(
             'list_format_response is optional but must be a boolean if provided'
         ),
-    check('exclude_bias_references')
-        .optional()
-        .isBoolean()
-        .withMessage(
-            'exclude_bias_references is optional but must be a boolean if provided'
-        ),
     check('excluded_text')
         .optional()
         .isString()
@@ -185,6 +179,12 @@ const execute = [
         .isIn(['json', 'text'])
         .withMessage(
             'format is optional but must be one of the following values: [json, text] if provided'
+        ),
+    check('temperature')
+        .optional()
+        .isFloat({ min: 0.0, max: 1.0 })
+        .withMessage(
+            'temperature is optional but must be a float between 0.0 and 1.0 if provided'
         ),
 ]
 
