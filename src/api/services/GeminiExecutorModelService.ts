@@ -84,7 +84,7 @@ class GeminiExecutorModelService {
             topK: 64,
             maxOutputTokens: 8192,
             response_mime_type:
-                format === 'json' && modelName.includes('gemini-1.5')
+                format === 'json' && !modelName.includes('gemini-1.0')
                     ? 'application/json'
                     : 'text/plain',
         }
