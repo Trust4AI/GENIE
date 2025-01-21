@@ -1,0 +1,31 @@
+{
+    "openai": [
+        "gpt-4-0125-preview",
+        "gpt-3.5-turbo-0125"
+    ],
+    "gemini": [
+        "gemini-1.0-pro",
+        "gemini-1.5-flash",
+        "gemini-1.5-pro",
+        "gemini-1.5-flash-8b",
+        "gemini-2.0-flash-exp"
+    ],
+    "ollama": {
+        "llama3-8b": {
+            "name": "llama3:8b",
+            "url": "http://llama3-8b:11434"
+        },
+        "mistral-7b": {
+            "name": "mistral:7b",
+            "url": "http://mistral-7b:11434"
+        },
+        "gemma-7b": {
+            "name": "gemma:7b",
+            "url": "http://gemma-7b:11434"
+        },
+        "llama2-7b": {
+            "name": "llama2:7b",
+            "url": "http://llama2-7b:11434"
+        }
+    }
+}

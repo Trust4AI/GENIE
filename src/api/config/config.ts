@@ -3,6 +3,7 @@ import './loadEnv'
 const config = {
     port: process.env.PORT || '8081',
     numContextWindow: process.env.NUM_CONTEXT_WINDOW,
+    nodeEnv: process.env.NODE_ENV || 'local',
     maxRetries: process.env.MAX_RETRIES || '5',
     debugMode: process.env.DEBUG_MODE === 'true',
     geminiAPIKey: process.env.GEMINI_API_KEY || '',

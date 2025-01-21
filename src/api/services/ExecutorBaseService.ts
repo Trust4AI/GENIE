@@ -70,10 +70,16 @@ class ExecutorBaseService {
     }
 
     async indexOllama() {
-        const ollamaBaseUrl = config.ollamaBaseUrl
-        const models = getOllamaModels(ollamaBaseUrl)
+        const nodeEnv = config.nodeEnv
+        if (nodeEnv !== 'docker') {
+            const ollamaBaseUrl = config.ollamaBaseUrl
+            const models = getOllamaModels(ollamaBaseUrl)
+            return models
+        }
 
-        return models
+        throw new Error(
+            '[GENIE] Ollama models cannot be fetched in docker environment.'
+        )
     }
 
     check() {

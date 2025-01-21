@@ -1,3 +1,4 @@
+import config from '../config/config'
 import { readJSONFile, writeJSONToFile } from './fileUtils'
 
 const MODELS_CONFIG_FILE = 'api/config/models.json'
@@ -119,7 +120,7 @@ const createOrUpdateModel = (
 }
 
 const getBaseUrl = (id: string): string => {
-    return process.env.NODE_ENV === 'docker'
+    return config.nodeEnv === 'docker'
         ? `http://${id}`
         : `${
               process.env.OLLAMA_BASE_URL?.replace(/:\d+/, '') ||
