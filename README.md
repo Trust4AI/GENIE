@@ -13,7 +13,8 @@ Integration options include a Docker image that launches a REST API with interac
 1. [Repository structure](#1-repository-structure)
 2. [Deployment](#2-deployment)
    1. [Local deployment](#i-local-deployment)
-   2. [Docker deployment](#ii-docker-deployment)
+   2. [Docker deployment (only GENIE)](#ii-docker-deployment-only-genie)
+   3. [Docker deployment (GENIE and Ollama)](#iii-docker-deployment-genie-and-ollama)
 3. [Usage](#3-usage)
    1. [Request using only the required properties](#i-request-using-only-the-required-properties)
    2. [Request using all properties](#ii-request-using-all-properties)
@@ -70,19 +71,54 @@ It is also possible to add the models using the API once the tool is running. Mo
 
 To deploy GENIE locally, please follow these steps carefully:
 
-1. Rename the `.env.local` file to `.env`.
-2. Navigate to the `src` directory and install the required dependencies.
+1. Rename the `.env.template.local` file to `.env`.
+2. Rename the `src/api/config/models.template.local.json` file to `src/api/config/models.json`. Ensure the configuration is updated with the models you plan to use, maintaining the required structure for Ollama model URLs to guarantee proper operation.
+3. Navigate to the `src` directory and install the required dependencies.
 
      ```bash
      cd src
      npm install
      ```
 
-3. Compile the source code and start the server.
+4. Compile the source code and start the server.
 
     ```bash
     npm run build
     npm start
+    ```
+
+5. To verify that the tool is running, you can check the status of the server by running the following command.
+
+    ```bash
+    curl -X GET "http://localhost:8081/api/v1/models/check" -H  "accept: application/json"
+    ```
+
+6. Finally, you can access the API documentation by visiting the following URL in your web browser.
+
+    ```
+    http://localhost:8081/api/v1/docs
+    ```
+
+### ii. Docker deployment (only GENIE)
+
+Docker deployment is recommended for production environments as it provides a consistent and scalable way of running applications. Docker containers encapsulate all dependencies, ensuring the tool runs reliably across different environments.
+
+#### Pre-requirements
+
+Ensure you have the following software installed on your machine:
+
+- [Docker engine](https://docs.docker.com/engine/install/)
+
+#### Steps
+
+To deploy GENIE using Docker, please follow these steps carefully.
+
+1. Rename the `.env.template.docker.genie` file to `.env`.
+2. Rename the `src/api/config/models.template.docker.genie.json` file to `src/api/config/models.json`. Ensure the configuration is updated with the models you plan to use, maintaining the required structure for Ollama model URLs to guarantee proper operation.
+3. Execute the following Docker Compose instruction:
+
+    ```bash
+    docker-compose up -d
     ```
 
 4. To verify that the tool is running, you can check the status of the server by running the following command.
@@ -97,7 +133,7 @@ To deploy GENIE locally, please follow these steps carefully:
     http://localhost:8081/api/v1/docs
     ```
 
-### ii. Docker deployment
+### iii. Docker deployment (GENIE and Ollama)
 
 Docker deployment is recommended for production environments as it provides a consistent and scalable way of running applications. Docker containers encapsulate all dependencies, ensuring the tool runs reliably across different environments.
 
@@ -192,23 +228,24 @@ Additionally, it is necessary to define the models to be used in the [docker-com
 
 #### Steps
 
-To deploy GENIE using Docker, please follow these steps carefully.
+To deploy GENIE and Ollama using Docker, please follow these steps carefully.
 
-1. Rename the `.env.docker` file to `.env`.
-2. Execute the following Docker Compose instruction:
+1. Rename the `.env.template.docker` file to `.env`.
+2. Rename the `src/api/config/models.template.docker.json` file to `src/api/config/models.json`. Ensure the configuration is updated with the models you plan to use, maintaining the required structure for Ollama model URLs to guarantee proper operation.
+3. Execute the following Docker Compose instruction:
 
     ```bash
     docker-compose up -d
     ```
      **Note**: If you encounter an error like `/ollama_setup.sh: not found` when executing the command, verify that the line endings in the [ollama bash script](https://github.com/Trust4AI/GENIE/blob/main/Ollama/ollama_setup.sh) are set to LF (Linux/Unix format), not CRLF (Windows format).
 
-3. To verify that the tool is running, you can check the status of the server by running the following command.
+4. To verify that the tool is running, you can check the status of the server by running the following command.
 
     ```bash
     curl -X GET "http://localhost:8081/api/v1/models/check" -H  "accept: application/json"
     ```
 
-4. Finally, you can access the API documentation by visiting the following URL in your web browser.
+5. Finally, you can access the API documentation by visiting the following URL in your web browser.
 
     ```
     http://localhost:8081/api/v1/docs
