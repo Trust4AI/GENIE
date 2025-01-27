@@ -2,12 +2,21 @@ import OpenAI from 'openai'
 import { debugLog } from '../utils/logUtils'
 import config from '../config/config'
 import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
+import { HttpsProxyAgent } from 'https-proxy-agent'
 
 const openaiAPIKey: string = config.openaiAPIKey
 
-const openai: OpenAI = new OpenAI({
+const proxyURL: string = config.proxyURL
+
+const openaiConfig: { apiKey: string; httpAgent?: HttpsProxyAgent<string> } = {
     apiKey: openaiAPIKey,
-})
+}
+
+if (proxyURL) {
+    openaiConfig.httpAgent = new HttpsProxyAgent(proxyURL)
+}
+
+const openai: OpenAI = new OpenAI(openaiConfig)
 
 class OpenAIExecutorModelService {
     async sendPromptToModel(dto: ExecuteRequestDTO): Promise<string> {

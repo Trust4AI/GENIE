@@ -1,17 +1,11 @@
 import config from '../config/config'
 import { GeminiGenerationConfig } from '../types'
 import { debugLog } from '../utils/logUtils'
-
-import {
-    ChatSession,
-    GenerativeModel,
-    GoogleGenerativeAI,
-} from '@google/generative-ai'
 import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
+import { ProxyAgent } from 'undici'
 
 const geminiAPIKey = config.geminiAPIKey
-
-const genAI = new GoogleGenerativeAI(geminiAPIKey)
+const proxyURL: string = config.proxyURL
 
 class GeminiExecutorModelService {
     async sendPromptToModel(dto: ExecuteRequestDTO): Promise<string> {
@@ -30,7 +24,12 @@ class GeminiExecutorModelService {
             throw new Error('[GENIE] GEMINI_API_KEY is not defined')
         }
 
-        const model = this.getModel(modelName)
+        const url: string = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${geminiAPIKey}`
+
+        const headers: Record<string, string> = {
+            'Content-Type': 'application/json',
+        }
+
         const generationConfig = this.getGenerationConfig(
             modelName,
             format,
@@ -44,21 +43,39 @@ class GeminiExecutorModelService {
         )
         this.logPrompts(modelName, auxSystemPrompt, systemPrompt, userPrompt)
 
-        const history = this.buildChatHistory(systemPrompt, auxSystemPrompt)
+        const history = this.buildChatHistory(
+            systemPrompt,
+            auxSystemPrompt,
+            userPrompt
+        )
 
         try {
-            const chatSession: ChatSession = model.startChat({
-                generationConfig,
-                history: history,
-            })
+            const data: Record<string, any> = {
+                contents: history,
+                generationConfig: generationConfig,
+            }
 
-            const result = await chatSession.sendMessage(userPrompt)
-            debugLog('Chat posted successfully!', 'info')
+            const fetchContent: RequestInit & {
+                dispatcher?: ProxyAgent
+            } = {
+                method: 'POST',
+                headers,
+                body: JSON.stringify(data),
+            }
 
-            const content = result.response.text()
-            if (content) {
-                debugLog(`Response from Gemini: ${content}`, 'info')
-                return content
+            if (proxyURL) {
+                const dispatcher = new ProxyAgent(proxyURL)
+                fetchContent.dispatcher = dispatcher
+            }
+
+            const content = await fetch(url, fetchContent).then((res) =>
+                res.json()
+            )
+
+            const response = content.candidates[0].content.parts[0].text
+
+            if (response) {
+                return response
             }
 
             throw new Error('[GENIE] No content found in Gemini response')
@@ -67,10 +84,6 @@ class GeminiExecutorModelService {
             debugLog(error, 'error')
             throw new Error(error.message)
         }
-    }
-
-    private getModel(modelName: string): GenerativeModel {
-        return genAI.getGenerativeModel({ model: modelName })
     }
 
     private getGenerationConfig(
@@ -123,7 +136,8 @@ class GeminiExecutorModelService {
 
     private buildChatHistory(
         systemPrompt: string,
-        auxSystemPrompt: string
+        auxSystemPrompt: string,
+        userPrompt: string
     ): Array<{ role: string; parts: Array<{ text: string }> }> {
         const history = []
 
@@ -137,6 +151,15 @@ class GeminiExecutorModelService {
                 ],
             })
         }
+
+        history.push({
+            role: 'user',
+            parts: [
+                {
+                    text: userPrompt,
+                },
+            ],
+        })
 
         return history
     }

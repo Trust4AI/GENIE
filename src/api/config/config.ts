@@ -2,6 +2,7 @@ import './loadEnv'
 
 const config = {
     port: process.env.PORT || '8081',
+    proxyURL: process.env.PROXY_URL || '',
     numContextWindow: process.env.NUM_CONTEXT_WINDOW,
     nodeEnv: process.env.NODE_ENV || 'local',
     maxRetries: process.env.MAX_RETRIES || '5',
