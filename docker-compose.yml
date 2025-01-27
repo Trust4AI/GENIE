@@ -13,6 +13,7 @@ services:
       - .env
     networks:
       - genie-network
+      - global-network
   # llama3-8b:
   #   container_name: llama3-8b
   #   image: llama3-8b:latest
@@ -58,3 +59,5 @@ services:
 networks:
   genie-network:
     driver: bridge
+  global-network:
+    external: true
