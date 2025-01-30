@@ -40,12 +40,26 @@ const execute = [
         ),
     check('excluded_text')
         .optional()
-        .isString()
-        .isLength({ min: 1, max: 30 })
-        .trim()
+        .isArray({ min: 1 })
         .withMessage(
-            'excluded_text is optional but must be a string with length between 1 and 30 if provided'
-        ),
+            'excluded_text must be an array with at least one string if provided'
+        )
+        .custom((value: any[]) => {
+            if (
+                !Array.isArray(value) ||
+                !value.every(
+                    (item) =>
+                        typeof item === 'string' &&
+                        item.length >= 1 &&
+                        item.length <= 30
+                )
+            ) {
+                throw new Error(
+                    'excluded_text must be an array (if provided) of strings, each with a length between 1 and 30'
+                )
+            }
+            return true
+        }),
     check('temperature')
         .optional()
         .isFloat({ min: 0.0, max: 1.0 })

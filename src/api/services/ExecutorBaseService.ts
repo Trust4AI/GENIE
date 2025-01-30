@@ -50,7 +50,7 @@ class ExecutorBaseService {
             prompt2,
             type === 'consistency' ? -1 : dto.responseMaxLength,
             type === 'consistency' ? false : dto.listFormatResponse,
-            type === 'consistency' ? '' : dto.excludedText,
+            type === 'consistency' ? [] : dto.excludedText,
             dto.temperature
         )
 
@@ -84,7 +84,7 @@ class ExecutorBaseService {
         userPrompt: string,
         responseMaxLength: number,
         listFormatResponse: boolean,
-        excludedText: string,
+        excludedText: string[],
         temperature: number
     ) {
         const requestDTO = this.createRequestDTO(
@@ -104,12 +104,13 @@ class ExecutorBaseService {
         userPrompt: string,
         responseMaxLength: number,
         listFormatResponse: boolean,
-        excludedText: string,
+        excludedText: string[],
         temperature: number
     ) {
-        if (excludedText && !userPrompt.includes(excludedText)) {
-            excludedText = ''
-        }
+        const newExcludedText =
+            excludedText.find((text) => userPrompt.includes(text)) || ''
+
+        console.log('newExcludedText', newExcludedText)
 
         return {
             modelName,
@@ -117,7 +118,7 @@ class ExecutorBaseService {
             userPrompt,
             responseMaxLength,
             listFormatResponse,
-            excludedText,
+            excludedText: newExcludedText,
             format: 'text',
             temperature,
         }

@@ -24,8 +24,8 @@ class ExecutorController {
         try {
             const dto: ExecuteMetamorphicRequestDTO =
                 new ExecuteMetamorphicRequestDTO(req.body)
-            const modelResponse = await this.executorBaseService.execute(dto)
-            res.send({ response: modelResponse })
+            const response = await this.executorBaseService.execute(dto)
+            res.json(response)
         } catch (error: any) {
             res.status(500).send({ error: error.message })
         }

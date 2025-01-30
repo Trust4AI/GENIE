@@ -4,7 +4,7 @@ export class ExecuteMetamorphicRequestDTO {
     prompt2: string
     responseMaxLength: number
     listFormatResponse: boolean
-    excludedText: string
+    excludedText: string[]
     temperature: number
     type: string
 
@@ -14,7 +14,7 @@ export class ExecuteMetamorphicRequestDTO {
         this.prompt2 = data.prompt_2
         this.responseMaxLength = data.response_max_length || -1
         this.listFormatResponse = data.list_format_response || false
-        this.excludedText = data.excluded_text || ''
+        this.excludedText = data.excluded_text || []
         this.temperature = data.temperature || 0.5
         this.type = data.type || 'comparison'
     }
