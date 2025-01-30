@@ -1,18 +1,9 @@
-import config from '../config/config'
 import container from '../config/container'
-import {
-    addModel,
-    updateModel,
-    getModelIds,
-    getModels,
-    removeModel,
-} from '../utils/modelUtils'
-import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
-import { getOllamaModels } from '../utils/ollamaUtils'
+import { getModelIds } from '../utils/modelUtils'
+import { ExecuteMetamorphicRequestDTO } from '../utils/objects/ExecuteMetamorphicRequestDTO'
 import GeminiExecutorModelService from './GeminiExecutorModelService'
 import OllamaExecutorModelService from './OllamaExecutorModelService'
 import OpenAIExecutorModelService from './OpenAIExecutorModelService'
-//import { writeOutputToFile } from '../utils/fileUtils'
 
 class ExecutorBaseService {
     ollamaExecutorModelService: OllamaExecutorModelService
@@ -30,70 +21,45 @@ class ExecutorBaseService {
         )
     }
 
-    exists(id: string): boolean {
-        const modelIds: string[] = getModelIds()
-        return modelIds.includes(id)
-    }
-
-    index(): string[] {
-        const models: string[] = getModelIds()
-        return models
-    }
-
-    indexDetails() {
-        const models = getModels()
-        return models
-    }
-
-    addModel(
-        category: string,
-        id: string,
-        name: string,
-        base_url: string,
-        port: number
-    ) {
-        addModel(category, id, name, base_url, port)
-        if (category === 'ollama') {
-            return { category, id, name, url: base_url }
-        }
-        return { category, id }
-    }
-
-    updateModel(id: string, name: string, base_url: string, port: number) {
-        updateModel(id, name, base_url, port)
-        return { id, name, url: base_url }
-    }
-
-    remove(id: string) {
-        removeModel(id)
-        return true
-    }
-
-    async indexOllama() {
-        const nodeEnv = config.nodeEnv
-        if (nodeEnv !== 'docker') {
-            const ollamaBaseUrl = config.ollamaBaseUrl
-            const models = getOllamaModels(ollamaBaseUrl)
-            return models
-        }
-
-        throw new Error(
-            '[GENIE] Ollama models cannot be fetched in docker environment.'
-        )
-    }
-
     check() {
-        return { message: 'GENIE is working properly!' }
+        return { message: 'The execution routes are working properly!' }
     }
 
-    async execute(dto: ExecuteRequestDTO) {
+    async execute(dto: ExecuteMetamorphicRequestDTO) {
         const executorModelService = this.getExecutorModelService(dto.modelName)
-        const response: string = await executorModelService.sendPromptToModel(
-            dto
+        const type = dto.type
+
+        const response1 = await this.getModelResponse(
+            executorModelService,
+            dto.modelName,
+            dto.prompt1,
+            dto.responseMaxLength,
+            dto.listFormatResponse,
+            dto.excludedText,
+            dto.temperature
         )
 
-        //writeOutputToFile(modelName, userPrompt, response)
-        return response
+        const prompt2 =
+            type === 'consistency'
+                ? this.getConsistencyPrompt(dto.prompt2, response1)
+                : dto.prompt2
+
+        const response2 = await this.getModelResponse(
+            executorModelService,
+            dto.modelName,
+            prompt2,
+            type === 'consistency' ? -1 : dto.responseMaxLength,
+            type === 'consistency' ? false : dto.listFormatResponse,
+            type === 'consistency' ? '' : dto.excludedText,
+            dto.temperature
+        )
+
+        return {
+            prompt_1: dto.prompt1,
+            response_1: response1,
+            prompt_2: prompt2,
+            response_2: response2,
+        }
     }
 
     private getExecutorModelService(modelName: string) {
@@ -107,6 +73,58 @@ class ExecutorBaseService {
             return this.geminiExecutorModelService
         }
         return this.ollamaExecutorModelService
+    }
+
+    private async getModelResponse(
+        executorModelService:
+            | OpenAIExecutorModelService
+            | GeminiExecutorModelService
+            | OllamaExecutorModelService,
+        modelName: string,
+        userPrompt: string,
+        responseMaxLength: number,
+        listFormatResponse: boolean,
+        excludedText: string,
+        temperature: number
+    ) {
+        const requestDTO = this.createRequestDTO(
+            modelName,
+            userPrompt,
+            responseMaxLength,
+            listFormatResponse,
+            excludedText,
+            temperature
+        )
+
+        return await executorModelService.sendPromptToModel(requestDTO)
+    }
+
+    private createRequestDTO(
+        modelName: string,
+        userPrompt: string,
+        responseMaxLength: number,
+        listFormatResponse: boolean,
+        excludedText: string,
+        temperature: number
+    ) {
+        if (excludedText && !userPrompt.includes(excludedText)) {
+            excludedText = ''
+        }
+
+        return {
+            modelName,
+            systemPrompt: '',
+            userPrompt,
+            responseMaxLength,
+            listFormatResponse,
+            excludedText,
+            format: 'text',
+            temperature,
+        }
+    }
+
+    private getConsistencyPrompt(prompt: string, response: string) {
+        return `Is the following a suitable response to the question '${prompt}': '${response}'?. Answer with a single word: 'Yes' or 'No'.`
     }
 }
 

@@ -1,128 +1,5 @@
 import { check } from 'express-validator'
-import {
-    getModelCategories,
-    getOllamaModelConfig,
-    getModelIds,
-    getUsedOllaModels,
-} from '../../utils/modelUtils'
-import { getOllamaModels } from '../../utils/ollamaUtils'
-import config from '../../config/config'
-
-const ollamaBaseUrl: string = config.ollamaBaseUrl
-
-const add = [
-    check('category')
-        .isString()
-        .trim()
-        .isIn(getModelCategories())
-        .withMessage(
-            'category must be one of the following values: [' +
-                getModelCategories().join(', ') +
-                '].'
-        ),
-    check('id')
-        .isString()
-        .trim()
-        .custom((value: string): boolean => {
-            const modelIds: string[] = getModelIds()
-            if (modelIds.includes(value)) {
-                throw new Error(
-                    `id must be unique and not one of the following values: [${modelIds.join(
-                        `, `
-                    )}]. Please use a different id.`
-                )
-            }
-            return true
-        })
-        .isLength({ min: 1, max: 30 })
-        .withMessage(
-            'id must be a string with length greater than 1 and less than 30'
-        ),
-    check('name')
-        .if((value, { req }) => req.body.category === 'ollama')
-        .isString()
-        .trim()
-        .custom(async (value: string, { req }) => {
-            if (req.body.category === 'ollama') {
-                const usedOllamaModels: string[] = getUsedOllaModels().map(
-                    (model: any) => model.name
-                )
-                let installedOllamaModels: string[] = await getOllamaModels(
-                    ollamaBaseUrl
-                ).then((models: any) => models.map((model: any) => model.name))
-                const validOllamaModels: string[] =
-                    installedOllamaModels.filter(
-                        (model: string) => !usedOllamaModels.includes(model)
-                    )
-                if (!validOllamaModels.includes(value)) {
-                    throw new Error(
-                        `name can be one of the following values: [${validOllamaModels.join(
-                            ', '
-                        )}]. If you want to use other model, pull it from Ollama first.`
-                    )
-                }
-                return true
-            }
-        }),
-    check('base_url')
-        .optional()
-        .isString()
-        .isLength({ min: 1 })
-        .trim()
-        .withMessage(
-            'base_url must be a string with length greater than 1 if provided'
-        ),
-    check('port')
-        .optional()
-        .isInt()
-        .withMessage('port must be an integer if provided')
-        .toInt(),
-]
-
-const update = [
-    check('name')
-        .isString()
-        .trim()
-        .custom(async (value: string, { req }) => {
-            const usedOllamaModels: string[] = getUsedOllaModels().map(
-                (model: any) => model.name
-            )
-            const installedOllamaModels: string[] = await getOllamaModels(
-                ollamaBaseUrl
-            ).then((models: any) => models.map((model: any) => model.name))
-
-            let validOllamaModels: string[] = installedOllamaModels.filter(
-                (model: string) => !usedOllamaModels.includes(model)
-            )
-            const id: string = req.params?.id
-            const currentModel = getOllamaModelConfig(id)
-            if (currentModel) {
-                validOllamaModels = [...validOllamaModels, currentModel.name]
-            }
-
-            if (!validOllamaModels.includes(value)) {
-                throw new Error(
-                    `name must be one of the following values: [${validOllamaModels.join(
-                        ', '
-                    )}].`
-                )
-            }
-            return true
-        }),
-    check('base_url')
-        .optional()
-        .isString()
-        .isLength({ min: 1 })
-        .trim()
-        .withMessage(
-            'base_url must be a string with length greater than 1 if provided'
-        ),
-    check('port')
-        .optional()
-        .isInt()
-        .withMessage('port must be an integer if provided')
-        .toInt(),
-]
+import { getModelIds } from '../../utils/modelUtils'
 
 const execute = [
     check('model_name')
@@ -139,19 +16,16 @@ const execute = [
             }
             return true
         }),
-    check('system_prompt')
-        .optional()
+    check('prompt_1')
         .isString()
         .isLength({ min: 1 })
         .trim()
-        .withMessage(
-            'system_prompt is optional but must be a string with length greater than 1 if provided'
-        ),
-    check('user_prompt')
+        .withMessage('prompt_1 must be a string with length greater than 1'),
+    check('prompt_2')
         .isString()
         .isLength({ min: 1 })
         .trim()
-        .withMessage('user_prompt must be a string with length greater than 1'),
+        .withMessage('prompt_2 must be a string with length greater than 1'),
     check('response_max_length')
         .optional()
         .isInt({ min: 1, max: 2000 })
@@ -172,20 +46,20 @@ const execute = [
         .withMessage(
             'excluded_text is optional but must be a string with length between 1 and 30 if provided'
         ),
-    check('format')
-        .optional()
-        .isString()
-        .trim()
-        .isIn(['json', 'text'])
-        .withMessage(
-            'format is optional but must be one of the following values: [json, text] if provided'
-        ),
     check('temperature')
         .optional()
         .isFloat({ min: 0.0, max: 1.0 })
         .withMessage(
             'temperature is optional but must be a float between 0.0 and 1.0 if provided'
         ),
+    check('type')
+        .optional()
+        .isString()
+        .trim()
+        .isIn(['comparison', 'consistency'])
+        .withMessage(
+            'type is optional but must be one of the following values: [comparison, consistency] if provided'
+        ),
 ]
 
-export { add, update, execute }
+export { execute }

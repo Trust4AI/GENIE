@@ -1,10 +1,14 @@
 import express from 'express'
-import ExecutorController from '../controllers/ExecutorController'
-import * as ExecutorInputValidation from '../controllers/validation/ExecutorInputValidation'
+import ModelController from '../controllers/ModelController'
+import * as ModelInputValidation from '../controllers/validation/ModelInputValidation'
 import { handleValidation } from '../middlewares/ValidationMiddleware'
+import container from '../config/container'
+import { checkEntityExists } from '../middlewares/EntityMiddleware'
+import { checkOllamaModelExists } from '../middlewares/ModelMiddleware'
 
 const router = express.Router()
-const executorController = new ExecutorController()
+const modelController = new ModelController()
+const modelBaseService = container.resolve('modelBaseService')
 
 /**
  * @swagger
@@ -289,12 +293,205 @@ const executorController = new ExecutorController()
 /**
  * @swagger
  * tags:
- *  name: Metamorphic Testing
+ *  name: Models
  */
 
 /**
  * @swagger
- * /metamorphic-tests/check:
+ * /models:
+ *   get:
+ *     summary: Get the list of models configured in GENIE.
+ *     tags: [Models]
+ *     responses:
+ *       200:
+ *         description: Successful response.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: string
+ *       500:
+ *         description: Server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *   post:
+ *     summary: Add a new model to GENIE configuration.
+ *     tags: [Models]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/AddModelInput'
+ *     responses:
+ *       200:
+ *         description: Successful response.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/AddModelResponse'
+ *       422:
+ *         description: Validation error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/ValidationError'
+ *       500:
+ *         description: Server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router
+    .route('/')
+    .get(modelController.index)
+    .post(ModelInputValidation.add, handleValidation, modelController.add)
+
+/**
+ * @swagger
+ * /models/{id}:
+ *   put:
+ *     summary: Update a model configuration in GENIE.
+ *     tags: [Models]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The unique identifier of the model to update.
+ *         schema:
+ *           type: string
+ *           example: "mistral-7b"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateModelInput'
+ *     responses:
+ *       200:
+ *         description: Successful response.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UpdateModelResponse'
+ *       404:
+ *         description: Model not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       422:
+ *         description: Validation error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/ValidationError'
+ *       500:
+ *         description: Server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *   delete:
+ *     summary: Remove a model configuration from GENIE.
+ *     tags: [Models]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The unique identifier of the model to remove.
+ *         schema:
+ *           type: string
+ *           example: "mistral-7b"
+ *     responses:
+ *       200:
+ *         description: Successful response.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/message'
+ *       404:
+ *         description: Model not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router
+    .route('/:id')
+    .put(
+        checkOllamaModelExists('id'),
+        ModelInputValidation.update,
+        handleValidation,
+        modelController.update
+    )
+    .delete(checkEntityExists(modelBaseService, 'id'), modelController.remove)
+
+/**
+ * @swagger
+ * /models/details:
+ *   get:
+ *     summary: Get the list of models configured in GENIE with details.
+ *     tags: [Models]
+ *     responses:
+ *       200:
+ *         description: Successful response.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/GENIEModels'
+ *       500:
+ *         description: Server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.route('/details').get(modelController.indexDetails)
+
+/**
+ * @swagger
+ * /models/ollama:
+ *   get:
+ *     summary: Get the list of local models available in Ollama.
+ *     tags: [Models]
+ *     responses:
+ *       200:
+ *         description: Successful response.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/OllamaModel'
+ *       500:
+ *         description: Server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.route('/ollama').get(modelController.indexOllama)
+
+/**
+ * @swagger
+ * /models/check:
  *   get:
  *     summary: Check if GENIE is working properly.
  *     tags: [Models]
@@ -312,11 +509,11 @@ const executorController = new ExecutorController()
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.route('/check').get(executorController.check)
+router.route('/check').get(modelController.check)
 
 /**
  * @swagger
- * /metamorphic-tests/execute:
+ * /models/execute:
  *   post:
  *     summary: Send a prompt under a specific model to generate a response.
  *     tags: [Models]
@@ -351,9 +548,9 @@ router.route('/check').get(executorController.check)
 router
     .route('/execute')
     .post(
-        ExecutorInputValidation.execute,
+        ModelInputValidation.execute,
         handleValidation,
-        executorController.execute
+        modelController.execute
     )
 
 export default router
