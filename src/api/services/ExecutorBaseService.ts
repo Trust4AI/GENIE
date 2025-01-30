@@ -107,10 +107,8 @@ class ExecutorBaseService {
         excludedText: string[],
         temperature: number
     ) {
-        const newExcludedText =
+        const filteredExcludedText =
             excludedText.find((text) => userPrompt.includes(text)) || ''
-
-        console.log('newExcludedText', newExcludedText)
 
         return {
             modelName,
@@ -118,7 +116,7 @@ class ExecutorBaseService {
             userPrompt,
             responseMaxLength,
             listFormatResponse,
-            excludedText: newExcludedText,
+            excludedText: filteredExcludedText,
             format: 'text',
             temperature,
         }
