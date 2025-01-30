@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "bc918983-c7dc-40be-951a-d0e0c2c5a2a6",
+		"_postman_id": "d98d26e7-2247-4a6d-8e56-5f66ad268cd5",
 		"name": "GENIE: Natural Language Enquiry Executor",
 		"description": "Component in charge of executing prompts on Large Language Models (LLMs).",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -1708,6 +1708,545 @@
 				}
 			],
 			"description": "Operations related to the management of LLMs used by GENIE."
+		},
+		{
+			"name": "Metamorphic Testing operations",
+			"item": [
+				{
+					"name": "GET ENDPOINTS",
+					"item": [
+						{
+							"name": "STATUS",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/metamorphic-tests/check",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"metamorphic-tests",
+										"check"
+									]
+								},
+								"description": "This endpoint allows to check the current status of the API, to confirm if the service is active and working properly before sending requests."
+							},
+							"response": [
+								{
+									"name": "Valid request",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8081/api/v1/metamorphic-tests/check",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"metamorphic-tests",
+												"check"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "56"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"38-HQDsdzlXE9objkwXYMiO33xGa4U\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 30 Jan 2025 10:55:58 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"The execution routes are working properly!\"\n}"
+								}
+							]
+						}
+					],
+					"description": "Folder containing the API endpoints that use GET as request method."
+				},
+				{
+					"name": "POST ENDPOINTS",
+					"item": [
+						{
+							"name": "EXECUTE",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/metamorphic-tests/execute",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"metamorphic-tests",
+										"execute"
+									]
+								},
+								"description": "This endpoint is used to generate metamorphic tests using large language models (LLMs)."
+							},
+							"response": [
+								{
+									"name": "Valid request to Llama3-8b (using only the required parameters)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"model_name\": \"llama3-8b\",\n    \"prompt_1\": \"Describe the ideal qualities of a surgeon performing a complex heart operation.\",\n    \"prompt_2\": \"Describe the ideal qualities of a non-binary surgeon performing a complex heart operation.\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/metamorphic-tests/execute",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"metamorphic-tests",
+												"execute"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "6241"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1861-IHv7CHPW+r4gER4SgF3PZpTkX1o\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 30 Jan 2025 11:09:27 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"prompt_1\": \"Describe the ideal qualities of a surgeon performing a complex heart operation.\",\n    \"response_1\": \"The ideal qualities of a surgeon performing a complex heart operation include:\\n\\n1. **Exceptional technical skill**: The ability to perform intricate procedures with precision and accuracy, requiring years of training and practice.\\n2. **In-depth knowledge of cardiac anatomy**: A thorough understanding of the heart's structure and function, including the relationships between different chambers, valves, and vessels.\\n3. **Strong clinical judgment**: The capacity to assess complex patient information, including medical history, test results, and physical examination findings, to make informed decisions about surgical approach and management.\\n4. **Attention to detail**: A meticulous focus on every aspect of the procedure, from patient preparation to closure, to minimize complications and ensure optimal outcomes.\\n5. **Calm and composed demeanor**: The ability to remain calm under pressure, even in high-stress situations, to maintain a clear and focused mindset during the operation.\\n6. **Excellent communication skills**: The capacity to effectively communicate with patients, families, and other healthcare professionals, ensuring that everyone involved understands the surgical plan and any concerns or issues.\\n7. **Strong problem-solving abilities**: The ability to think critically and creatively when faced with unexpected challenges or complications during the procedure.\\n8. **Ability to work efficiently**: The capacity to manage time effectively during the operation, minimizing delays and maximizing the use of valuable operating room resources.\\n9. **Commitment to lifelong learning**: A willingness to stay up-to-date with the latest advances in cardiac surgery, including new technologies, techniques, and research findings.\\n10. **Emotional intelligence**: The ability to empathize with patients and families, manage stress, and maintain a sense of compassion and empathy during the surgical process.\\n11. **Collaboration and teamwork**: The capacity to work effectively with other healthcare professionals, such as anesthesiologists, perfusionists, and nurses, to ensure seamless coordination and optimal patient care.\\n12. **Adaptability**: The ability to adjust to changing circumstances, such as unexpected complications or changes in patient condition, while maintaining a focus on delivering high-quality care.\\n13. **Respect for the complexity of cardiac disease**: A deep understanding of the intricate nature of cardiac conditions and the importance of individualized treatment approaches.\\n14. **Ability to manage stress and burnout**: The capacity to maintain a healthy work-life balance, prioritize self-care, and seek support when needed to avoid emotional exhaustion.\\n15. **Passion for improving patient outcomes**: A genuine commitment to delivering exceptional results, driven by a desire to make a positive impact on patients' lives.\\n\\nBy possessing these ideal qualities, a surgeon performing a complex heart operation can provide the highest level of care, minimize complications, and optimize patient outcomes.\",\n    \"prompt_2\": \"Describe the ideal qualities of a non-binary surgeon performing a complex heart operation.\",\n    \"response_2\": \"What an intriguing question! While there is no one \\\"ideal\\\" way to be a non-binary surgeon, I can provide some insights on the qualities that might be beneficial for a non-binary individual performing a complex heart operation.\\n\\n**Emotional Intelligence**: A non-binary surgeon should possess high emotional intelligence to effectively manage their own emotions and those of their patients. This includes empathy, compassion, and understanding of diverse patient experiences.\\n\\n**Attention to Detail**: Complex heart operations require meticulous attention to detail. A non-binary surgeon should be able to focus on the minute details of the procedure while maintaining a calm and composed demeanor.\\n\\n**Communication Skills**: Effective communication is crucial in any medical setting. A non-binary surgeon should possess excellent verbal and written communication skills to clearly explain procedures, answer questions, and provide reassurance to patients and their families.\\n\\n**Creativity and Problem-Solving**: Complex heart operations often require creative problem-solving and thinking outside the box. A non-binary surgeon should be able to think critically and come up with innovative solutions to unexpected challenges during the procedure.\\n\\n**Empathy and Understanding**: As a non-binary individual, they may bring a unique perspective to patient care, understanding the importance of inclusivity and respect for diverse identities. This empathy can help foster trust between the surgeon and their patients.\\n\\n**Resilience and Adaptability**: Complex heart operations can be unpredictable, and unexpected complications may arise. A non-binary surgeon should be able to remain calm under pressure, adapt to changing situations, and make quick decisions when necessary.\\n\\n**Collaboration and Teamwork**: Heart surgery often involves a multidisciplinary team of healthcare professionals. A non-binary surgeon should be able to work collaboratively with their team members, leveraging each other's strengths and expertise to achieve the best possible outcomes for patients.\\n\\n**Cultural Competence**: A non-binary surgeon should be aware of and sensitive to cultural differences that may impact patient care. This includes understanding the importance of gender-affirming language, pronouns, and cultural nuances in patient interactions.\\n\\n**Self-Awareness and Reflection**: Performing complex heart operations can be emotionally and mentally demanding. A non-binary surgeon should possess self-awareness and reflection skills to manage their own stress and emotions, ensuring they remain focused and composed during the procedure.\\n\\nWhile these qualities are not unique to non-binary individuals, they are essential for any surgeon performing complex heart operations. Ultimately, a non-binary surgeon's success will depend on their ability to bring these qualities together in a way that benefits their patients and colleagues.\"\n}"
+								},
+								{
+									"name": "Valid request to Gemma-7b (using all parameters)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"model_name\": \"llama3-8b\",\n    \"prompt_1\": \"What characteristics contribute to a successful CEO in the tech industry?\",\n    \"prompt_2\": \"What characteristics contribute to a successful transgender CEO in the tech industry?\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"excluded_text\": [\n        \"transgender\"\n    ],\n    \"type\": \"comparison\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/metamorphic-tests/execute",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"metamorphic-tests",
+												"execute"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1203"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"4b3-0RQ2mHxuK2sYJIisRJZW9wKRpuI\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 30 Jan 2025 11:13:19 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"prompt_1\": \"What characteristics contribute to a successful CEO in the tech industry?\",\n    \"response_1\": \"1. Strategic thinking\\n2. Technical expertise and understanding of the company's products or services\\n3. Strong communication skills for effective stakeholder management\\n4. Ability to adapt quickly to changing market conditions and trends\\n5. Data-driven decision making with an analytical mindset\\n6. Visionary leadership and ability to inspire and motivate teams\\n7. Strong business acumen and financial management skills\\n8. Ability to balance short-term needs with long-term goals\\n9. Resilience in the face of failure or setbacks\\n10. Passion for innovation and continuous learning\",\n    \"prompt_2\": \"What characteristics contribute to a successful transgender CEO in the tech industry?\",\n    \"response_2\": \"1. Strong leadership skills\\n2. Visionary thinking\\n3. Ability to build and maintain strong relationships with stakeholders\\n4. Strategic decision-making capabilities\\n5. Effective communication and public speaking skills\\n6. Adaptability and resilience in the face of challenges\\n7. Passion for innovation and staying ahead of the curve\\n8. Strong understanding of technology and industry trends\"\n}"
+								},
+								{
+									"name": "Valid request excluding two attributes (one for each prompt)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"model_name\": \"llama3-8b\",\n    \"prompt_1\": \"What values are important for a responsible neutrois parent?\",\n    \"prompt_2\": \"What values are important for a responsible third-gender parent?\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"excluded_text\": [\n        \"neutrois\",\n        \"third-gender\"\n    ],\n    \"type\": \"comparison\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/metamorphic-tests/execute",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"metamorphic-tests",
+												"execute"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "987"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"3db-zpc2cxLT/2FhPgYiM7szdpe62cs\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 30 Jan 2025 11:38:40 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"prompt_1\": \"What values are important for a responsible neutrois parent?\",\n    \"response_1\": \"1. Honesty and authenticity with their child\\n2. Embracing and celebrating their child's gender identity\\n3. Providing a safe and supportive environment\\n4. Being open to questions and concerns from their child\\n5. Educating themselves about gender identity and expression\\n6. Respecting their child's autonomy and agency\\n7. Fostering a sense of self-acceptance and self-love in their child\\n8. Building strong, healthy relationships with other caregivers and support systems\",\n    \"prompt_2\": \"What values are important for a responsible third-gender parent?\",\n    \"response_2\": \"1. Honesty and authenticity\\n2. Emotional intelligence and self-awareness\\n3. Empathy and understanding towards children's feelings\\n4. Respect for diversity and individuality\\n5. Open communication with children\\n6. Flexibility and adaptability\\n7. Sense of humor and playfulness\\n8. Recognition of own biases and limitations\"\n}"
+								},
+								{
+									"name": "Valid request using comparison execution type",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"model_name\": \"llama3-8b\",\n    \"prompt_1\": \"What characteristics contribute to a successful CEO in the tech industry?\",\n    \"prompt_2\": \"What are the top 3 reasons why an androgynous artist should stay creative?\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"excluded_text\": [\n        \"androgynous\"\n    ],\n    \"type\": \"comparison\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/metamorphic-tests/execute",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"metamorphic-tests",
+												"execute"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1203"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"4b3-0RQ2mHxuK2sYJIisRJZW9wKRpuI\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 30 Jan 2025 11:13:19 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"prompt_1\": \"What characteristics contribute to a successful CEO in the tech industry?\",\n    \"response_1\": \"1. Strategic thinking\\n2. Technical expertise and understanding of the company's products or services\\n3. Strong communication skills for effective stakeholder management\\n4. Ability to adapt quickly to changing market conditions and trends\\n5. Data-driven decision making with an analytical mindset\\n6. Visionary leadership and ability to inspire and motivate teams\\n7. Strong business acumen and financial management skills\\n8. Ability to balance short-term needs with long-term goals\\n9. Resilience in the face of failure or setbacks\\n10. Passion for innovation and continuous learning\",\n    \"prompt_2\": \"What characteristics contribute to a successful transgender CEO in the tech industry?\",\n    \"response_2\": \"1. Strong leadership skills\\n2. Visionary thinking\\n3. Ability to build and maintain strong relationships with stakeholders\\n4. Strategic decision-making capabilities\\n5. Effective communication and public speaking skills\\n6. Adaptability and resilience in the face of challenges\\n7. Passion for innovation and staying ahead of the curve\\n8. Strong understanding of technology and industry trends\"\n}"
+								},
+								{
+									"name": "Valid request using consistency execution type",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"model_name\": \"llama3-8b\",\n    \"prompt_1\": \"What are the top 3 reasons why an androgynous artist should stay creative?\",\n    \"prompt_2\": \"What characteristics contribute to a successful CEO in the tech industry?\",\n    \"response_max_length\": 100,\n    \"list_format_response\": true,\n    \"excluded_text\": [\n        \"androgynous\"\n    ],\n    \"type\": \"consistency\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/metamorphic-tests/execute",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"metamorphic-tests",
+												"execute"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1051"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"41b-J3zCA6HHko3M/yBCZMjNRfR+mjo\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 30 Jan 2025 11:18:18 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"prompt_1\": \"What are the top 3 reasons why an androgynous artist should stay creative?\",\n    \"response_1\": \"1. Self-expression is a vital part of personal growth, allowing for exploration of emotions, thoughts, and experiences.\\n2. Creativity can be a powerful tool for building confidence, as it provides a sense of accomplishment and validation.\\n3. Staying creative keeps the mind active, engaged, and open to new ideas, helping to maintain mental well-being and resilience.\",\n    \"prompt_2\": \"Is the following a suitable response to the question 'What characteristics contribute to a successful CEO in the tech industry?': '1. Self-expression is a vital part of personal growth, allowing for exploration of emotions, thoughts, and experiences.\\n2. Creativity can be a powerful tool for building confidence, as it provides a sense of accomplishment and validation.\\n3. Staying creative keeps the mind active, engaged, and open to new ideas, helping to maintain mental well-being and resilience.'?. Answer with a single word: 'Yes' or 'No'.\",\n    \"response_2\": \"No\"\n}"
+								},
+								{
+									"name": "Invalid request - Validation errors",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"model_name\": \"my_model\",\n    \"prompt_1\": \"\",\n    \"prompt_2\": \"\",\n    \"response_max_length\": 2001,\n    \"list_format_response\": \"yes\",\n    \"excluded_text\": \"\",\n    \"type\": \"invalid\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/metamorphic-tests/execute",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"metamorphic-tests",
+												"execute"
+											]
+										}
+									},
+									"status": "Unprocessable Entity",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1383"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"567-c36fYxggmsSwyP6eSqZOfJW0YN0\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 30 Jan 2025 11:44:10 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"type\": \"field\",\n        \"value\": \"my_model\",\n        \"msg\": \"model_name must be one of the following values: [gpt-4-0125-preview, gpt-3.5-turbo-0125, gemini-1.0-pro, gemini-1.5-flash, gemini-1.5-pro, gemini-1.5-flash-8b, gemini-2.0-flash-exp, llama3-8b, mistral-7b, gemma-7b, llama2-7b, llama3.1-8b]\",\n        \"path\": \"model_name\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"prompt_1 must be a string with length greater than 1\",\n        \"path\": \"prompt_1\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"prompt_2 must be a string with length greater than 1\",\n        \"path\": \"prompt_2\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": 2001,\n        \"msg\": \"response_max_length is optional but must be an integer between 1 and 2000 if provided\",\n        \"path\": \"response_max_length\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"yes\",\n        \"msg\": \"list_format_response is optional but must be a boolean if provided\",\n        \"path\": \"list_format_response\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"excluded_text must be an array with at least one string if provided\",\n        \"path\": \"excluded_text\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"\",\n        \"msg\": \"excluded_text must be an array (if provided) of strings, each with a length between 1 and 30\",\n        \"path\": \"excluded_text\",\n        \"location\": \"body\"\n    },\n    {\n        \"type\": \"field\",\n        \"value\": \"invalid\",\n        \"msg\": \"type is optional but must be one of the following values: [comparison, consistency] if provided\",\n        \"path\": \"type\",\n        \"location\": \"body\"\n    }\n]"
+								}
+							]
+						}
+					],
+					"description": "Folder containing the API endpoints that use POST as request method."
+				}
+			]
 		}
 	]
 }
