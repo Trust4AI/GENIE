@@ -30,7 +30,7 @@ const swaggerOptions: Options = {
             },
         ],
     },
-    apis: ['./api/routes/ExecutorRoutes.ts'],
+    apis: ['./api/routes/ModelRoutes.ts', './api/routes/ExecutorRoutes.ts'],
 }
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions)

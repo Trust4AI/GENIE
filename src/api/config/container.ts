@@ -1,5 +1,6 @@
 import { createContainer, asClass, AwilixContainer } from 'awilix'
 
+import ModelBaseService from '../services/ModelBaseService'
 import ExecutorBaseService from '../services/ExecutorBaseService'
 import OllamaExecutorModelService from '../services/OllamaExecutorModelService'
 import OpenAIExecutorModelService from '../services/OpenAIExecutorModelService'
@@ -9,6 +10,7 @@ function initContainer(): AwilixContainer {
     const container: AwilixContainer = createContainer()
 
     container.register({
+        modelBaseService: asClass(ModelBaseService).singleton(),
         executorBaseService: asClass(ExecutorBaseService).singleton(),
         ollamaExecutorModelService: asClass(
             OllamaExecutorModelService
