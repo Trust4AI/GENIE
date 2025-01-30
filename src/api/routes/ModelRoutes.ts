@@ -157,7 +157,7 @@ const modelBaseService = container.resolve('modelBaseService')
  *         type: "field"
  *         value: ""
  *         msg: "user_prompt must be a string with length greater than 1"
- *         path: "prompt"
+ *         path: "user_prompt"
  *         location: "body"
  *     AddModelInput:
  *       type: object
