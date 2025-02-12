@@ -14,99 +14,7 @@ const modelBaseService = container.resolve('modelBaseService')
  * @swagger
  * components:
  *   schemas:
- *     GENIEModels:
- *       type: object
- *       properties:
- *         openai:
- *           type: array
- *           items:
- *             type: string
- *         gemini:
- *           type: array
- *           items:
- *             type: string
- *         ollama:
- *           type: object
- *           additionalProperties:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               url:
- *                 type: string
- *     AddModelResponse:
- *       type: object
- *       required:
- *         - category
- *         - id
- *       properties:
- *         category:
- *           type: string
- *           description: The category of the model added.
- *           example: "ollama"
- *         id:
- *           type: string
- *           description: The unique identifier of the model added.
- *           example: "mistral-7b"
- *         name:
- *           type: string
- *           description: The base name of the model in Ollama.
- *           example: "mistral:7b"
- *         url:
- *           type: string
- *           description: The url to use the model.
- *           example: "http://127.0.0.1:11434"
- *       example:
- *         category: "ollama"
- *         id: "mistral-7b"
- *         name: "mistral:7b"
- *         url: "http://127.0.0.1:11434"
- *     UpdateModelResponse:
- *       type: object
- *       required:
- *         - id
- *       properties:
- *         id:
- *           type: string
- *           description: The unique identifier of the model updated.
- *           example: "mistral-7b"
- *         name:
- *           type: string
- *           description: The base name of the model in Ollama.
- *           example: "mistral:7b"
- *         url:
- *           type: string
- *           description: The url to use the model.
- *           example: "http://127.0.0.1:11434"
- *       example:
- *         id: "mistral-7b"
- *         name: "mistral:7b"
- *         url: "http://127.0.0.1:11434"
- *     OllamaModel:
- *       type: object
- *       required:
- *         - name
- *         - model
- *         - modified_at
- *       properties:
- *         name:
- *           type: string
- *           description: The name given to the model in Ollama.
- *           example: "llama3:latest"
- *         model:
- *           type: string
- *           description: The base name of the model in Ollama.
- *           example: "llama3:8b"
- *         modified_at:
- *           type: string
- *           format: date-time
- *           description: The date and time the model was last modified.
- *           example: "2024-08-01T12:15:39.507589+02:00"
- *       example:
- *         name: "llama3:latest"
- *         model: "llama3:8b"
- *         modified_at: "2024-08-01T12:15:39.507589+02:00"
- *     Message:
+ *     ModelMessage:
  *       type: object
  *       required:
  *         - message
@@ -114,7 +22,7 @@ const modelBaseService = container.resolve('modelBaseService')
  *         message:
  *           type: string
  *       example:
- *         message: GENIE is working properly!
+ *         message: The model routes are working properly!
  *     Error:
  *       type: object
  *       required:
@@ -159,66 +67,6 @@ const modelBaseService = container.resolve('modelBaseService')
  *         msg: "user_prompt must be a string with length greater than 1"
  *         path: "user_prompt"
  *         location: "body"
- *     AddModelInput:
- *       type: object
- *       required:
- *         - category
- *         - id
- *       properties:
- *         category:
- *           description: The category of the model to add.
- *           type: string
- *           enum: ["ollama", "openai", "gemini"]
- *           example: "ollama"
- *         id:
- *           description: The unique identifier of the model to add.
- *           type: string
- *           example: "mistral-7b"
- *         name:
- *           description: The base name of the model in Ollama.
- *           type: string
- *           example: "mistral:7b"
- *         base_url:
- *           description: The base url to use the model.
- *           type: string
- *           example: "http://127.0.0.1"
- *         port:
- *           description: The port to use the model.
- *           type: integer
- *           example: 11434
- *       example:
- *         category: "ollama"
- *         id: "mistral-7b"
- *         name: "mistral:7b"
- *         base_url: "http://127.0.0.1"
- *         port: 11434
- *     UpdateModelInput:
- *       type: object
- *       required:
- *         - id
- *         - name
- *       properties:
- *         id:
- *           description: The unique identifier of the model to update.
- *           type: string
- *           example: "mistral-7b"
- *         name:
- *           description: The base name of the model in Ollama.
- *           type: string
- *           example: "mistral:7b"
- *         base_url:
- *           description: The base url to use the model.
- *           type: string
- *           example: "http://127.0.0.1"
- *         port:
- *           description: The port to use the model.
- *           type: integer
- *           example: 11434
- *       example:
- *         id: "mistral-7b"
- *         name: "mistral:7b"
- *         base_url: "http://127.0.0.1"
- *         port: 11434
  *     ExecutionInput:
  *       type: object
  *       required:
@@ -228,8 +76,8 @@ const modelBaseService = container.resolve('modelBaseService')
  *         model_name:
  *           description: The name of the model to use.
  *           type: string
- *           enum: ["llama3-8b", "llama2-7b", "mistral-7b", "gemma-7b"]
- *           example: "llama3-8b"
+ *           enum: ["gemini-1.0-pro", "gemini-1.5-flash", "gemini-1.5-flash-8b", "gemini-2.0-flash-exp"]
+ *           example: "gemini-1.5-flash"
  *         system_prompt:
  *           description: The system prompt to execute on the model.
  *           type: string
@@ -249,6 +97,7 @@ const modelBaseService = container.resolve('modelBaseService')
  *         list_format_response:
  *           description: Determines whether the response of the model should be returned as a structured list of points.
  *           type: boolean
+ *           default: false
  *           example: true
  *         excluded_text:
  *           description: The text to exclude from the response of the model.
@@ -269,7 +118,7 @@ const modelBaseService = container.resolve('modelBaseService')
  *           default: 0.5
  *           example: 0.5
  *       example:
- *         model_name: "llama3-8b"
+ *         model_name: "gemini-1.5-flash"
  *         system_prompt: "Respond as if you were NASA's chief engineer."
  *         user_prompt: "How can a Jewish engineer solve complex problems?"
  *         response_max_length: 100
@@ -296,141 +145,11 @@ const modelBaseService = container.resolve('modelBaseService')
  *  name: Models
  */
 
-/**
- * @swagger
- * /models:
- *   get:
- *     summary: Get the list of models configured in GENIE.
- *     tags: [Models]
- *     responses:
- *       200:
- *         description: Successful response.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: string
- *       500:
- *         description: Server error.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- *   post:
- *     summary: Add a new model to GENIE configuration.
- *     tags: [Models]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/AddModelInput'
- *     responses:
- *       200:
- *         description: Successful response.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/AddModelResponse'
- *       422:
- *         description: Validation error.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/ValidationError'
- *       500:
- *         description: Server error.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- */
 router
     .route('/')
     .get(modelController.index)
     .post(ModelInputValidation.add, handleValidation, modelController.add)
 
-/**
- * @swagger
- * /models/{id}:
- *   put:
- *     summary: Update a model configuration in GENIE.
- *     tags: [Models]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: The unique identifier of the model to update.
- *         schema:
- *           type: string
- *           example: "mistral-7b"
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/UpdateModelInput'
- *     responses:
- *       200:
- *         description: Successful response.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/UpdateModelResponse'
- *       404:
- *         description: Model not found.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- *       422:
- *         description: Validation error.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/ValidationError'
- *       500:
- *         description: Server error.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- *   delete:
- *     summary: Remove a model configuration from GENIE.
- *     tags: [Models]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: The unique identifier of the model to remove.
- *         schema:
- *           type: string
- *           example: "mistral-7b"
- *     responses:
- *       200:
- *         description: Successful response.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/message'
- *       404:
- *         description: Model not found.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- *       500:
- *         description: Server error.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- */
 router
     .route('/:id')
     .put(
@@ -441,59 +160,15 @@ router
     )
     .delete(checkEntityExists(modelBaseService, 'id'), modelController.remove)
 
-/**
- * @swagger
- * /models/details:
- *   get:
- *     summary: Get the list of models configured in GENIE with details.
- *     tags: [Models]
- *     responses:
- *       200:
- *         description: Successful response.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/GENIEModels'
- *       500:
- *         description: Server error.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- */
 router.route('/details').get(modelController.indexDetails)
 
-/**
- * @swagger
- * /models/ollama:
- *   get:
- *     summary: Get the list of local models available in Ollama.
- *     tags: [Models]
- *     responses:
- *       200:
- *         description: Successful response.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/OllamaModel'
- *       500:
- *         description: Server error.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- */
 router.route('/ollama').get(modelController.indexOllama)
 
 /**
  * @swagger
  * /models/check:
  *   get:
- *     summary: Check if GENIE is working properly.
+ *     summary: Check if model routes are working properly.
  *     tags: [Models]
  *     responses:
  *       200:
@@ -501,7 +176,7 @@ router.route('/ollama').get(modelController.indexOllama)
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Message'
+ *               $ref: '#/components/schemas/ModelMessage'
  *       500:
  *         description: Server error.
  *         content:

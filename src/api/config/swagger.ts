@@ -26,7 +26,7 @@ const swaggerOptions: Options = {
         },
         servers: [
             {
-                url: `http://localhost:${port}/api/v1/`,
+                url: `http://trust4ai.us.es:8085/api/v1/`,
             },
         ],
     },
