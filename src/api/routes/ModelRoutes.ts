@@ -106,7 +106,7 @@ const modelBaseService = container.resolve('modelBaseService')
  *         name: "llama3:latest"
  *         model: "llama3:8b"
  *         modified_at: "2024-08-01T12:15:39.507589+02:00"
- *     Message:
+ *     ModelMessage:
  *       type: object
  *       required:
  *         - message
@@ -493,7 +493,7 @@ router.route('/ollama').get(modelController.indexOllama)
  * @swagger
  * /models/check:
  *   get:
- *     summary: Check if GENIE is working properly.
+ *     summary: Check if the model routes are working properly.
  *     tags: [Models]
  *     responses:
  *       200:
@@ -501,7 +501,7 @@ router.route('/ollama').get(modelController.indexOllama)
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Message'
+ *               $ref: '#/components/schemas/ModelMessage'
  *       500:
  *         description: Server error.
  *         content:
