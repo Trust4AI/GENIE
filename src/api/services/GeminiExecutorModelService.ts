@@ -22,6 +22,9 @@ class GeminiExecutorModelService {
             userPrompt,
             responseMaxLength,
             listFormatResponse,
+            numericFormatResponse,
+            yesNoFormatResponse,
+            multipleChoiceFormatResponse,
             excludedText,
             format,
             temperature,
@@ -41,6 +44,9 @@ class GeminiExecutorModelService {
         const auxSystemPrompt = buildAuxSystemPrompt(
             responseMaxLength,
             listFormatResponse,
+            numericFormatResponse,
+            yesNoFormatResponse,
+            multipleChoiceFormatResponse,
             excludedText
         )
         logPrompts(modelName, auxSystemPrompt, systemPrompt, userPrompt)

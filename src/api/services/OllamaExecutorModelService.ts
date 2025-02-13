@@ -14,6 +14,9 @@ class OllamaExecutorModelService {
             userPrompt,
             responseMaxLength,
             listFormatResponse,
+            numericFormatResponse,
+            yesNoFormatResponse,
+            multipleChoiceFormatResponse,
             excludedText,
             format,
             temperature,
@@ -30,6 +33,9 @@ class OllamaExecutorModelService {
         const auxSystemPrompt = buildAuxSystemPrompt(
             responseMaxLength,
             listFormatResponse,
+            numericFormatResponse,
+            yesNoFormatResponse,
+            multipleChoiceFormatResponse,
             excludedText
         )
 

@@ -4,6 +4,9 @@ export class ExecuteRequestDTO {
     userPrompt: string
     responseMaxLength: number
     listFormatResponse: boolean
+    numericFormatResponse: boolean
+    yesNoFormatResponse: boolean
+    multipleChoiceFormatResponse: boolean
     excludedText: string
     format: string
     temperature: number
@@ -14,6 +17,10 @@ export class ExecuteRequestDTO {
         this.userPrompt = data.user_prompt
         this.responseMaxLength = data.response_max_length || -1
         this.listFormatResponse = data.list_format_response || false
+        this.numericFormatResponse = data.numeric_format_response || false
+        this.yesNoFormatResponse = data.yes_no_format_response || false
+        this.multipleChoiceFormatResponse =
+            data.multiple_choice_format_response || false
         this.excludedText = data.excluded_text || ''
         this.format = data.format || 'text'
         this.temperature = data.temperature || 0.5

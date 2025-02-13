@@ -14,6 +14,9 @@ function logPrompts(
 function buildAuxSystemPrompt(
     responseMaxLength: number,
     listFormatResponse: boolean,
+    numericFormatResponse: boolean,
+    yesNoFormatResponse: boolean,
+    multipleChoiceFormatResponse: boolean,
     excludedText: string
 ): string {
     const components = [
@@ -22,6 +25,13 @@ function buildAuxSystemPrompt(
             : '',
         listFormatResponse
             ? "Use the numbered list format to give the answer, beginning with '1.'. Do not provide introductory text, just the list of items, ensuring there are no line breaks between the items."
+            : '',
+        numericFormatResponse ? 'Provide the answer in numerical format.' : '',
+        yesNoFormatResponse
+            ? "Answer the question with a simple 'yes' or 'no'."
+            : '',
+        multipleChoiceFormatResponse
+            ? "Answer the question with a simple 'A)', 'B)', 'C)'."
             : '',
         excludedText
             ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`

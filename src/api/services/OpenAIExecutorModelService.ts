@@ -18,6 +18,9 @@ class OpenAIExecutorModelService {
             userPrompt,
             responseMaxLength,
             listFormatResponse,
+            numericFormatResponse,
+            yesNoFormatResponse,
+            multipleChoiceFormatResponse,
             excludedText,
             format,
             temperature,
@@ -29,6 +32,9 @@ class OpenAIExecutorModelService {
         const auxSystemPrompt = buildAuxSystemPrompt(
             responseMaxLength,
             listFormatResponse,
+            numericFormatResponse,
+            yesNoFormatResponse,
+            multipleChoiceFormatResponse,
             excludedText
         )
 
