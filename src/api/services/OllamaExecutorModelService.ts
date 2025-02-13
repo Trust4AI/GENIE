@@ -4,6 +4,7 @@ import { debugLog } from '../utils/logUtils'
 import { getOllamaModelConfig } from '../utils/modelUtils'
 import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
 import { sendChatRequest } from '../utils/ollamaUtils'
+import { buildAuxSystemPrompt, logPrompts } from '../utils/promptUtils'
 
 class OllamaExecutorModelService {
     async sendPromptToModel(dto: ExecuteRequestDTO): Promise<string> {
@@ -26,19 +27,13 @@ class OllamaExecutorModelService {
             )
         }
 
-        const auxSystemPrompt = this.buildAuxSystemPrompt(
+        const auxSystemPrompt = buildAuxSystemPrompt(
             responseMaxLength,
             listFormatResponse,
             excludedText
         )
 
-        this.logPrompts(
-            modelData.url,
-            modelData.name,
-            auxSystemPrompt,
-            systemPrompt,
-            userPrompt
-        )
+        logPrompts(modelData.name, auxSystemPrompt, systemPrompt, userPrompt)
 
         const requestBody = this.buildRequestBody(
             modelData.name,
@@ -62,39 +57,6 @@ class OllamaExecutorModelService {
             debugLog(error, 'error')
             throw new Error(error.message)
         }
-    }
-
-    private buildAuxSystemPrompt(
-        responseMaxLength: number,
-        listFormatResponse: boolean,
-        excludedText: string
-    ): string {
-        const components = [
-            responseMaxLength !== -1
-                ? `Answer the question in no more than ${responseMaxLength} words.`
-                : '',
-            listFormatResponse
-                ? "Use the numbered list format to give the answer, beginning with '1.'. Do not provide introductory text, just the list of items, ensuring there are no line breaks between the items."
-                : '',
-            excludedText
-                ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
-                : '',
-        ]
-
-        return components.filter(Boolean).join(' ')
-    }
-
-    private logPrompts(
-        url: string,
-        model: string,
-        auxSystemPrompt: string,
-        systemPrompt: string,
-        userPrompt: string
-    ): void {
-        debugLog(`URL: ${url}`, 'info')
-        debugLog(`Model: ${model}`, 'info')
-        debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')
-        debugLog(`User prompt: ${userPrompt}`, 'info')
     }
 
     private buildRequestBody(

@@ -8,6 +8,7 @@ import {
     GoogleGenerativeAI,
 } from '@google/generative-ai'
 import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
+import { buildAuxSystemPrompt, logPrompts } from '../utils/promptUtils'
 
 const geminiAPIKey = config.geminiAPIKey
 
@@ -37,12 +38,12 @@ class GeminiExecutorModelService {
             temperature
         )
 
-        const auxSystemPrompt = this.buildAuxSystemPrompt(
+        const auxSystemPrompt = buildAuxSystemPrompt(
             responseMaxLength,
             listFormatResponse,
             excludedText
         )
-        this.logPrompts(modelName, auxSystemPrompt, systemPrompt, userPrompt)
+        logPrompts(modelName, auxSystemPrompt, systemPrompt, userPrompt)
 
         const history = this.buildChatHistory(systemPrompt, auxSystemPrompt)
 
@@ -88,37 +89,6 @@ class GeminiExecutorModelService {
                     ? 'application/json'
                     : 'text/plain',
         }
-    }
-
-    private buildAuxSystemPrompt(
-        responseMaxLength: number,
-        listFormatResponse: boolean,
-        excludedText: string
-    ): string {
-        const components = [
-            responseMaxLength !== -1
-                ? `Answer the question in no more than ${responseMaxLength} words.`
-                : '',
-            listFormatResponse
-                ? "Use the numbered list format to give the answer, beginning with '1.'. Do not provide introductory text, just the list of items, ensuring there are no line breaks between the items."
-                : '',
-            excludedText
-                ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
-                : '',
-        ]
-
-        return components.filter(Boolean).join(' ')
-    }
-
-    private logPrompts(
-        modelName: string,
-        auxSystemPrompt: string,
-        systemPrompt: string,
-        userPrompt: string
-    ): void {
-        debugLog(`Model: ${modelName}`, 'info')
-        debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')
-        debugLog(`User prompt: ${userPrompt}`, 'info')
     }
 
     private buildChatHistory(
