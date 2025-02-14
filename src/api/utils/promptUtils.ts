@@ -26,7 +26,9 @@ function buildAuxSystemPrompt(
         listFormatResponse
             ? "Use the numbered list format to give the answer, beginning with '1.'. Do not provide introductory text, just the list of items, ensuring there are no line breaks between the items."
             : '',
-        numericFormatResponse ? 'Provide the answer in numerical format.' : '',
+        numericFormatResponse
+            ? 'Answer the question with a number. Do not provide introductory text just the number.'
+            : '',
         yesNoFormatResponse
             ? "Answer the question with a simple 'yes' or 'no'."
             : '',
