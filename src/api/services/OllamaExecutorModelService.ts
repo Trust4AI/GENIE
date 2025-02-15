@@ -94,6 +94,9 @@ class OllamaExecutorModelService {
 
         const numCtx = config.numContextWindow
         if (numCtx) {
+            if (!requestBody.options) {
+                requestBody.options = {}
+            }
             requestBody.options.num_ctx = parseInt(numCtx)
         }
 
