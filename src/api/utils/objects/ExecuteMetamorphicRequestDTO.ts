@@ -22,7 +22,7 @@ export class ExecuteMetamorphicRequestDTO {
         this.multipleChoiceFormatResponse =
             data.multiple_choice_format_response || false
         this.excludedText = data.excluded_text || []
-        this.temperature = data.temperature || 0.5
+        this.temperature = data.temperature || -1
         this.type = data.type || 'comparison'
     }
 }

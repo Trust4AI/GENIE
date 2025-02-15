@@ -23,6 +23,6 @@ export class ExecuteRequestDTO {
             data.multiple_choice_format_response || false
         this.excludedText = data.excluded_text || ''
         this.format = data.format || 'text'
-        this.temperature = data.temperature || 0.5
+        this.temperature = data.temperature || -1
     }
 }

@@ -92,7 +92,10 @@ class OpenAIExecutorModelService {
         const params: OpenAI.Chat.ChatCompletionCreateParams = {
             model: modelName,
             messages,
-            temperature,
+        }
+
+        if (temperature !== -1) {
+            params.temperature = temperature
         }
 
         if (format === 'json') {

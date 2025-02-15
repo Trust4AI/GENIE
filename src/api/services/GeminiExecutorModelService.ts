@@ -85,16 +85,21 @@ class GeminiExecutorModelService {
         format: string,
         temperature: number
     ): GeminiGenerationConfig {
-        return {
-            temperature: temperature,
-            topP: 0.95,
-            topK: 40,
-            maxOutputTokens: 8192,
+        const config: GeminiGenerationConfig = {
+            // topP: 0.95,
+            // topK: 40,
+            // maxOutputTokens: 8192,
             response_mime_type:
                 format === 'json' && !modelName.includes('gemini-1.0')
                     ? 'application/json'
                     : 'text/plain',
         }
+
+        if (temperature !== -1) {
+            config['temperature'] = temperature
+        }
+
+        return config
     }
 
     private buildChatHistory(

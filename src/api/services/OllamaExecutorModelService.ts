@@ -88,7 +88,9 @@ class OllamaExecutorModelService {
             messages,
         }
 
-        requestBody.options = { temperature }
+        if (temperature !== -1) {
+            requestBody.options = { temperature }
+        }
 
         const numCtx = config.numContextWindow
         if (numCtx) {
