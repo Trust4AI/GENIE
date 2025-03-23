@@ -1,78 +1,41 @@
 {
     "openai": [
-        "gpt-4o-mini",
-        "gpt-4o"
+        "o3-mini-2025-01-31"
     ],
     "gemini": [
-        "gemini-1.5-flash-8b",
-        "gemini-1.5-flash",
-        "gemini-2.0-flash-lite-preview-02-05",
-        "gemini-2.0-flash",
         "gemini-2.0-flash-thinking-exp-01-21"
     ],
     "ollama": {
-        "llama3-8b": {
-            "name": "llama3:8b",
-            "url": "http://127.0.0.1:11434"
-        },
         "llama3.2-1b": {
             "name": "llama3.2:1b",
-            "url": "http://127.0.0.1:11434"
-        },
-        "llama3.2-3b": {
-            "name": "llama3.2:3b",
-            "url": "http://127.0.0.1:11434"
-        },
-        "llama3.1-8b": {
-            "name": "llama3.1:8b",
-            "url": "http://127.0.0.1:11434"
-        },
-        "mistral-7b": {
-            "name": "mistral:7b",
-            "url": "http://127.0.0.1:11434"
-        },
-        "qwen2.5-0.5b": {
-            "name": "qwen2.5:0.5b",
             "url": "http://127.0.0.1:11434"
         },
         "qwen2.5-1.5b": {
             "name": "qwen2.5:1.5b",
             "url": "http://127.0.0.1:11434"
         },
-        "qwen2.5-3b": {
-            "name": "qwen2.5:3b",
+        "salamandra-7b": {
+            "name": "salamandra:7b",
             "url": "http://127.0.0.1:11434"
         },
-        "qwen2.5-7b": {
-            "name": "qwen2.5:7b",
+        "llama3.1-8b": {
+            "name": "llama3.1:8b",
             "url": "http://127.0.0.1:11434"
         },
-        "gemma2-2b": {
-            "name": "gemma2:2b",
+        "gemma3-12b": {
+            "name": "gemma3:12b",
             "url": "http://127.0.0.1:11434"
         },
-        "gemma2-9b": {
-            "name": "gemma2:9b",
+        "phi4-14b": {
+            "name": "phi4:14b",
             "url": "http://127.0.0.1:11434"
         },
-        "orca-mini-3b": {
-            "name": "orca-mini:3b",
+        "deepseek-r1-32b": {
+            "name": "deepseek-r1:32b",
             "url": "http://127.0.0.1:11434"
         },
-        "orca-mini-7b": {
-            "name": "orca-mini:7b",
-            "url": "http://127.0.0.1:11434"
-        },
-        "vicuna-7b": {
-            "name": "vicuna:7b",
-            "url": "http://127.0.0.1:11434"
-        },
-        "deepseek-r1-1.5b": {
-            "name": "deepseek-r1:1.5b",
-            "url": "http://127.0.0.1:11434"
-        },
-        "deepseek-r1-8b": {
-            "name": "deepseek-r1:8b",
+        "llama3.3-70b": {
+            "name": "llama3.3:70b",
             "url": "http://127.0.0.1:11434"
         }
     }
