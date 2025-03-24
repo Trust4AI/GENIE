@@ -51,10 +51,14 @@ class OllamaModelService {
         )
 
         try {
-            const response = await this.fetchChatResponse(
+            let response = await this.fetchChatResponse(
                 modelData.url,
                 requestBody
             )
+            if (response.includes('<think>')) {
+                response = response.replace(/<think>.*<\/think>/, '')
+                response.trim()
+            }
             debugLog('Chat posted successfully!', 'info')
             debugLog(`Response from Ollama: ${response}`, 'info')
             return response
