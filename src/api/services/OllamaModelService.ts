@@ -6,7 +6,7 @@ import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
 import { sendChatRequest } from '../utils/ollamaUtils'
 import { buildAuxSystemPrompt, logPrompts } from '../utils/promptUtils'
 
-class OllamaExecutorModelService {
+class OllamaModelService {
     async sendPromptToModel(dto: ExecuteRequestDTO): Promise<string> {
         const {
             modelName,
@@ -117,4 +117,4 @@ class OllamaExecutorModelService {
     }
 }
 
-export default OllamaExecutorModelService
+export default OllamaModelService

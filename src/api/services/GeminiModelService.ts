@@ -14,7 +14,7 @@ const geminiAPIKey = config.geminiAPIKey
 
 const genAI = new GoogleGenerativeAI(geminiAPIKey)
 
-class GeminiExecutorModelService {
+class GeminiModelService {
     async sendPromptToModel(dto: ExecuteRequestDTO): Promise<string> {
         const {
             modelName,
@@ -123,4 +123,4 @@ class GeminiExecutorModelService {
     }
 }
 
-export default GeminiExecutorModelService
+export default GeminiModelService

@@ -10,7 +10,7 @@ const openai: OpenAI = new OpenAI({
     apiKey: openaiAPIKey,
 })
 
-class OpenAIExecutorModelService {
+class OpenAIModelService {
     async sendPromptToModel(dto: ExecuteRequestDTO): Promise<string> {
         const {
             modelName,
@@ -119,4 +119,4 @@ class OpenAIExecutorModelService {
     }
 }
 
-export default OpenAIExecutorModelService
+export default OpenAIModelService
