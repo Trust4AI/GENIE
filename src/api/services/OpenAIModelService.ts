@@ -2,6 +2,7 @@ import OpenAI from 'openai'
 import { debugLog } from '../utils/logUtils'
 import config from '../config/config'
 import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
+import { buildAuxSystemPrompt, logPrompts } from '../utils/promptUtils'
 
 const openaiAPIKey: string = config.openaiAPIKey
 
@@ -9,7 +10,7 @@ const openai: OpenAI = new OpenAI({
     apiKey: openaiAPIKey,
 })
 
-class OpenAIExecutorModelService {
+class OpenAIModelService {
     async sendPromptToModel(dto: ExecuteRequestDTO): Promise<string> {
         const {
             modelName,
@@ -17,6 +18,9 @@ class OpenAIExecutorModelService {
             userPrompt,
             responseMaxLength,
             listFormatResponse,
+            numericFormatResponse,
+            yesNoFormatResponse,
+            multipleChoiceFormatResponse,
             excludedText,
             format,
             temperature,
@@ -25,13 +29,16 @@ class OpenAIExecutorModelService {
             throw new Error('[GENIE] OPENAI_API_KEY is not defined')
         }
 
-        const auxSystemPrompt = this.buildAuxSystemPrompt(
+        const auxSystemPrompt = buildAuxSystemPrompt(
             responseMaxLength,
             listFormatResponse,
+            numericFormatResponse,
+            yesNoFormatResponse,
+            multipleChoiceFormatResponse,
             excludedText
         )
 
-        this.logPrompts(modelName, auxSystemPrompt, systemPrompt, userPrompt)
+        logPrompts(modelName, auxSystemPrompt, systemPrompt, userPrompt)
 
         const messages = this.buildMessages(
             auxSystemPrompt,
@@ -55,37 +62,6 @@ class OpenAIExecutorModelService {
             debugLog(error, 'error')
             throw new Error(error.message)
         }
-    }
-
-    private buildAuxSystemPrompt(
-        responseMaxLength: number,
-        listFormatResponse: boolean,
-        excludedText: string
-    ): string {
-        const components = [
-            responseMaxLength !== -1
-                ? `Answer the question in no more than ${responseMaxLength} words.`
-                : '',
-            listFormatResponse
-                ? "Use the numbered list format to give the answer, beginning with '1.'. Do not provide introductory text, just the list of items, ensuring there are no line breaks between the items."
-                : '',
-            excludedText
-                ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
-                : '',
-        ]
-
-        return components.filter(Boolean).join(' ')
-    }
-
-    private logPrompts(
-        modelName: string,
-        auxSystemPrompt: string,
-        systemPrompt: string,
-        userPrompt: string
-    ): void {
-        debugLog(`Model: ${modelName}`, 'info')
-        debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')
-        debugLog(`User prompt: ${userPrompt}`, 'info')
     }
 
     private buildMessages(
@@ -116,7 +92,10 @@ class OpenAIExecutorModelService {
         const params: OpenAI.Chat.ChatCompletionCreateParams = {
             model: modelName,
             messages,
-            temperature,
+        }
+
+        if (temperature !== -1) {
+            params.temperature = temperature
         }
 
         if (format === 'json') {
@@ -140,4 +119,4 @@ class OpenAIExecutorModelService {
     }
 }
 
-export default OpenAIExecutorModelService
+export default OpenAIModelService

@@ -1,24 +1,18 @@
 import container from '../config/container'
 import { getModelIds } from '../utils/modelUtils'
 import { ExecuteMetamorphicRequestDTO } from '../utils/objects/ExecuteMetamorphicRequestDTO'
-import GeminiExecutorModelService from './GeminiExecutorModelService'
-import OllamaExecutorModelService from './OllamaExecutorModelService'
-import OpenAIExecutorModelService from './OpenAIExecutorModelService'
+import GeminiModelService from './GeminiModelService'
+import OllamaModelService from './OllamaModelService'
+import OpenAIModelService from './OpenAIModelService'
 
 class ExecutorBaseService {
-    ollamaExecutorModelService: OllamaExecutorModelService
-    openaiExecutorModelService: OpenAIExecutorModelService
-    geminiExecutorModelService: GeminiExecutorModelService
+    ollamaModelService: OllamaModelService
+    openaiModelService: OpenAIModelService
+    geminiModelService: GeminiModelService
     constructor() {
-        this.ollamaExecutorModelService = container.resolve(
-            'ollamaExecutorModelService'
-        )
-        this.openaiExecutorModelService = container.resolve(
-            'openaiExecutorModelService'
-        )
-        this.geminiExecutorModelService = container.resolve(
-            'geminiExecutorModelService'
-        )
+        this.ollamaModelService = container.resolve('ollamaModelService')
+        this.openaiModelService = container.resolve('openaiModelService')
+        this.geminiModelService = container.resolve('geminiModelService')
     }
 
     check() {
@@ -35,6 +29,9 @@ class ExecutorBaseService {
             dto.prompt1,
             dto.responseMaxLength,
             dto.listFormatResponse,
+            dto.numericFormatResponse,
+            dto.yesNoFormatResponse,
+            dto.multipleChoiceFormatResponse,
             dto.excludedText,
             dto.temperature
         )
@@ -50,6 +47,9 @@ class ExecutorBaseService {
             prompt2,
             type === 'consistency' ? -1 : dto.responseMaxLength,
             type === 'consistency' ? false : dto.listFormatResponse,
+            type === 'consistency' ? false : dto.numericFormatResponse,
+            type === 'consistency' ? false : dto.yesNoFormatResponse,
+            type === 'consistency' ? false : dto.multipleChoiceFormatResponse,
             type === 'consistency' ? [] : dto.excludedText,
             dto.temperature
         )
@@ -67,23 +67,26 @@ class ExecutorBaseService {
         const geminiModelIds = getModelIds('gemini')
 
         if (openAIModelIds.includes(modelName)) {
-            return this.openaiExecutorModelService
+            return this.openaiModelService
         }
         if (geminiModelIds.includes(modelName)) {
-            return this.geminiExecutorModelService
+            return this.geminiModelService
         }
-        return this.ollamaExecutorModelService
+        return this.ollamaModelService
     }
 
     private async getModelResponse(
         executorModelService:
-            | OpenAIExecutorModelService
-            | GeminiExecutorModelService
-            | OllamaExecutorModelService,
+            | OpenAIModelService
+            | GeminiModelService
+            | OllamaModelService,
         modelName: string,
         userPrompt: string,
         responseMaxLength: number,
         listFormatResponse: boolean,
+        numericFormatResponse: boolean,
+        yesNoFormatResponse: boolean,
+        multipleChoiceFormatResponse: boolean,
         excludedText: string[],
         temperature: number
     ) {
@@ -92,6 +95,9 @@ class ExecutorBaseService {
             userPrompt,
             responseMaxLength,
             listFormatResponse,
+            numericFormatResponse,
+            yesNoFormatResponse,
+            multipleChoiceFormatResponse,
             excludedText,
             temperature
         )
@@ -104,6 +110,9 @@ class ExecutorBaseService {
         userPrompt: string,
         responseMaxLength: number,
         listFormatResponse: boolean,
+        numericFormatResponse: boolean,
+        yesNoFormatResponse: boolean,
+        multipleChoiceFormatResponse: boolean,
         excludedText: string[],
         temperature: number
     ) {
@@ -116,6 +125,9 @@ class ExecutorBaseService {
             userPrompt,
             responseMaxLength,
             listFormatResponse,
+            numericFormatResponse,
+            yesNoFormatResponse,
+            multipleChoiceFormatResponse,
             excludedText: filteredExcludedText,
             format: 'text',
             temperature,

@@ -1,30 +1,53 @@
 {
     "openai": [
-        "gpt-4-0125-preview",
-        "gpt-3.5-turbo-0125"
+        "o3-mini-2025-01-31"
     ],
     "gemini": [
-        "gemini-1.0-pro",
-        "gemini-1.5-flash",
-        "gemini-1.5-pro",
-        "gemini-1.5-flash-8b",
-        "gemini-2.0-flash-exp"
+        "gemini-2.0-flash-thinking-exp-01-21"
     ],
     "ollama": {
-        "llama3-8b": {
-            "name": "llama3:8b",
+        "llama3.2-1b": {
+            "name": "llama3.2:1b",
+            "url": "http://127.0.0.1:11434"
+        },
+        "qwen2.5-1.5b": {
+            "name": "qwen2.5:1.5b",
+            "url": "http://127.0.0.1:11434"
+        },
+        "salamandra-7b": {
+            "name": "salamandra:7b",
             "url": "http://127.0.0.1:11434"
         },
         "mistral-7b": {
             "name": "mistral:7b",
             "url": "http://127.0.0.1:11434"
         },
-        "gemma-7b": {
-            "name": "gemma:7b",
+        "llama3.1-8b": {
+            "name": "llama3.1:8b",
             "url": "http://127.0.0.1:11434"
         },
-        "llama2-7b": {
-            "name": "llama2:7b",
+        "gemma3-12b": {
+            "name": "gemma3:12b",
+            "url": "http://127.0.0.1:11434"
+        },
+        "deepseek-r1-14b": {
+            "name": "deepseek-r1:14b",
+            "url": "http://127.0.0.1:11434"
+        },
+        "gemma3-27b": {
+            "name": "gemma3:27b",
+            "url": "http://127.0.0.1:11434"
+        },
+        "qwq-32b": {
+            "name": "qwq:32b",
+            "url": "http://127.0.0.1:11434"
+        },
+        "deepseek-r1-32b": {
+            "name": "deepseek-r1:32b",
+            "url": "http://127.0.0.1:11434"
+        },
+        "llama3.3-70b": {
+            "name": "llama3.3:70b",
             "url": "http://127.0.0.1:11434"
         }
     }
