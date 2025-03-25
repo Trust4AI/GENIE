@@ -1,24 +1,18 @@
 import container from '../config/container'
 import { getModelIds } from '../utils/modelUtils'
 import { ExecuteMetamorphicRequestDTO } from '../utils/objects/ExecuteMetamorphicRequestDTO'
-import GeminiExecutorModelService from './GeminiExecutorModelService'
-import OllamaExecutorModelService from './OllamaExecutorModelService'
-import OpenAIExecutorModelService from './OpenAIExecutorModelService'
+import GeminiModelService from './GeminiModelService'
+import OllamaModelService from './OllamaModelService'
+import OpenAIModelService from './OpenAIModelService'
 
 class ExecutorBaseService {
-    ollamaExecutorModelService: OllamaExecutorModelService
-    openaiExecutorModelService: OpenAIExecutorModelService
-    geminiExecutorModelService: GeminiExecutorModelService
+    ollamaModelService: OllamaModelService
+    openaiModelService: OpenAIModelService
+    geminiModelService: GeminiModelService
     constructor() {
-        this.ollamaExecutorModelService = container.resolve(
-            'ollamaExecutorModelService'
-        )
-        this.openaiExecutorModelService = container.resolve(
-            'openaiExecutorModelService'
-        )
-        this.geminiExecutorModelService = container.resolve(
-            'geminiExecutorModelService'
-        )
+        this.ollamaModelService = container.resolve('ollamaModelService')
+        this.openaiModelService = container.resolve('openaiModelService')
+        this.geminiModelService = container.resolve('geminiModelService')
     }
 
     check() {
@@ -73,19 +67,19 @@ class ExecutorBaseService {
         const geminiModelIds = getModelIds('gemini')
 
         if (openAIModelIds.includes(modelName)) {
-            return this.openaiExecutorModelService
+            return this.openaiModelService
         }
         if (geminiModelIds.includes(modelName)) {
-            return this.geminiExecutorModelService
+            return this.geminiModelService
         }
-        return this.ollamaExecutorModelService
+        return this.ollamaModelService
     }
 
     private async getModelResponse(
         executorModelService:
-            | OpenAIExecutorModelService
-            | GeminiExecutorModelService
-            | OllamaExecutorModelService,
+            | OpenAIModelService
+            | GeminiModelService
+            | OllamaModelService,
         modelName: string,
         userPrompt: string,
         responseMaxLength: number,

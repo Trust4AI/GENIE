@@ -9,25 +9,19 @@ import {
 } from '../utils/modelUtils'
 import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
 import { getOllamaModels } from '../utils/ollamaUtils'
-import GeminiExecutorModelService from './GeminiExecutorModelService'
-import OllamaExecutorModelService from './OllamaExecutorModelService'
-import OpenAIExecutorModelService from './OpenAIExecutorModelService'
+import GeminiModelService from './GeminiModelService'
+import OllamaModelService from './OllamaModelService'
+import OpenAIModelService from './OpenAIModelService'
 //import { writeOutputToFile } from '../utils/fileUtils'
 
 class ModelBaseService {
-    ollamaExecutorModelService: OllamaExecutorModelService
-    openaiExecutorModelService: OpenAIExecutorModelService
-    geminiExecutorModelService: GeminiExecutorModelService
+    ollamaModelService: OllamaModelService
+    openaiModelService: OpenAIModelService
+    geminiModelService: GeminiModelService
     constructor() {
-        this.ollamaExecutorModelService = container.resolve(
-            'ollamaExecutorModelService'
-        )
-        this.openaiExecutorModelService = container.resolve(
-            'openaiExecutorModelService'
-        )
-        this.geminiExecutorModelService = container.resolve(
-            'geminiExecutorModelService'
-        )
+        this.ollamaModelService = container.resolve('ollamaModelService')
+        this.openaiModelService = container.resolve('openaiModelService')
+        this.geminiModelService = container.resolve('geminiModelService')
     }
 
     exists(id: string): boolean {
@@ -101,12 +95,12 @@ class ModelBaseService {
         const geminiModelIds = getModelIds('gemini')
 
         if (openAIModelIds.includes(modelName)) {
-            return this.openaiExecutorModelService
+            return this.openaiModelService
         }
         if (geminiModelIds.includes(modelName)) {
-            return this.geminiExecutorModelService
+            return this.geminiModelService
         }
-        return this.ollamaExecutorModelService
+        return this.ollamaModelService
     }
 }
 
