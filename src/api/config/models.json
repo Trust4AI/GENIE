@@ -18,6 +18,10 @@
             "name": "salamandra:7b",
             "url": "http://127.0.0.1:11434"
         },
+        "mistral-7b": {
+            "name": "mistral:7b",
+            "url": "http://127.0.0.1:11434"
+        },
         "llama3.1-8b": {
             "name": "llama3.1:8b",
             "url": "http://127.0.0.1:11434"
@@ -26,8 +30,16 @@
             "name": "gemma3:12b",
             "url": "http://127.0.0.1:11434"
         },
-        "phi4-14b": {
-            "name": "phi4:14b",
+        "deepseek-r1-14b": {
+            "name": "deepseek-r1:14b",
+            "url": "http://127.0.0.1:11434"
+        },
+        "gemma3-27b": {
+            "name": "gemma3:27b",
+            "url": "http://127.0.0.1:11434"
+        },
+        "qwq-32b": {
+            "name": "qwq:32b",
             "url": "http://127.0.0.1:11434"
         },
         "deepseek-r1-32b": {
