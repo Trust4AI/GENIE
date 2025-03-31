@@ -22,6 +22,10 @@
             "name": "mistral:7b",
             "url": "http://127.0.0.1:11434"
         },
+        "llama3-8b": {
+            "name": "llama3:8b",
+            "url": "http://127.0.0.1:11434"
+        },
         "llama3.1-8b": {
             "name": "llama3.1:8b",
             "url": "http://127.0.0.1:11434"
