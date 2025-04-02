@@ -17,6 +17,7 @@ class OllamaModelService {
             numericFormatResponse,
             yesNoFormatResponse,
             multipleChoiceFormatResponse,
+            completionFormatResponse,
             excludedText,
             format,
             temperature,
@@ -36,6 +37,7 @@ class OllamaModelService {
             numericFormatResponse,
             yesNoFormatResponse,
             multipleChoiceFormatResponse,
+            completionFormatResponse,
             excludedText
         )
 

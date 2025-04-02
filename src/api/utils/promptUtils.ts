@@ -17,6 +17,7 @@ function buildAuxSystemPrompt(
     numericFormatResponse: boolean,
     yesNoFormatResponse: boolean,
     multipleChoiceFormatResponse: boolean,
+    completionFormatResponse: boolean,
     excludedText: string
 ): string {
     const components = [
@@ -38,6 +39,7 @@ function buildAuxSystemPrompt(
         excludedText
             ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
             : '',
+        completionFormatResponse ? 'Complete the following sentence: ' : '',
     ]
 
     return components.filter(Boolean).join(' ')

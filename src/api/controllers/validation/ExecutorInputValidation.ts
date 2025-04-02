@@ -56,6 +56,12 @@ const execute = [
         .withMessage(
             'multiple_choice_format_response is optional but must be a boolean if provided'
         ),
+    check('completion_format_response')
+        .optional()
+        .isBoolean()
+        .withMessage(
+            'completion_format_response is optional but must be a boolean if provided'
+        ),
     check('excluded_text')
         .optional()
         .isArray({ min: 1 })

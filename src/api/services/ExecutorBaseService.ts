@@ -32,6 +32,7 @@ class ExecutorBaseService {
             dto.numericFormatResponse,
             dto.yesNoFormatResponse,
             dto.multipleChoiceFormatResponse,
+            dto.completionFormatResponse,
             dto.excludedText,
             dto.temperature
         )
@@ -50,6 +51,7 @@ class ExecutorBaseService {
             type === 'consistency' ? false : dto.numericFormatResponse,
             type === 'consistency' ? false : dto.yesNoFormatResponse,
             type === 'consistency' ? false : dto.multipleChoiceFormatResponse,
+            type === 'consistency' ? false : dto.completionFormatResponse,
             type === 'consistency' ? [] : dto.excludedText,
             dto.temperature
         )
@@ -87,6 +89,7 @@ class ExecutorBaseService {
         numericFormatResponse: boolean,
         yesNoFormatResponse: boolean,
         multipleChoiceFormatResponse: boolean,
+        completionFormatResponse: boolean,
         excludedText: string[],
         temperature: number
     ) {
@@ -98,6 +101,7 @@ class ExecutorBaseService {
             numericFormatResponse,
             yesNoFormatResponse,
             multipleChoiceFormatResponse,
+            completionFormatResponse,
             excludedText,
             temperature
         )
@@ -113,6 +117,7 @@ class ExecutorBaseService {
         numericFormatResponse: boolean,
         yesNoFormatResponse: boolean,
         multipleChoiceFormatResponse: boolean,
+        completionFormatResponse: boolean,
         excludedText: string[],
         temperature: number
     ) {
@@ -128,6 +133,7 @@ class ExecutorBaseService {
             numericFormatResponse,
             yesNoFormatResponse,
             multipleChoiceFormatResponse,
+            completionFormatResponse,
             excludedText: filteredExcludedText,
             format: 'text',
             temperature,

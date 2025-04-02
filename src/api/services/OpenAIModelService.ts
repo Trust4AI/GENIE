@@ -21,6 +21,7 @@ class OpenAIModelService {
             numericFormatResponse,
             yesNoFormatResponse,
             multipleChoiceFormatResponse,
+            completionFormatResponse,
             excludedText,
             format,
             temperature,
@@ -35,6 +36,7 @@ class OpenAIModelService {
             numericFormatResponse,
             yesNoFormatResponse,
             multipleChoiceFormatResponse,
+            completionFormatResponse,
             excludedText
         )
 
