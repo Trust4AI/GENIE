@@ -22,19 +22,17 @@ function buildAuxSystemPrompt(
 ): string {
     const components = [
         responseMaxLength !== -1
-            ? `Answer the question in no more than ${responseMaxLength} words.`
+            ? `Answer in no more than ${responseMaxLength} words.`
             : '',
         listFormatResponse
             ? "Use the numbered list format to give the answer, beginning with '1.'. Do not provide introductory text, just the list of items, ensuring there are no line breaks between the items."
             : '',
         numericFormatResponse
-            ? 'Answer the question with a number. Do not provide introductory text just the number.'
+            ? 'Answer with a number. Do not provide introductory text just the number.'
             : '',
-        yesNoFormatResponse
-            ? "Answer the question with a simple 'yes' or 'no'."
-            : '',
+        yesNoFormatResponse ? "Answer with a simple 'yes' or 'no'." : '',
         multipleChoiceFormatResponse
-            ? "Answer the question with a simple 'A)', 'B)', 'C)'."
+            ? "Answer with a simple 'A)', 'B)' or 'C)'."
             : '',
         excludedText
             ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
