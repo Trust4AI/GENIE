@@ -8,6 +8,7 @@ export class ExecuteMetamorphicRequestDTO {
     yesNoFormatResponse: boolean
     multipleChoiceFormatResponse: boolean
     completionFormatResponse: boolean
+    rankFormatResponse: boolean
     excludedText: string[]
     temperature: number
     type: string
@@ -23,6 +24,7 @@ export class ExecuteMetamorphicRequestDTO {
         this.multipleChoiceFormatResponse =
             data.multiple_choice_format_response || false
         this.completionFormatResponse = data.completion_format_response || false
+        this.rankFormatResponse = data.rank_format_response || false
         this.excludedText = data.excluded_text || []
         this.temperature = data.temperature || -1
         this.type = data.type || 'comparison'
