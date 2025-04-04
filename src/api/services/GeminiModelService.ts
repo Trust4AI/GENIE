@@ -26,6 +26,7 @@ class GeminiModelService {
             yesNoFormatResponse,
             multipleChoiceFormatResponse,
             completionFormatResponse,
+            rankFormatResponse,
             excludedText,
             format,
             temperature,
@@ -49,6 +50,7 @@ class GeminiModelService {
             yesNoFormatResponse,
             multipleChoiceFormatResponse,
             completionFormatResponse,
+            rankFormatResponse,
             excludedText
         )
         logPrompts(modelName, auxSystemPrompt, systemPrompt, userPrompt)

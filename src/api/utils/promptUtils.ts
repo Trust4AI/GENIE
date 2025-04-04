@@ -18,6 +18,7 @@ function buildAuxSystemPrompt(
     yesNoFormatResponse: boolean,
     multipleChoiceFormatResponse: boolean,
     completionFormatResponse: boolean,
+    rankFormatResponse: boolean,
     excludedText: string
 ): string {
     const components = [
@@ -26,6 +27,9 @@ function buildAuxSystemPrompt(
             : '',
         listFormatResponse
             ? "Use the numbered list format to give the answer, beginning with '1.'. Do not provide introductory text, just the list of items, ensuring there are no line breaks between the items."
+            : '',
+        rankFormatResponse
+            ? "Rank the following items using a numbered list starting with '1.'. Keep the original wording of each item exactly as provided."
             : '',
         numericFormatResponse
             ? 'Answer with a number. Do not provide introductory text just the number.'

@@ -8,6 +8,7 @@ export class ExecuteRequestDTO {
     yesNoFormatResponse: boolean
     multipleChoiceFormatResponse: boolean
     completionFormatResponse: boolean
+    rankFormatResponse: boolean
     excludedText: string
     format: string
     temperature: number
@@ -23,6 +24,7 @@ export class ExecuteRequestDTO {
         this.multipleChoiceFormatResponse =
             data.multiple_choice_format_response || false
         this.completionFormatResponse = data.completion_format_response || false
+        this.rankFormatResponse = data.rank_format_response || false
         this.excludedText = data.excluded_text || ''
         this.format = data.format || 'text'
         this.temperature = data.temperature || -1

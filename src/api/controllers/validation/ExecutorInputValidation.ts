@@ -62,6 +62,12 @@ const execute = [
         .withMessage(
             'completion_format_response is optional but must be a boolean if provided'
         ),
+    check('rank_format_response')
+        .optional()
+        .isBoolean()
+        .withMessage(
+            'rank_format_response is optional but must be a boolean if provided'
+        ),
     check('excluded_text')
         .optional()
         .isArray({ min: 1 })
