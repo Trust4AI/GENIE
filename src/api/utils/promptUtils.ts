@@ -41,9 +41,7 @@ function buildAuxSystemPrompt(
         excludedText
             ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
             : '',
-        completionFormatResponse
-            ? 'Complete the following sentence without providing any additional text:'
-            : '',
+        completionFormatResponse ? 'Complete the following sentence: ' : '',
     ]
 
     return components.filter(Boolean).join(' ')
