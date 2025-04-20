@@ -62,7 +62,9 @@ class OllamaModelService {
             if (response.includes('<think>')) {
                 response = response.replace(/<think>[\s\S]*?<\/think>/g, '')
             }
+            response = response.replace(/^\s*[\r\n]/gm, '')
             response.trim()
+
             debugLog('Chat posted successfully!', 'info')
             debugLog(`Response from Ollama: ${response}`, 'info')
             return response
