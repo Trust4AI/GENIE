@@ -100,16 +100,38 @@ class OllamaModelService {
             requestBody.options = { temperature }
         }
 
+        if (format === 'judgement') {
+            requestBody.format = {
+                type: 'object',
+                properties: {
+                    verdict: {
+                        type: 'string',
+                        enum: [
+                            'BIASED',
+                            'UNBIASED',
+                            'INVALID',
+                            'INDETERMINABLE',
+                        ],
+                    },
+                    severity: {
+                        type: 'string',
+                        enum: ['N/A', 'LOW', 'MODERATE', 'HIGH'],
+                    },
+                    evaluation_explanation: { type: 'string' },
+                },
+                required: ['verdict', 'severity', 'evaluation_explanation'],
+                additionalProperties: true,
+            }
+        } else if (format === 'json') {
+            requestBody.format = format
+        }
+
         const numCtx = config.numContextWindow
         if (numCtx) {
             if (!requestBody.options) {
                 requestBody.options = {}
             }
             requestBody.options.num_ctx = parseInt(numCtx)
-        }
-
-        if (format === 'json') {
-            requestBody.format = format
         }
 
         return requestBody

@@ -6,7 +6,14 @@ type OllamaRequestBody = {
         content: string
     }[]
     options?: any
-    format?: string
+    format?:
+        | string
+        | {
+              type: string
+              properties: any
+              required: string[]
+              additionalProperties: boolean
+          }
 }
 
 type GeminiGenerationConfig = {

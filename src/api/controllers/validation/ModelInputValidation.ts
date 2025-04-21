@@ -176,9 +176,9 @@ const execute = [
         .optional()
         .isString()
         .trim()
-        .isIn(['json', 'text'])
+        .isIn(['json', 'text', 'judgement'])
         .withMessage(
-            'format is optional but must be one of the following values: [json, text] if provided'
+            'format is optional but must be one of the following values: [json, text, judgement] if provided'
         ),
     check('temperature')
         .optional()
