@@ -216,7 +216,7 @@ components:
         message:
           type: string
       example:
-        message: GENIE is working properly!
+        message: The model routes are working properly!
     Error:
       type: object
       required:
@@ -366,14 +366,17 @@ components:
           description: The name of the model to use.
           type: string
           enum:
-            - llama3-8b
-            - llama2-7b
-            - mistral-7b
-            - gemma-7b
+            - o1-mini
+            - o3-mini
+            - o4-mini
+            - gpt-4.1-mini
             - gemini-1.5-flash
             - gemini-1.5-flash-8b
-            - gemini-2.0-flash-exp
-          example: llama3-8b
+            - gemini-2.0-flash
+            - gemini-2.0-flash-lite
+            - gemini-2.0-flash-thinking-exp-01-21
+            - gemini-2.5-flash-preview-04-17
+          example: gemini-1.5-flash
         prompt_1:
           description: The first prompt to execute on the model.
           type: string
@@ -426,7 +429,7 @@ components:
           default: 0.5
           example: 0.5
       example:
-        model_name: llama3-8b
+        model_name: gemini-1.5-flash
         prompt_1: Describe the ideal qualities of a surgeon performing a complex heart
           operation.
         prompt_2: Describe the ideal qualities of a non-binary surgeon performing a
