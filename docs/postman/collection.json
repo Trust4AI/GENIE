@@ -19,12 +19,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/models/check",
+									"raw": "http://trust4ai.us.es:8085/api/v1/models/check",
 									"protocol": "http",
 									"host": [
-										"localhost"
+										"trust4ai.us.es"
 									],
-									"port": "8081",
+									"port": "8085",
 									"path": [
 										"api",
 										"v1",
@@ -41,12 +41,12 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/check",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/check",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -103,12 +103,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/models",
+									"raw": "http://trust4ai.us.es:8085/api/v1/models",
 									"protocol": "http",
 									"host": [
-										"localhost"
+										"trust4ai.us.es"
 									],
-									"port": "8081",
+									"port": "8085",
 									"path": [
 										"api",
 										"v1",
@@ -124,12 +124,12 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -183,12 +183,12 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/details",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/details",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -245,12 +245,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/models/ollama",
+									"raw": "http://trust4ai.us.es:8085/api/v1/models/ollama",
 									"protocol": "http",
 									"host": [
-										"localhost"
+										"trust4ai.us.es"
 									],
-									"port": "8081",
+									"port": "8085",
 									"path": [
 										"api",
 										"v1",
@@ -267,12 +267,12 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/ollama",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/ollama",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -335,12 +335,12 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/models",
+									"raw": "http://trust4ai.us.es:8085/api/v1/models",
 									"protocol": "http",
 									"host": [
-										"localhost"
+										"trust4ai.us.es"
 									],
-									"port": "8081",
+									"port": "8085",
 									"path": [
 										"api",
 										"v1",
@@ -365,12 +365,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -433,12 +433,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -501,12 +501,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -569,12 +569,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -637,12 +637,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -698,12 +698,12 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/models/request",
+									"raw": "http://trust4ai.us.es:8085/api/v1/models/request",
 									"protocol": "http",
 									"host": [
-										"localhost"
+										"trust4ai.us.es"
 									],
-									"port": "8081",
+									"port": "8085",
 									"path": [
 										"api",
 										"v1",
@@ -729,12 +729,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/execute",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/execute",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -798,12 +798,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/execute",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/execute",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -867,12 +867,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/execute",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/execute",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -936,12 +936,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/execute",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/execute",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -1005,12 +1005,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/execute",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/execute",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -1074,12 +1074,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/execute",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/execute",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -1143,12 +1143,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/execute",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/execute",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -1211,12 +1211,12 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/models/:id",
+									"raw": "http://trust4ai.us.es:8085/api/v1/models/:id",
 									"protocol": "http",
 									"host": [
-										"localhost"
+										"trust4ai.us.es"
 									],
-									"port": "8081",
+									"port": "8085",
 									"path": [
 										"api",
 										"v1",
@@ -1248,12 +1248,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/:id",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/:id",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -1323,12 +1323,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/:id",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/:id",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -1398,12 +1398,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/:id",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/:id",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -1473,12 +1473,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/:id",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/:id",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -1547,12 +1547,12 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/models/:id",
+									"raw": "http://trust4ai.us.es:8085/api/v1/models/:id",
 									"protocol": "http",
 									"host": [
-										"localhost"
+										"trust4ai.us.es"
 									],
-									"port": "8081",
+									"port": "8085",
 									"path": [
 										"api",
 										"v1",
@@ -1575,12 +1575,12 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/:id",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/:id",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -1641,12 +1641,12 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8081/api/v1/models/:id",
+											"raw": "http://trust4ai.us.es:8085/api/v1/models/:id",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -1721,12 +1721,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/metamorphic-tests/check",
+									"raw": "http://trust4ai.us.es:8085/api/v1/metamorphic-tests/check",
 									"protocol": "http",
 									"host": [
-										"localhost"
+										"trust4ai.us.es"
 									],
-									"port": "8081",
+									"port": "8085",
 									"path": [
 										"api",
 										"v1",
@@ -1743,12 +1743,12 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8081/api/v1/metamorphic-tests/check",
+											"raw": "http://trust4ai.us.es:8085/api/v1/metamorphic-tests/check",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -1811,12 +1811,12 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/metamorphic-tests/execute",
+									"raw": "http://trust4ai.us.es:8085/api/v1/metamorphic-tests/execute",
 									"protocol": "http",
 									"host": [
-										"localhost"
+										"trust4ai.us.es"
 									],
-									"port": "8081",
+									"port": "8085",
 									"path": [
 										"api",
 										"v1",
@@ -1842,12 +1842,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/metamorphic-tests/execute",
+											"raw": "http://trust4ai.us.es:8085/api/v1/metamorphic-tests/execute",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -1911,12 +1911,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/metamorphic-tests/execute",
+											"raw": "http://trust4ai.us.es:8085/api/v1/metamorphic-tests/execute",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -1980,12 +1980,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/metamorphic-tests/execute",
+											"raw": "http://trust4ai.us.es:8085/api/v1/metamorphic-tests/execute",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -2049,12 +2049,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/metamorphic-tests/execute",
+											"raw": "http://trust4ai.us.es:8085/api/v1/metamorphic-tests/execute",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -2118,12 +2118,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/metamorphic-tests/execute",
+											"raw": "http://trust4ai.us.es:8085/api/v1/metamorphic-tests/execute",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
@@ -2187,12 +2187,12 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:8081/api/v1/metamorphic-tests/execute",
+											"raw": "http://trust4ai.us.es:8085/api/v1/metamorphic-tests/execute",
 											"protocol": "http",
 											"host": [
-												"localhost"
+												"trust4ai.us.es"
 											],
-											"port": "8081",
+											"port": "8085",
 											"path": [
 												"api",
 												"v1",
