@@ -38,6 +38,36 @@ const execute = [
         .withMessage(
             'list_format_response is optional but must be a boolean if provided'
         ),
+    check('numeric_format_response')
+        .optional()
+        .isBoolean()
+        .withMessage(
+            'numeric_format_response is optional but must be a boolean if provided'
+        ),
+    check('yes_no_format_response')
+        .optional()
+        .isBoolean()
+        .withMessage(
+            'yes_no_format_response is optional but must be a boolean if provided'
+        ),
+    check('multiple_choice_format_response')
+        .optional()
+        .isBoolean()
+        .withMessage(
+            'multiple_choice_format_response is optional but must be a boolean if provided'
+        ),
+    check('completion_format_response')
+        .optional()
+        .isBoolean()
+        .withMessage(
+            'completion_format_response is optional but must be a boolean if provided'
+        ),
+    check('rank_format_response')
+        .optional()
+        .isBoolean()
+        .withMessage(
+            'rank_format_response is optional but must be a boolean if provided'
+        ),
     check('excluded_text')
         .optional()
         .isArray({ min: 1 })

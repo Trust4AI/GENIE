@@ -14,6 +14,98 @@ const modelBaseService = container.resolve('modelBaseService')
  * @swagger
  * components:
  *   schemas:
+ *     GENIEModels:
+ *       type: object
+ *       properties:
+ *         openai:
+ *           type: array
+ *           items:
+ *             type: string
+ *         gemini:
+ *           type: array
+ *           items:
+ *             type: string
+ *         ollama:
+ *           type: object
+ *           additionalProperties:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               url:
+ *                 type: string
+ *     AddModelResponse:
+ *       type: object
+ *       required:
+ *         - category
+ *         - id
+ *       properties:
+ *         category:
+ *           type: string
+ *           description: The category of the model added.
+ *           example: "ollama"
+ *         id:
+ *           type: string
+ *           description: The unique identifier of the model added.
+ *           example: "mistral-7b"
+ *         name:
+ *           type: string
+ *           description: The base name of the model in Ollama.
+ *           example: "mistral:7b"
+ *         url:
+ *           type: string
+ *           description: The url to use the model.
+ *           example: "http://127.0.0.1:11434"
+ *       example:
+ *         category: "ollama"
+ *         id: "mistral-7b"
+ *         name: "mistral:7b"
+ *         url: "http://127.0.0.1:11434"
+ *     UpdateModelResponse:
+ *       type: object
+ *       required:
+ *         - id
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The unique identifier of the model updated.
+ *           example: "mistral-7b"
+ *         name:
+ *           type: string
+ *           description: The base name of the model in Ollama.
+ *           example: "mistral:7b"
+ *         url:
+ *           type: string
+ *           description: The url to use the model.
+ *           example: "http://127.0.0.1:11434"
+ *       example:
+ *         id: "mistral-7b"
+ *         name: "mistral:7b"
+ *         url: "http://127.0.0.1:11434"
+ *     OllamaModel:
+ *       type: object
+ *       required:
+ *         - name
+ *         - model
+ *         - modified_at
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: The name given to the model in Ollama.
+ *           example: "llama3:latest"
+ *         model:
+ *           type: string
+ *           description: The base name of the model in Ollama.
+ *           example: "llama3:8b"
+ *         modified_at:
+ *           type: string
+ *           format: date-time
+ *           description: The date and time the model was last modified.
+ *           example: "2024-08-01T12:15:39.507589+02:00"
+ *       example:
+ *         name: "llama3:latest"
+ *         model: "llama3:8b"
+ *         modified_at: "2024-08-01T12:15:39.507589+02:00"
  *     ModelMessage:
  *       type: object
  *       required:
@@ -168,7 +260,7 @@ router.route('/ollama').get(modelController.indexOllama)
  * @swagger
  * /models/check:
  *   get:
- *     summary: Check if model routes are working properly.
+ *     summary: Check if the model routes are working properly.
  *     tags: [Models]
  *     responses:
  *       200:

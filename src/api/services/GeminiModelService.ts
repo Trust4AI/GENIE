@@ -3,11 +3,12 @@ import { GeminiGenerationConfig } from '../types'
 import { debugLog } from '../utils/logUtils'
 import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
 import { ProxyAgent } from 'undici'
+import { buildAuxSystemPrompt, logPrompts } from '../utils/promptUtils'
 
 const geminiAPIKey = config.geminiAPIKey
 const proxyURL: string = config.proxyURL
 
-class GeminiExecutorModelService {
+class GeminiModelService {
     async sendPromptToModel(dto: ExecuteRequestDTO): Promise<string> {
         const {
             modelName,
@@ -15,6 +16,11 @@ class GeminiExecutorModelService {
             userPrompt,
             responseMaxLength,
             listFormatResponse,
+            numericFormatResponse,
+            yesNoFormatResponse,
+            multipleChoiceFormatResponse,
+            completionFormatResponse,
+            rankFormatResponse,
             excludedText,
             format,
             temperature,
@@ -36,12 +42,17 @@ class GeminiExecutorModelService {
             temperature
         )
 
-        const auxSystemPrompt = this.buildAuxSystemPrompt(
+        const auxSystemPrompt = buildAuxSystemPrompt(
             responseMaxLength,
             listFormatResponse,
+            numericFormatResponse,
+            yesNoFormatResponse,
+            multipleChoiceFormatResponse,
+            completionFormatResponse,
+            rankFormatResponse,
             excludedText
         )
-        this.logPrompts(modelName, auxSystemPrompt, systemPrompt, userPrompt)
+        logPrompts(modelName, auxSystemPrompt, systemPrompt, userPrompt)
 
         const history = this.buildChatHistory(
             systemPrompt,
@@ -94,47 +105,21 @@ class GeminiExecutorModelService {
         format: string,
         temperature: number
     ): GeminiGenerationConfig {
-        return {
-            temperature: temperature,
-            topP: 0.95,
-            topK: 40,
-            maxOutputTokens: 8192,
+        const config: GeminiGenerationConfig = {
+            // topP: 0.95,
+            // topK: 40,
+            // maxOutputTokens: 8192,
             response_mime_type:
                 format === 'json' && !modelName.includes('gemini-1.0')
                     ? 'application/json'
                     : 'text/plain',
         }
-    }
 
-    private buildAuxSystemPrompt(
-        responseMaxLength: number,
-        listFormatResponse: boolean,
-        excludedText: string
-    ): string {
-        const components = [
-            responseMaxLength !== -1
-                ? `Answer the question in no more than ${responseMaxLength} words.`
-                : '',
-            listFormatResponse
-                ? "Use the numbered list format to give the answer, beginning with '1.'. Do not provide introductory text, just the list of items, ensuring there are no line breaks between the items."
-                : '',
-            excludedText
-                ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
-                : '',
-        ]
+        if (temperature !== -1) {
+            config['temperature'] = temperature
+        }
 
-        return components.filter(Boolean).join(' ')
-    }
-
-    private logPrompts(
-        modelName: string,
-        auxSystemPrompt: string,
-        systemPrompt: string,
-        userPrompt: string
-    ): void {
-        debugLog(`Model: ${modelName}`, 'info')
-        debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')
-        debugLog(`User prompt: ${userPrompt}`, 'info')
+        return config
     }
 
     private buildChatHistory(
@@ -168,4 +153,4 @@ class GeminiExecutorModelService {
     }
 }
 
-export default GeminiExecutorModelService
+export default GeminiModelService

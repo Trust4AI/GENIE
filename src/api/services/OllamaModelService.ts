@@ -4,8 +4,9 @@ import { debugLog } from '../utils/logUtils'
 import { getOllamaModelConfig } from '../utils/modelUtils'
 import { ExecuteRequestDTO } from '../utils/objects/ExecuteRequestDTO'
 import { sendChatRequest } from '../utils/ollamaUtils'
+import { buildAuxSystemPrompt, logPrompts } from '../utils/promptUtils'
 
-class OllamaExecutorModelService {
+class OllamaModelService {
     async sendPromptToModel(dto: ExecuteRequestDTO): Promise<string> {
         const {
             modelName,
@@ -13,6 +14,11 @@ class OllamaExecutorModelService {
             userPrompt,
             responseMaxLength,
             listFormatResponse,
+            numericFormatResponse,
+            yesNoFormatResponse,
+            multipleChoiceFormatResponse,
+            completionFormatResponse,
+            rankFormatResponse,
             excludedText,
             format,
             temperature,
@@ -26,19 +32,18 @@ class OllamaExecutorModelService {
             )
         }
 
-        const auxSystemPrompt = this.buildAuxSystemPrompt(
+        const auxSystemPrompt = buildAuxSystemPrompt(
             responseMaxLength,
             listFormatResponse,
+            numericFormatResponse,
+            yesNoFormatResponse,
+            multipleChoiceFormatResponse,
+            completionFormatResponse,
+            rankFormatResponse,
             excludedText
         )
 
-        this.logPrompts(
-            modelData.url,
-            modelData.name,
-            auxSystemPrompt,
-            systemPrompt,
-            userPrompt
-        )
+        logPrompts(modelData.name, auxSystemPrompt, systemPrompt, userPrompt)
 
         const requestBody = this.buildRequestBody(
             modelData.name,
@@ -50,10 +55,16 @@ class OllamaExecutorModelService {
         )
 
         try {
-            const response = await this.fetchChatResponse(
+            let response = await this.fetchChatResponse(
                 modelData.url,
                 requestBody
             )
+            if (response.includes('<think>')) {
+                response = response.replace(/<think>[\s\S]*?<\/think>/g, '')
+            }
+            response = response.replace(/^\s*[\r\n]/gm, '')
+            response.trim()
+
             debugLog('Chat posted successfully!', 'info')
             debugLog(`Response from Ollama: ${response}`, 'info')
             return response
@@ -62,39 +73,6 @@ class OllamaExecutorModelService {
             debugLog(error, 'error')
             throw new Error(error.message)
         }
-    }
-
-    private buildAuxSystemPrompt(
-        responseMaxLength: number,
-        listFormatResponse: boolean,
-        excludedText: string
-    ): string {
-        const components = [
-            responseMaxLength !== -1
-                ? `Answer the question in no more than ${responseMaxLength} words.`
-                : '',
-            listFormatResponse
-                ? "Use the numbered list format to give the answer, beginning with '1.'. Do not provide introductory text, just the list of items, ensuring there are no line breaks between the items."
-                : '',
-            excludedText
-                ? `Omit any mention of the term(s) '${excludedText}', or derivatives, in your response.`
-                : '',
-        ]
-
-        return components.filter(Boolean).join(' ')
-    }
-
-    private logPrompts(
-        url: string,
-        model: string,
-        auxSystemPrompt: string,
-        systemPrompt: string,
-        userPrompt: string
-    ): void {
-        debugLog(`URL: ${url}`, 'info')
-        debugLog(`Model: ${model}`, 'info')
-        debugLog(`System prompt: ${auxSystemPrompt} ${systemPrompt}`, 'info')
-        debugLog(`User prompt: ${userPrompt}`, 'info')
     }
 
     private buildRequestBody(
@@ -120,15 +98,42 @@ class OllamaExecutorModelService {
             messages,
         }
 
-        requestBody.options = { temperature }
+        if (temperature !== -1) {
+            requestBody.options = { temperature }
+        }
+
+        if (format === 'judgement') {
+            requestBody.format = {
+                type: 'object',
+                properties: {
+                    verdict: {
+                        type: 'string',
+                        enum: [
+                            'BIASED',
+                            'UNBIASED',
+                            'INVALID',
+                            'INDETERMINABLE',
+                        ],
+                    },
+                    severity: {
+                        type: 'string',
+                        enum: ['N/A', 'LOW', 'MODERATE', 'HIGH'],
+                    },
+                    evaluation_explanation: { type: 'string' },
+                },
+                required: ['verdict', 'severity', 'evaluation_explanation'],
+                additionalProperties: true,
+            }
+        } else if (format === 'json') {
+            requestBody.format = format
+        }
 
         const numCtx = config.numContextWindow
         if (numCtx) {
+            if (!requestBody.options) {
+                requestBody.options = {}
+            }
             requestBody.options.num_ctx = parseInt(numCtx)
-        }
-
-        if (format === 'json') {
-            requestBody.format = format
         }
 
         return requestBody
@@ -144,4 +149,4 @@ class OllamaExecutorModelService {
     }
 }
 
-export default OllamaExecutorModelService
+export default OllamaModelService

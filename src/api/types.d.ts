@@ -6,15 +6,22 @@ type OllamaRequestBody = {
         content: string
     }[]
     options?: any
-    format?: string
+    format?:
+        | string
+        | {
+              type: string
+              properties: any
+              required: string[]
+              additionalProperties: boolean
+          }
 }
 
 type GeminiGenerationConfig = {
-    temperature: number
-    topP: number
-    topK: number
-    maxOutputTokens: number
-    response_mime_type: string
+    temperature?: number
+    topP?: number
+    topK?: number
+    maxOutputTokens?: number
+    response_mime_type?: string
 }
 
 type LogType = 'error' | 'warn' | 'info' | 'log'
