@@ -5,6 +5,12 @@ const execute = [
     check('model_name')
         .isString()
         .trim()
+        .isLength({ min: 1 })
+        .withMessage(
+            `model_name must be a string with length greater than 1, and one of the following values: [${getModelIds().join(
+                ', '
+            )}]`
+        )
         .custom((value: string): boolean => {
             const modelIds: string[] = getModelIds()
             if (!modelIds.includes(value)) {
